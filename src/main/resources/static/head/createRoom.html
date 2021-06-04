@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>创建房间</title>
+
+    <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2 style="text-align: center">请输入信息开始创建</h2>
+
+    <form action="/room/create" method="post" onsubmit="return check()">
+        <p style="text-align: center">请输入玩家名称:</p>
+        <input type="text" name="playerName" id="playerName" placeholder="请输入玩家名称" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px"/>
+        <p>
+
+
+        </p>
+
+        <p style="text-align: center">请输入房间名:</p>
+        <input type="text" name="roomName" id="roomName" placeholder="请输入玩家名称" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px"/>
+
+        <p>
+
+
+        </p>
+
+        <p style="text-align: center">请选择职业:</p>
+        <select name="career" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px">
+            <option value="">--请选择--</option>
+            <option value="">医生</option>
+            <option value="">律师</option>
+            <option value="">机械师</option>
+        </select>
+
+        <p>
+
+
+        </p>
+        <input type="submit" value="创建对局" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px" />
+    </form>
+
+</body>
+
+    <script>
+        function check() {
+            var playerName = $("#playerName").val();
+            var roomName = $("#roomName").val();
+
+            if (playerName == null || playerName == "" || roomName == null || roomName == "") {
+                alert("玩家名称、房间名不能为空")
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+</html>
