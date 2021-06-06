@@ -1,0 +1,21 @@
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('1', '1', 9500, 6900, 2600, 9500, 480, 2350, 1330, 0, 300, 660, 50, 2210, 400, 13300, 0, 15000, 22000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('2', '1', 7500, 5420, 2080, 7500, 380, 1830, 1100, 390, 220, 180, 50, 1650, 400, 110000, 78000, 11000, 6000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('3', '1', 4900, 3260, 1640, 4900, 250, 1050, 750, 60, 140, 120, 50, 1090, 400, 75000, 12000, 7000, 4000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('4', '1', 4600, 2930, 1670, 4600, 240, 910, 700, 60, 120, 90, 50, 1000, 400, 75000, 12000, 7000, 4000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('5', '1', 3300, 2190, 1110, 3300, 180, 630, 500, 60, 100, 90, 50, 760, 400, 50000, 12000, 5000, 3000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('6', '1', 3100, 1980, 1120, 3100, 170, 600, 400, 30, 100, 90, 50, 710, 480, 40000, 6000, 5000, 3000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('7', '1', 3000, 1880, 1120, 3000, 160, 580, 400, 0, 100, 60, 50, 690, 520, 40000, 0, 5000, 2000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('8', '1', 2500, 1620, 880, 2500, 140, 460, 400, 0, 80, 60, 50, 570, 710, 40000, 0, 4000, 2000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('9', '1', 2500, 1620, 880, 2500, 140, 460, 400, 0, 80, 60, 50, 570, 750, 40000, 0, 4000, 2000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('10', '1', 2000, 1280, 720, 2000, 110, 360, 300, 0, 60, 60, 50, 450, 400, 30000, 0, 3000, 2000, 1000);
+
+insert into cashflow.rat_table(career, is_init, total_income, total_pay, month_cash_flow, salary, pay_per_child, tax_pay, house_pay, education_pay, car_pay, credit_card_pay, extra_pay, other_pay, bank_store, house_loan, education_loan, car_loan, credit_card, extra_debt) VALUES('11', '1', 1600, 970, 630, 1600, 70, 280, 200, 0, 80, 60, 50, 300, 560, 20000, 0, 4000, 2000, 1000);

@@ -1,7 +1,12 @@
 package com.house.cjh_cashflow.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.house.cjh_cashflow.constant.CareerEunm;
+import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.dto.RoomDto;
+import com.house.cjh_cashflow.service.RatTableService;
 import com.house.cjh_cashflow.service.RoomService;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +27,11 @@ public class RoomController {
     @Autowired
     RoomService roomService;
 
+    @Autowired
+    RatTableService ratTableService;
+
     @RequestMapping(value = "/room/create", method = RequestMethod.POST)
+    @ResponseBody
     public String create(@RequestParam(value = "playerName") String playerName,
                          @RequestParam(value = "roomName") String roomName,
                          @RequestParam(value = "career") String career,
@@ -35,7 +44,15 @@ public class RoomController {
             return "error";
         }
 
-        return "success";
+        if (StringUtils.isBlank(career)) {
+            return "";
+        }
+
+        RatTableDto ratTableDto;
+        ratTableDto = ratTableService.getInitRatCareer(career);
+        ratTableDto.setCareerName(CareerEunm.map.get(career));
+
+        return JSON.toJSONString(ratTableDto);
 
     }
 

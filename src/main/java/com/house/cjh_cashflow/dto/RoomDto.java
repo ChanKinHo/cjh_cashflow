@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class RoomDto {
 
-    private int id;
+    private long id;
 
     private String name;
 
@@ -22,11 +22,11 @@ public class RoomDto {
         this.createdDate = createdDate;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

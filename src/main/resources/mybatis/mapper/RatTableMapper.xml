@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.cjh_cashflow.dao.RatTableDao">
+
+    <sql id="select">
+        select id,
+              career,
+              player_id,
+              is_init,
+              passive_income,
+              total_income,
+              total_pay,
+              month_cash_flow,
+              salary,
+              pay_per_child,
+              child_count,
+              tax_pay,
+              house_pay,
+              education_pay,
+              car_pay,
+              credit_card_pay,
+              extra_pay,
+              other_pay,
+              children_pay,
+              bank_pay,
+              house_loan,
+              education_loan,
+              car_loan,
+              credit_card,
+              extra_debt,
+              bank_loan,
+              bank_store,
+              created_date,
+              updated_date
+    </sql>
+
+    <select id="getInitRatCareer" resultType="com.house.cjh_cashflow.dto.RatTableDto">
+        <include refid="select" />
+        from rat_table where is_init = '1' and career = #{career}
+    </select>
+</mapper>
