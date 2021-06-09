@@ -7,50 +7,184 @@
 
 </head>
 <body>
-    <!--玩家: <input type="text" value="飞机师1">-->
 
-    <div style="float: left; font-weight:bold">职业: </div> <div style="float: left; margin-left:10px">飞机师</div>
-    <div style="float: left; font-weight:bold;margin-left:500px">玩家: </div>  <div style="float: left; margin-left:10px">cjh</div>
+    <div style="float: left; font-weight:bold">职业: </div> <div th:text="${ratObj.careerName}" style="float: left; margin-left:10px"></div>
+    <div style="float: left; font-weight:bold;margin-left:500px">玩家: </div>  <div th:text="${ratObj.playerName}" style="float: left; margin-left:10px"></div>
 
     <br><p style="margin-top: 10px;color: crimson">目标: 努力使你的被动收入高于你的总支出，跳出老鼠圈，进入快车道<p/>
-    <div style="font-weight: bold; font-size: 20px">利润表</div>
-    <div>
-        <div style="font-weight: bold;margin-top: 5px; font-size: 18px">收入</div>
-        <div>----------------------------------------------------</div>
-        <div style="float: left; color: blue">项目</div><div style="margin-left: 250px; float: left; color: blue">现金流</div>
-        <br><div style="float: left;margin-top: 10px">工资: </div><input type="text" value="9500" disabled style="margin-left:250px; margin-top: 10px; width: 50px"/>
-        <br><div style="margin-top: 10px">利息/分红: </div>
-        <li>
-            <tr>
-                <th>xxx基金</th>
+    <div style="font-weight: bold; font-size: 20px; color: deeppink">利润表</div>
 
-            </tr>
-            <tr>
-                <!--<th><input type="text" value="" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/></th>-->
-                <input type="text" value="" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-                <!--<th style="margin-left: 200px">200</th>-->
-            </tr>
-        </li>
-        <div style="margin-top: 10px">房地产/企业: </div>
-        <li>
-            <tr>
-                <th>三房两厅</th>
-            </tr>
-            <tr>
-                <input type="text" value="200" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-            </tr>
-        </li>
-        <div style="font-weight: bold;margin-top: 5px; font-size: 18px">支出</div>
-        <div>----------------------------------------------------</div>
-        <div style="float: left;margin-top: 10px">税金: </div><input type="text" value="500" disabled style="margin-left:230px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">住房抵押贷款: </div><input type="text" value="500" disabled style="margin-left:170px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">教育贷款: </div><input type="text" value="500" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">购车贷款: </div><input type="text" value="500" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">信用卡支出: </div><input type="text" value="500" disabled style="margin-left:180px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">额外支出: </div><input type="text" value="500" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">其他支出: </div><input type="text" value="500" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">小孩支出: </div><input type="text" value="500" disabled style="margin-left:200px; margin-top: 10px; width: 50px"/>
-        <br><div style="float: left;margin-top: 10px">银行贷款支出: </div><input type="text" value="500" disabled style="margin-left:170px; margin-top: 10px; width: 50px"/>
+    <div style="float: left">
+        <div style="font-weight: bold;margin-top: 5px; font-size: 18px">收入</div>
+        <div>----------------------------------------------</div>
+        <div style="float: left; color: blue">项目</div><div style="margin-left: 250px; float: left; color: blue">现金流</div>
+
+        <br><div style="float: left;margin-top: 11px">工资: </div><input th:value="${ratObj.salary}" type="text" value="0" disabled style="margin-left:250px; margin-top: 10px; width: 50px"/>
+        <div>利息/分红</div>
+        <div>
+            <div th:each="stock,stocks: ${ratObj.stockDtos}">
+                <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled><input th:value="${stock.interest}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
+            </div>
+        </div>
+
+        <div>房地产/企业</div>
+        <div>
+            <div th:each="state, states: ${ratObj.stateCompanyDtos}">
+                <!--<div th:text="${state.name}+'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'+${state.monthCashFlow}" style="font-size: 10px; color: red">xxx企业: <input th:value="${state.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled></div>-->
+                <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
+
+            </div>
+        </div>
+
+        <br><div style="font-weight: bold;margin-top: 5px; font-size: 18px">支出</div>
+        <div>----------------------------------------------</div>
+        <div>个人所得税: <input th:value="${ratObj.taxPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>房屋按揭款: <input th:value="${ratObj.housePay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>教育按揭款: <input th:value="${ratObj.educationPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>购车按揭款: <input th:value="${ratObj.carPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>信用卡利息: <input th:value="${ratObj.creditCardPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>额外债务支出: <input th:value="${ratObj.extraPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>其他生活支出: <input th:value="${ratObj.otherPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>孩子相关支出: <input th:value="${ratObj.childrenPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>银行贷款信息: <input th:value="${ratObj.bankPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
     </div>
+
+    <div style="float: left">
+        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 50px">被动收入(美元): <input th:value="${ratObj.passiveIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 60px">总收入(美元): <input th:value="${ratObj.totalIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="margin-left: 50px; margin-top: 20px">----------------------------------</div>
+        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 30px; color: blue">孩子个数: <input th:value="${ratObj.childCount}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 30px"></div>
+        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 20px; color: blue">每个孩子支出(美元): <input th:value="${ratObj.payPerChild}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 10px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 30px">总支出(美元): <input th:value="${ratObj.totalPay}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 35px">月现金流(美元): <input th:value="${ratObj.monthCashFlow}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 70px"></div>
+    </div>
+
+    <form action="/room/testAdd" method="post">
+    <div style="float: left; margin-left: 80px">
+        <div style="font-weight: bold; font-size: 20px; color: deeppink">资产负债表</div>
+        <div style="float: left">
+            <div style="font-weight: bold; font-size: 18px">资产</div>
+            <div>--------------------------------------</div>
+            <div style="font-size: 15px">银行存款: <input th:value="${ratObj.bankStore}" type="text" disabled style="width: 35px;margin-left: 100px" value="0"></div>
+            <div style="float: left; font-size: 15px">股票/债权:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">股数:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">价值(股):</div>
+            <br>
+            <div id="stocks">
+                <div th:each="stock, stocks: ${ratObj.stockDtos}">
+                    <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${stock.totalCount}" type="text" value="500" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled><input th:value="${stock.perCost}" type="text" value="5" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled>
+                </div>
+            </div>
+            <input type="button" value="点击新增" id="stockBtn" onclick="addStock()">
+            <br>
+            <br>
+            <div style="float: left; font-size: 15px">房产/企业:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">首付:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">价值(套):</div>
+            <br>
+            <div id="states" >
+                <div th:each="state, states: ${ratObj.stateCompanyDtos}">
+                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${state.totalCost}" type="text" value="650000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled>
+                </div>
+            </div>
+            <input type="button" value="点击新增" id="stateBtn" onclick="addState()">
+        </div>
+        <br>
+        <div style="float: left">
+            <div style="font-weight: bold; font-size: 18px; margin-top: 10px">负债</div>
+            <div>--------------------------------------</div>
+            <div>房屋贷款: <input th:value="${ratObj.houseLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>教育贷款: <input th:value="${ratObj.educationLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>购车贷款: <input th:value="${ratObj.carLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>信用卡透支: <input th:value="${ratObj.creditCard}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>额外负债: <input th:value="${ratObj.extraDebt}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div style="float: left; font-size: 15px">房产/企业:</div>
+            <div style="float: left; margin-left: 150px; font-size: 15px">抵押/贷款:</div>
+            <br>
+            <div id="stateLoan">
+                <div th:each="state, states: ${ratObj.stateCompanyDtos}">
+                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.loan}" type="text" value="20000" style="color: red; margin-left: 150px; font-size: 10px; width: 50px" disabled>
+                </div>
+            </div>
+
+            <br>
+            <div style="font-size: 15px">银行贷款:</div>
+            <div id="bankLoan">
+                <div style="font-size: 13px; color: red">当前借款: <input th:value="${ratObj.bankLoan}" type="text" value="20000" style="color: red; margin-left: 50px; font-size: 10px; width: 50px" disabled></div>
+            </div>
+        </div>
+    </div><br>
+        <input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">
+    </form>
+
+
 </body>
+
+    <script type="text/javascript">
+        function addStock(){
+            var input1 = document.createElement('input');
+            input1.setAttribute('type', 'text');
+            input1.setAttribute('name', 'stockName');
+            input1.setAttribute('style','color: red; font-size: 10px; width: 30px')
+
+            var input2 = document.createElement('input');
+            input2.setAttribute('type', 'text');
+            input2.setAttribute('name', 'stockNum');
+            input2.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 30px')
+
+            var input3 = document.createElement('input');
+            input3.setAttribute('type', 'text');
+            input3.setAttribute('name', 'stockValue');
+            input3.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 30px')
+            var stocks = document.getElementById("stocks");
+
+            stocks.insertBefore(input1,null);
+            stocks.insertBefore(input2,null);
+            stocks.insertBefore(input3,null);
+
+            var btn = document.getElementById("stockBtn");
+            btn.setAttribute('disabled',true);
+        }
+    </script>
+
+    <script type="text/javascript">
+        function addState(){
+            var input1 = document.createElement('input');
+            input1.setAttribute('type', 'text');
+            input1.setAttribute('name', 'stateName');
+            input1.setAttribute('style','color: red; font-size: 10px; width: 50px')
+
+            var input2 = document.createElement('input');
+            input2.setAttribute('type', 'text');
+            input2.setAttribute('name', 'downPayment');
+            input2.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 50px')
+
+            var input3 = document.createElement('input');
+            input3.setAttribute('type', 'text');
+            input3.setAttribute('name', 'totalValue');
+            input3.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 50px')
+            var states = document.getElementById("states");
+
+            states.insertBefore(input1,null);
+            states.insertBefore(input2,null);
+            states.insertBefore(input3,null);
+
+            var input4 = document.createElement('input');
+            input4.setAttribute('type', 'text');
+            input4.setAttribute('value', '请输入贷款')
+            input4.setAttribute('disabled', true);
+            input4.setAttribute('style','color: red; font-size: 10px; width: 50px')
+
+            var input5 = document.createElement('input');
+            input5.setAttribute('type', 'text');
+            input5.setAttribute('name', 'stateLoan');
+            input5.setAttribute('style','color: red; margin-left: 150px; font-size: 10px; width: 50px')
+            var stateLoan = document.getElementById("stateLoan");
+            stateLoan.insertBefore(input4,null);
+            stateLoan.insertBefore(input5,null);
+
+            var btn = document.getElementById("stateBtn");
+            btn.setAttribute('disabled',true);
+        }
+    </script>
 </html>

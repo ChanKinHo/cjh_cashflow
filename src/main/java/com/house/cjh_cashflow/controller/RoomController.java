@@ -1,9 +1,9 @@
 package com.house.cjh_cashflow.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.house.cjh_cashflow.constant.CareerEunm;
 import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.dto.RoomDto;
+import com.house.cjh_cashflow.dto.StateCompanyDto;
 import com.house.cjh_cashflow.service.RatTableService;
 import com.house.cjh_cashflow.service.RoomService;
 import org.apache.commons.lang.StringUtils;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,8 +31,8 @@ public class RoomController {
     @Autowired
     RatTableService ratTableService;
 
+
     @RequestMapping(value = "/room/create", method = RequestMethod.POST)
-    @ResponseBody
     public String create(@RequestParam(value = "playerName") String playerName,
                          @RequestParam(value = "roomName") String roomName,
                          @RequestParam(value = "career") String career,
@@ -45,15 +46,28 @@ public class RoomController {
         }
 
         if (StringUtils.isBlank(career)) {
-            return "";
+            return "ratTable";
         }
 
         RatTableDto ratTableDto;
         ratTableDto = ratTableService.getInitRatCareer(career);
-        ratTableDto.setCareerName(CareerEunm.map.get(career));
+        ratTableDto.setCareerName("飛機師");
+        ratTableDto.setPlayerName("靓仔浩");
 
-        return JSON.toJSONString(ratTableDto);
+        List<StateCompanyDto> stateCompanyDtos = new ArrayList<>();
+        stateCompanyDtos.add(new StateCompanyDto("三房两厅", 150, 2000,65000, 63000));
+        stateCompanyDtos.add(new StateCompanyDto("8房公寓", 1500, 20000,750000, 730000));
+        stateCompanyDtos.add(new StateCompanyDto("机械厂", 0, 3000,30000, 27000));
+        ratTableDto.setStateCompanyDtos(stateCompanyDtos);
 
+//        List<StockDto> list = new ArrayList<>();
+//        ratTableDto.setStockDtos(list);
+
+        map.addAttribute("ratObj", ratTableDto);
+
+        return "ratTable";
+
+//        return JSON.toJSONString(map);
     }
 
     @RequestMapping("/room/check")
@@ -61,5 +75,11 @@ public class RoomController {
     public List<RoomDto> checkRoom() {
 
         return roomService.queryRooms();
+    }
+
+    @RequestMapping("/room/test")
+    public String checkRat() {
+
+        return "ratTable";
     }
 }

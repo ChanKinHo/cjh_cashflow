@@ -1,5 +1,7 @@
 package com.house.cjh_cashflow.dto;
 
+import java.util.List;
+
 public class RatTableDto {
 
     private long id;
@@ -9,6 +11,8 @@ public class RatTableDto {
     private String careerName;
 
     private long playerId;
+
+    private String playerName;
 
     private String isInit;
 
@@ -58,9 +62,37 @@ public class RatTableDto {
 
     private long bankStore;
 
+    private List<StateCompanyDto> stateCompanyDtos;
+
+    private List<StockDto> stockDtos;
+
     private String createdDate;
 
     private String updatedDate;
+
+    public List<StockDto> getStockDtos() {
+        return stockDtos;
+    }
+
+    public void setStockDtos(List<StockDto> stockDtos) {
+        this.stockDtos = stockDtos;
+    }
+
+    public List<StateCompanyDto> getStateCompanyDtos() {
+        return stateCompanyDtos;
+    }
+
+    public void setStateCompanyDtos(List<StateCompanyDto> stateCompanyDtos) {
+        this.stateCompanyDtos = stateCompanyDtos;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
 
     public long getId() {
         return id;
