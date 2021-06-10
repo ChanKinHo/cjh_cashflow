@@ -1,9 +1,11 @@
 package com.house.cjh_cashflow.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.house.cjh_cashflow.constant.RespConstant;
+import com.house.cjh_cashflow.controller.form.PlayerForm;
 import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.dto.RoomDto;
-import com.house.cjh_cashflow.dto.StateCompanyDto;
+import com.house.cjh_cashflow.exception.ServiceException;
+import com.house.cjh_cashflow.service.PlayerService;
 import com.house.cjh_cashflow.service.RatTableService;
 import com.house.cjh_cashflow.service.RoomService;
 import org.apache.commons.lang.StringUtils;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,9 +28,6 @@ public class RoomController {
 
     @Autowired
     RoomService roomService;
-
-    @Autowired
-    RatTableService ratTableService;
 
 
     @RequestMapping(value = "/room/create", method = RequestMethod.POST)
@@ -42,32 +40,26 @@ public class RoomController {
 
         if (playerName.length() > 10 || roomName.length() > 10 ) {
             map.addAttribute("msg", "输入玩家名称或房间名不能超过10个字");
-            return "error";
+            return "createRoomError";
         }
 
         if (StringUtils.isBlank(career)) {
             return "ratTable";
         }
 
-        RatTableDto ratTableDto;
-        ratTableDto = ratTableService.getInitRatCareer(career);
-        ratTableDto.setCareerName("飛機師");
-        ratTableDto.setPlayerName("靓仔浩");
-
-        List<StateCompanyDto> stateCompanyDtos = new ArrayList<>();
-        stateCompanyDtos.add(new StateCompanyDto("三房两厅", 150, 2000,65000, 63000));
-        stateCompanyDtos.add(new StateCompanyDto("8房公寓", 1500, 20000,750000, 730000));
-        stateCompanyDtos.add(new StateCompanyDto("机械厂", 0, 3000,30000, 27000));
-        ratTableDto.setStateCompanyDtos(stateCompanyDtos);
-
-//        List<StockDto> list = new ArrayList<>();
-//        ratTableDto.setStockDtos(list);
-
-        map.addAttribute("ratObj", ratTableDto);
+        try {
+            roomService.createAndFeedBack(roomName, playerName, career, map);
+        } catch (ServiceException se) {
+            map.addAttribute("msg", se.getMsg());
+            return "error";
+        } catch (Exception e) {
+            map.addAttribute("msg", RespConstant.SYSTEM_FAIL_CODE_MSG);
+            logger.error("RoomController createRoom err ",e);
+            return "error";
+        }
 
         return "ratTable";
 
-//        return JSON.toJSONString(map);
     }
 
     @RequestMapping("/room/check")

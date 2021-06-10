@@ -9,7 +9,8 @@
 <body>
 
     <div style="float: left; font-weight:bold">职业: </div> <div th:text="${ratObj.careerName}" style="float: left; margin-left:10px"></div>
-    <div style="float: left; font-weight:bold;margin-left:500px">玩家: </div>  <div th:text="${ratObj.playerName}" style="float: left; margin-left:10px"></div>
+    <div style="float: left; font-weight:bold;margin-left:250px">玩家: </div>  <div th:text="${ratObj.playerName}" style="float: left; margin-left:10px"></div>
+    <div style="float: left; font-weight:bold;margin-left:250px">房间号: </div>  <div th:text="${roomObj.code}" style="float: left; margin-left:10px"></div>
 
     <br><p style="margin-top: 10px;color: crimson">目标: 努力使你的被动收入高于你的总支出，跳出老鼠圈，进入快车道<p/>
     <div style="font-weight: bold; font-size: 20px; color: deeppink">利润表</div>
@@ -84,7 +85,7 @@
             <br>
             <div id="states" >
                 <div th:each="state, states: ${ratObj.stateCompanyDtos}">
-                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${state.totalCost}" type="text" value="650000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled>
+                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${state.totalCost}" type="text" value="650000" style="color: red; margin-left: 40px; font-size: 10px; width: 50px" disabled>
                 </div>
             </div>
             <input type="button" value="点击新增" id="stateBtn" onclick="addState()">
@@ -109,9 +110,19 @@
 
             <br>
             <div style="font-size: 15px">银行贷款:</div>
-            <div id="bankLoan">
+            <div id="bank">
                 <div style="font-size: 13px; color: red">当前借款: <input th:value="${ratObj.bankLoan}" type="text" value="20000" style="color: red; margin-left: 50px; font-size: 10px; width: 50px" disabled></div>
             </div>
+            <select id="bankLoan">
+                <option value="0">--请选择--</option>
+                <option value="1000">1000</option>
+                <option value="2000">2000</option>
+                <option value="3000">3000</option>
+                <option value="4000">4000</option>
+                <option value="5000">5000</option>
+                <option value="6000">6000</option>
+            </select>
+            <input type="button" id="bankBtn" value="点击借款" onclick="addBank()">
         </div>
     </div><br>
         <input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">
@@ -125,25 +136,35 @@
             var input1 = document.createElement('input');
             input1.setAttribute('type', 'text');
             input1.setAttribute('name', 'stockName');
-            input1.setAttribute('style','color: red; font-size: 10px; width: 30px')
+            input1.setAttribute('style','color: red; font-size: 10px; width: 45px')
 
             var input2 = document.createElement('input');
             input2.setAttribute('type', 'text');
             input2.setAttribute('name', 'stockNum');
-            input2.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 30px')
+            input2.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
             var input3 = document.createElement('input');
             input3.setAttribute('type', 'text');
             input3.setAttribute('name', 'stockValue');
-            input3.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 30px')
-            var stocks = document.getElementById("stocks");
+            input3.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
+            var input4 = document.createElement('input');
+            input4.setAttribute('type', 'text');
+            input4.setAttribute('name', 'interest');
+            input4.setAttribute('placeHolder', '请输入分红');
+            input4.setAttribute('style','color: red; margin-left: 65px; font-size: 13px; width: 100px; font-weight: bold')
+
+            var stocks = document.getElementById("stocks");
             stocks.insertBefore(input1,null);
             stocks.insertBefore(input2,null);
             stocks.insertBefore(input3,null);
+            stocks.insertBefore(input4,null);
 
-            var btn = document.getElementById("stockBtn");
-            btn.setAttribute('disabled',true);
+            var btn1 = document.getElementById("stockBtn");
+            btn1.setAttribute('disabled',true);
+
+            var btn2 = document.getElementById("stateBtn");
+            btn2.setAttribute('disabled',true);
         }
     </script>
 
@@ -157,17 +178,24 @@
             var input2 = document.createElement('input');
             input2.setAttribute('type', 'text');
             input2.setAttribute('name', 'downPayment');
-            input2.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 50px')
+            input2.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 50px')
 
             var input3 = document.createElement('input');
             input3.setAttribute('type', 'text');
             input3.setAttribute('name', 'totalValue');
-            input3.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 50px')
-            var states = document.getElementById("states");
+            input3.setAttribute('style','color: red; margin-left: 40px; font-size: 10px; width: 50px')
 
+            var input6 = document.createElement('input');
+            input6.setAttribute('type', 'text');
+            input6.setAttribute('name', 'monthCashFlow');
+            input6.setAttribute('placeHolder', '请输入月现金流');
+            input6.setAttribute('style','color: red; margin-left: 50px; font-size: 13px; width: 100px; font-weight: bold')
+
+            var states = document.getElementById("states");
             states.insertBefore(input1,null);
             states.insertBefore(input2,null);
             states.insertBefore(input3,null);
+            states.insertBefore(input6,null);
 
             var input4 = document.createElement('input');
             input4.setAttribute('type', 'text');
@@ -183,8 +211,17 @@
             stateLoan.insertBefore(input4,null);
             stateLoan.insertBefore(input5,null);
 
-            var btn = document.getElementById("stateBtn");
-            btn.setAttribute('disabled',true);
+            var btn1 = document.getElementById("stateBtn");
+            btn1.setAttribute('disabled',true);
+
+            var btn2 = document.getElementById("stockBtn");
+            btn2.setAttribute('disabled',true);
+        }
+    </script>
+
+    <script>
+        function addBank() {
+
         }
     </script>
 </html>

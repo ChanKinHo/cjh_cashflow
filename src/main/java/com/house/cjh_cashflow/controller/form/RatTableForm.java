@@ -1,8 +1,11 @@
-package com.house.cjh_cashflow.dto;
+package com.house.cjh_cashflow.controller.form;
+
+import com.house.cjh_cashflow.dto.StateCompanyDto;
+import com.house.cjh_cashflow.dto.StockDto;
 
 import java.util.List;
 
-public class RatTableDto {
+public class RatTableForm {
 
     private long id;
 

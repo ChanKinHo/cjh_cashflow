@@ -7,6 +7,14 @@
 
     <select id="queryRooms" resultType="com.house.cjh_cashflow.dto.RoomDto">
 
-        select id, name, code, creator, created_date from room;
+        select id, name, code, creator, created_date from room
+        where 1=1
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+    </select>
+
+    <select id="insertRoom">
+        insert into room(name, code, creator, created_date) values(#{name}, #{code}, #{creator}, sysdate);
     </select>
 </mapper>

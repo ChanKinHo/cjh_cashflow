@@ -6,15 +6,18 @@ import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.service.RatTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+
 public class RatTableServiceImpl implements RatTableService {
 
     @Autowired
     RatTableDao ratTableDao;
 
     @Override
-    public RatTableDto getInitRatCareer(String career) {
+    @Transactional(rollbackFor = Exception.class)
+    public RatTableDto getInitRatCareer(String career, long playerId, String roomCode) {
         return ratTableDao.getInitRatCareer(career);
     }
 }
