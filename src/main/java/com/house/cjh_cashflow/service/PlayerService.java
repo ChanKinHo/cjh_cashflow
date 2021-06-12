@@ -4,5 +4,7 @@ import com.house.cjh_cashflow.controller.form.PlayerForm;
 
 public interface PlayerService {
 
-    long createPlayerInfo(String career, String roomCode, String playerName);
+    Long createPlayerInfo(String career, String roomCode, String playerName);
+
+    Long checkPlayerNameExist(String playerName, String roomCode);
 }

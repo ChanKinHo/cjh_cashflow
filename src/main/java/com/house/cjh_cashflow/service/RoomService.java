@@ -10,7 +10,7 @@ public interface RoomService {
 
     List<RoomDto> queryRooms();
 
-    RoomDto createRoom(String roomName, String playerName) throws ServiceException;
+    String createRoom(String roomName, String playerName) throws ServiceException;
 
     void createAndFeedBack(String roomName, String playerName, String career, ModelMap map) throws ServiceException;
 }

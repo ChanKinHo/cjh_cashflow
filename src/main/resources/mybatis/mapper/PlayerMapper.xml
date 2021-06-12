@@ -4,13 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.house.cjh_cashflow.dao.PlayerDao">
 
-    <insert id="insertPlayer">
-        insert into player(name,career,room_code) values(#{name}, #{career}, #{roomCode})
+    <insert id="insertPlayer" parameterType="com.house.cjh_cashflow.controller.form.PlayerForm">
+
+        insert into player(id, name,career,room_code,created_date) values(null,#{name}, #{career}, #{roomCode},now())
     </insert>
 
 
     <select id="selectId" resultType="java.lang.Long">
-        select id from player where name = #{name} and room_code = #{roomCode}
+        SELECT id from player where name = #{name} and room_code = #{roomCode}
     </select>
 
+    <select id="checkNameExist" resultType="java.lang.Long">
+        select 1 from player where name = #{playerName} and room_code = #{roomCode}
+    </select>
 </mapper>

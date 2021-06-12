@@ -15,6 +15,10 @@
     </select>
 
     <select id="insertRoom">
-        insert into room(name, code, creator, created_date) values(#{name}, #{code}, #{creator}, sysdate);
+        insert into room(name, code, creator, created_date) values(#{name}, #{code}, #{creator}, now());
+    </select>
+
+    <select id="checkRoomCodeExist" resultType="java.lang.Long" >
+        select 1 from room where code = #{roomCode}
     </select>
 </mapper>

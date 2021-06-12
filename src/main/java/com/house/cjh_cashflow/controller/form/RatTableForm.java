@@ -1,6 +1,6 @@
 package com.house.cjh_cashflow.controller.form;
 
-import com.house.cjh_cashflow.dto.StateCompanyDto;
+import com.house.cjh_cashflow.dto.EstateCompanyDto;
 import com.house.cjh_cashflow.dto.StockDto;
 
 import java.util.List;
@@ -75,7 +75,7 @@ public class RatTableForm {
         this.roomCode = roomCode;
     }
 
-    private List<StateCompanyDto> stateCompanyDtos;
+    private List<EstateCompanyDto> stateCompanyDtos;
 
     private List<StockDto> stockDtos;
 
@@ -91,11 +91,11 @@ public class RatTableForm {
         this.stockDtos = stockDtos;
     }
 
-    public List<StateCompanyDto> getStateCompanyDtos() {
+    public List<EstateCompanyDto> getStateCompanyDtos() {
         return stateCompanyDtos;
     }
 
-    public void setStateCompanyDtos(List<StateCompanyDto> stateCompanyDtos) {
+    public void setStateCompanyDtos(List<EstateCompanyDto> stateCompanyDtos) {
         this.stateCompanyDtos = stateCompanyDtos;
     }
 

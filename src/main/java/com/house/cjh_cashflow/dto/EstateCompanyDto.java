@@ -1,6 +1,6 @@
 package com.house.cjh_cashflow.dto;
 
-public class StateCompanyDto {
+public class EstateCompanyDto {
 
     private long id;
 
@@ -92,7 +92,7 @@ public class StateCompanyDto {
         this.createdDate = createdDate;
     }
 
-    public StateCompanyDto(String name, long monthCashFlow, long downPayment, long totalCost, long loan) {
+    public EstateCompanyDto(String name, long monthCashFlow, long downPayment, long totalCost, long loan) {
         this.name = name;
         this.monthCashFlow = monthCashFlow;
         this.downPayment = downPayment;

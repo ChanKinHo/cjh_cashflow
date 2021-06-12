@@ -32,5 +32,3 @@ CREATE TABLE cashflow.rat_table
 )ENGINE=INNODB COMMENT '老鼠表';
 
 CREATE UNIQUE INDEX rat_table_palyer_id_uidx ON cashflow.rat_table(player_id);
-
-alter TABLE rat_table add COLUMN room_code VARCHAR(50) COMMENT '房间号码';

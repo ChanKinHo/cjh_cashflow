@@ -72,7 +72,7 @@ public class RatTableDto {
         this.roomCode = roomCode;
     }
 
-    private List<StateCompanyDto> stateCompanyDtos;
+    private List<EstateCompanyDto> estateCompanyDtos;
 
     private List<StockDto> stockDtos;
 
@@ -88,12 +88,12 @@ public class RatTableDto {
         this.stockDtos = stockDtos;
     }
 
-    public List<StateCompanyDto> getStateCompanyDtos() {
-        return stateCompanyDtos;
+    public List<EstateCompanyDto> getEstateCompanyDtos() {
+        return estateCompanyDtos;
     }
 
-    public void setStateCompanyDtos(List<StateCompanyDto> stateCompanyDtos) {
-        this.stateCompanyDtos = stateCompanyDtos;
+    public void setEstateCompanyDtos(List<EstateCompanyDto> estateCompanyDtos) {
+        this.estateCompanyDtos = estateCompanyDtos;
     }
 
     public String getPlayerName() {

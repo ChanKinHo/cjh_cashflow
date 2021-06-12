@@ -51,11 +51,11 @@ public class RoomController {
             roomService.createAndFeedBack(roomName, playerName, career, map);
         } catch (ServiceException se) {
             map.addAttribute("msg", se.getMsg());
-            return "error";
+            return "createRoomError";
         } catch (Exception e) {
             map.addAttribute("msg", RespConstant.SYSTEM_FAIL_CODE_MSG);
             logger.error("RoomController createRoom err ",e);
-            return "error";
+            return "createRoomError";
         }
 
         return "ratTable";

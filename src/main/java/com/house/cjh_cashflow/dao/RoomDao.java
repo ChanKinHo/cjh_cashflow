@@ -12,4 +12,7 @@ public interface RoomDao {
     List<RoomDto> queryRooms(RoomForm roomForm);
 
     void insertRoom(RoomForm roomForm);
+
+    Long checkRoomCodeExist(String roomCode);
+
 }

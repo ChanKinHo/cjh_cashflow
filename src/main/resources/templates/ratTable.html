@@ -10,7 +10,7 @@
 
     <div style="float: left; font-weight:bold">职业: </div> <div th:text="${ratObj.careerName}" style="float: left; margin-left:10px"></div>
     <div style="float: left; font-weight:bold;margin-left:250px">玩家: </div>  <div th:text="${ratObj.playerName}" style="float: left; margin-left:10px"></div>
-    <div style="float: left; font-weight:bold;margin-left:250px">房间号: </div>  <div th:text="${roomObj.code}" style="float: left; margin-left:10px"></div>
+    <div style="float: left; font-weight:bold;margin-left:250px">房间号: </div>  <div th:text="${ratObj.roomCode}" style="float: left; margin-left:10px"></div>
 
     <br><p style="margin-top: 10px;color: crimson">目标: 努力使你的被动收入高于你的总支出，跳出老鼠圈，进入快车道<p/>
     <div style="font-weight: bold; font-size: 20px; color: deeppink">利润表</div>
@@ -30,9 +30,9 @@
 
         <div>房地产/企业</div>
         <div>
-            <div th:each="state, states: ${ratObj.stateCompanyDtos}">
+            <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
                 <!--<div th:text="${state.name}+'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'+${state.monthCashFlow}" style="font-size: 10px; color: red">xxx企业: <input th:value="${state.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled></div>-->
-                <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
+                <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
 
             </div>
         </div>
@@ -83,12 +83,12 @@
             <div style="float: left; margin-left: 50px; font-size: 15px">首付:</div>
             <div style="float: left; margin-left: 50px; font-size: 15px">价值(套):</div>
             <br>
-            <div id="states" >
-                <div th:each="state, states: ${ratObj.stateCompanyDtos}">
-                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${state.totalCost}" type="text" value="650000" style="color: red; margin-left: 40px; font-size: 10px; width: 50px" disabled>
+            <div id="estates" >
+                <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
+                    <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${estate.totalCost}" type="text" value="650000" style="color: red; margin-left: 40px; font-size: 10px; width: 50px" disabled>
                 </div>
             </div>
-            <input type="button" value="点击新增" id="stateBtn" onclick="addState()">
+            <input type="button" value="点击新增" id="estateBtn" onclick="addState()">
         </div>
         <br>
         <div style="float: left">
@@ -102,9 +102,9 @@
             <div style="float: left; font-size: 15px">房产/企业:</div>
             <div style="float: left; margin-left: 150px; font-size: 15px">抵押/贷款:</div>
             <br>
-            <div id="stateLoan">
-                <div th:each="state, states: ${ratObj.stateCompanyDtos}">
-                    <input th:value="${state.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${state.loan}" type="text" value="20000" style="color: red; margin-left: 150px; font-size: 10px; width: 50px" disabled>
+            <div id="estateLoan">
+                <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
+                    <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.loan}" type="text" value="20000" style="color: red; margin-left: 150px; font-size: 10px; width: 50px" disabled>
                 </div>
             </div>
 
@@ -125,7 +125,11 @@
             <input type="button" id="bankBtn" value="点击借款" onclick="addBank()">
         </div>
     </div><br>
+        <input th:value="${ratObj.roomCode}" id="roomCode" type="hidden">
+        <input th:value="${ratObj.playerId}" id="playerId" type="hidden">
+        <input th:value="${ratObj.id}" id="ratId" type="hidden">
         <input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">
+
     </form>
 
 
@@ -163,7 +167,7 @@
             var btn1 = document.getElementById("stockBtn");
             btn1.setAttribute('disabled',true);
 
-            var btn2 = document.getElementById("stateBtn");
+            var btn2 = document.getElementById("estateBtn");
             btn2.setAttribute('disabled',true);
         }
     </script>
@@ -172,7 +176,7 @@
         function addState(){
             var input1 = document.createElement('input');
             input1.setAttribute('type', 'text');
-            input1.setAttribute('name', 'stateName');
+            input1.setAttribute('name', 'estateName');
             input1.setAttribute('style','color: red; font-size: 10px; width: 50px')
 
             var input2 = document.createElement('input');
@@ -191,7 +195,7 @@
             input6.setAttribute('placeHolder', '请输入月现金流');
             input6.setAttribute('style','color: red; margin-left: 50px; font-size: 13px; width: 100px; font-weight: bold')
 
-            var states = document.getElementById("states");
+            var states = document.getElementById("estates");
             states.insertBefore(input1,null);
             states.insertBefore(input2,null);
             states.insertBefore(input3,null);
@@ -205,13 +209,13 @@
 
             var input5 = document.createElement('input');
             input5.setAttribute('type', 'text');
-            input5.setAttribute('name', 'stateLoan');
+            input5.setAttribute('name', 'estateLoan');
             input5.setAttribute('style','color: red; margin-left: 150px; font-size: 10px; width: 50px')
-            var stateLoan = document.getElementById("stateLoan");
+            var stateLoan = document.getElementById("estateLoan");
             stateLoan.insertBefore(input4,null);
             stateLoan.insertBefore(input5,null);
 
-            var btn1 = document.getElementById("stateBtn");
+            var btn1 = document.getElementById("estateBtn");
             btn1.setAttribute('disabled',true);
 
             var btn2 = document.getElementById("stockBtn");

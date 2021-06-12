@@ -15,7 +15,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public long createPlayerInfo(String career, String roomCode, String playerName) {
+    public Long createPlayerInfo(String career, String roomCode, String playerName) {
 
         PlayerForm form = new PlayerForm();
         form.setCareer(career);
@@ -25,5 +25,12 @@ public class PlayerServiceImpl implements PlayerService {
         playerDao.insertPlayer(form);
 
         return playerDao.selectId(form);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long checkPlayerNameExist(String playerName, String roomCode) {
+
+        return playerDao.checkNameExist(playerName, roomCode);
     }
 }
