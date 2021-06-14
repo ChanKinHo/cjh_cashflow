@@ -20,7 +20,7 @@
         <div>----------------------------------------------</div>
         <div style="float: left; color: blue">项目</div><div style="margin-left: 250px; float: left; color: blue">现金流</div>
 
-        <br><div style="float: left;margin-top: 11px">工资: </div><input th:value="${ratObj.salary}" type="text" value="0" disabled style="margin-left:250px; margin-top: 10px; width: 50px"/>
+        <br><div style="float: left;margin-top: 11px">工资: </div><input id="salary" th:value="${ratObj.salary}" type="text" value="0" disabled style="margin-left:250px; margin-top: 10px; width: 50px"/>
         <div>利息/分红</div>
         <div>
             <div th:each="stock,stocks: ${ratObj.stockDtos}">
@@ -51,16 +51,16 @@
     </div>
 
     <div style="float: left">
-        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 50px">被动收入(美元): <input th:value="${ratObj.passiveIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
-        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 60px">总收入(美元): <input th:value="${ratObj.totalIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 50px">被动收入(美元): <input id="passiveIncome" th:value="${ratObj.passiveIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 60px">总收入(美元): <input id="totalIncome" th:value="${ratObj.totalIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
         <div style="margin-left: 50px; margin-top: 20px">----------------------------------</div>
         <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 30px; color: blue">孩子个数: <input th:value="${ratObj.childCount}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 30px"></div>
         <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 20px; color: blue">每个孩子支出(美元): <input th:value="${ratObj.payPerChild}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 10px"></div>
         <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 30px">总支出(美元): <input th:value="${ratObj.totalPay}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
-        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 35px">月现金流(美元): <input th:value="${ratObj.monthCashFlow}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 70px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 35px">月现金流(美元): <input id="totalCashFlow" th:value="${ratObj.monthCashFlow}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 70px"></div>
     </div>
 
-    <form action="/room/testAdd" method="post">
+    <!--<form action="/room/testAdd" method="post">-->
     <div style="float: left; margin-left: 80px">
         <div style="font-weight: bold; font-size: 20px; color: deeppink">资产负债表</div>
         <div style="float: left">
@@ -74,7 +74,7 @@
             <div id="stocks">
                 <div th:each="stock, stocks: ${ratObj.stockDtos}">
                     <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${stock.totalCount}" type="text" value="500" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled><input th:value="${stock.perCost}" type="text" value="5" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled>
-                </div>
+                </div><input onclick="requestStock()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
             </div>
             <input type="button" value="点击新增" id="stockBtn" onclick="addStock()">
             <br>
@@ -128,33 +128,114 @@
         <input th:value="${ratObj.roomCode}" id="roomCode" type="hidden">
         <input th:value="${ratObj.playerId}" id="playerId" type="hidden">
         <input th:value="${ratObj.id}" id="ratId" type="hidden">
-        <input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">
+        <!--<input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">-->
 
-    </form>
+    <!--</form>-->
 
 
 </body>
+
+    <script>
+        function requestStock() {
+            var $stockName = $("#stockName");
+            var stockName = $stockName.val();
+            console.log(stockName);
+
+            var $stockNum = $("#stockNum");
+            var stockNum = $stockNum.val();
+
+            var $stockValue = $("#stockValue");
+            var stockValue = $stockValue.val();
+
+            if (stockName === undefined || stockName === '' || stockNum === undefined || stockNum === ''
+                || stockValue === undefined || stockValue === '') {
+                alert("股票名称、股数、每股价值不能为空");
+                return;
+            }
+
+            // var regPos = /^-?\\d+$/;
+            var $interest = $("#interest");
+            var interest = $interest.val();
+            var interestNum = parseInt(interest);
+
+            // console.log(regPos.test(stockNum) + ", " + regPos.test(stockValue)  + "," + regPos.test(interestNum))
+            // if (!regPos.test(stockNum) || !regPos.test(stockValue) || !regPos.test(interestNum)) {
+            //     alert("股数、每股价值、分红必须输入整数");
+            //     return;
+            // }
+
+            var $passiveIncome = $("#passiveIncome");
+            var $totalIncome = $("#totalIncome");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var passiveIncome = $passiveIncome.val();
+            var totalIncome = $totalIncome.val();
+            var totalCashFlow = $totalCashFlow.val();
+
+            var propertyBody = {"passiveIncome":passiveIncome, "totalIncome":totalIncome
+                                , "monthCashFlow":totalCashFlow, "property":{"stockName":stockName
+                                ,"stockNum":stockNum, "stockValue":stockValue, "interest":interest}};
+
+            $.ajax({
+                url: "/test/addStock",
+                type: "POST",
+                async: true,
+                data: propertyBody,
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+
+                    code = result.respCode;
+                    msg = result.respMsg;
+
+                    alert(code + ", " + msg);
+
+                    stockObj = result.data;
+                    var info = "<input value = " + stockObj.name + " style=\"color: red; width: 35px; height: 11px; font-size: 10px\" value=\"0\" disabled> <input value = " + stockObj.totalCount +"  type=\"text\" value=\"500\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled><input value ="+ stockObj.perCost + "  type=\"text\" value=\"5\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled>"
+
+                    $("#stocks").html(info)
+                }
+
+            });
+
+
+
+            $passiveIncome.attr('value', interestNum + parseInt(passiveIncome));
+            $totalIncome.attr('value', interestNum + parseInt(totalIncome));
+            $totalCashFlow.attr('value', interestNum + parseInt(totalCashFlow));
+
+            $stockName.remove();
+            $stockNum.remove();
+            $stockValue.remove();
+        }
+
+    </script>
 
     <script type="text/javascript">
         function addStock(){
             var input1 = document.createElement('input');
             input1.setAttribute('type', 'text');
             input1.setAttribute('name', 'stockName');
+            input1.setAttribute('id', 'stockName');
             input1.setAttribute('style','color: red; font-size: 10px; width: 45px')
 
             var input2 = document.createElement('input');
             input2.setAttribute('type', 'text');
             input2.setAttribute('name', 'stockNum');
+            input2.setAttribute('id', 'stockNum');
             input2.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
             var input3 = document.createElement('input');
             input3.setAttribute('type', 'text');
             input3.setAttribute('name', 'stockValue');
+            input3.setAttribute('id', 'stockValue');
             input3.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
             var input4 = document.createElement('input');
             input4.setAttribute('type', 'text');
+            input4.setAttribute('value','0');
             input4.setAttribute('name', 'interest');
+            input4.setAttribute('id', 'interest');
             input4.setAttribute('placeHolder', '请输入分红');
             input4.setAttribute('style','color: red; margin-left: 65px; font-size: 13px; width: 100px; font-weight: bold')
 
@@ -228,4 +309,12 @@
 
         }
     </script>
+
+
+    <script>
+        function addSum() {
+            var salary = parseInt($("#salary").val()) + 1000;
+            $("#salary").attr('value', salary);
+        }
+</script>
 </html>

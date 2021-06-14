@@ -35,6 +35,24 @@
     </insert>
 
     <select id="selectId" resultType="java.lang.Long">
-        select id from rat_table where player_id = #{playerId} and room_code = ,#{roomCode}
+        select id from rat_table where player_id = #{playerId} and room_code = #{roomCode}
+    </select>
+
+    <select id="selectRatById" resultType="com.house.cjh_cashflow.dto.RatTableDto">
+        select
+        <include refid="select"/>
+        from rat_table where id = #{ratId}
+        and room_code = #{roomCode}
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
+    </select>
+
+    <select id="selectEstateCompanyList" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">
+        select
+        id, rat_table_id, name, down_payment, total_cost
+        ,loan ,month_cash_flow
+        from estate_company
+        where rat_table_id = #{ratId} and room_code = #{roomCode}
     </select>
 </mapper>

@@ -6,6 +6,8 @@ public class StockDto {
 
     private int ratTableId;
 
+    private String roomCode;
+
     private String name;
 
     private long interest;
@@ -15,6 +17,14 @@ public class StockDto {
     private long perCost;
 
     private String createdDate;
+
+    public String getRoomCode() {
+        return roomCode;
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
 
     public long getId() {
         return id;

@@ -6,6 +6,8 @@ public class EstateCompanyDto {
 
     private int ratTableId;
 
+    private String roomCode;
+
     private String name;
 
     private long monthCashFlow;
@@ -19,6 +21,14 @@ public class EstateCompanyDto {
     private String type;
 
     private String createdDate;
+
+    public String getRoomCode() {
+        return roomCode;
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
 
     public long getId() {
         return id;

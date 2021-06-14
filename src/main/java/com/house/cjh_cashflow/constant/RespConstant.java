@@ -10,4 +10,10 @@ public class RespConstant {
 
     public static final String PLAYER_NAME_EXISTS_CODE = "200202";
     public static final String PLAYER_NAME_EXISTS_MSG = "同一房间玩家名称不得重复";
+
+    public static final String MUST_PARAM_NONE_CODE = "300512";
+    public static final String MUST_PARAM_NONE_MSG = "房间号或玩家id或老鼠表id为空";
+
+    public static final String NO_PROPERTY_PARAM_CODE = "300513";
+    public static final String NO_PROPERTY_PARAM_MSG = "资产必要参数没有传入";
 }

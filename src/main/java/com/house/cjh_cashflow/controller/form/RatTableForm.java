@@ -67,6 +67,16 @@ public class RatTableForm {
 
     private long bankStore;
 
+    private PropertyForm property;
+
+    public PropertyForm getProperty() {
+        return property;
+    }
+
+    public void setProperty(PropertyForm property) {
+        this.property = property;
+    }
+
     public String getRoomCode() {
         return roomCode;
     }
