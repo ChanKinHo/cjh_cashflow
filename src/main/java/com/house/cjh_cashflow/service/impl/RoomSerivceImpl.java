@@ -54,7 +54,6 @@ public class RoomSerivceImpl implements RoomService {
         //查询表中有无重复房间号
         Long count = roomDao.checkRoomCodeExist(roomCode);
 
-        System.out.println("胜多负少的：" + count);
 
         if (count != null && count > 0) {
             throw new ServiceException(RespConstant.ROOM_NUM_EXISTS_CODE,RespConstant.ROOM_NUM_EXISTS_MSG);
@@ -79,6 +78,8 @@ public class RoomSerivceImpl implements RoomService {
         //生成玩家信息
         Long playerId = playerService.createPlayerInfo(career,roomCode,playerName);
 
+        System.out.println("生成的玩家id ： " + playerId);
+
         //获取初始老鼠表并生成玩家老鼠表
         RatTableDto ratTableDto = ratTableService.getInitRatCareer(career, playerId, roomCode);
         ratTableDto.setRoomCode(roomCode);
@@ -89,8 +90,11 @@ public class RoomSerivceImpl implements RoomService {
         RatTableForm ratTableForm = new RatTableForm();
         BeanUtils.copyProperties(ratTableDto, ratTableForm);
 
+
         //生成玩家老鼠表
         Long ratId = ratTableService.insertRat(ratTableForm);
+
+        System.out.println("生成的id：" + ratId);
 
         ratTableDto.setId(ratId);
         map.addAttribute("ratObj", ratTableDto);

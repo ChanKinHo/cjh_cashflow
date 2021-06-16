@@ -8,12 +8,23 @@ public class BaseVo<T> {
 
     private T data;
 
+    public static BaseVo succ(){
+        return succ(null);
+    }
+
     public static BaseVo succ(Object data){
 
         BaseVo<Object> baseVo = new BaseVo<Object>();
-        baseVo.setRespCode("000000");
-        baseVo.setRespMsg("成功");
+        baseVo.setRespCode(RespConstant.SYSTEM_SUCCESS_CODE);
+        baseVo.setRespMsg(RespConstant.SYSTEM_SUCCESS_MSG);
         baseVo.setData(data);
+        return baseVo;
+    }
+
+    public static BaseVo fail(String code, String msg) {
+        BaseVo baseVo = new BaseVo();
+        baseVo.setRespCode(code);
+        baseVo.setRespMsg(msg);
         return baseVo;
     }
 

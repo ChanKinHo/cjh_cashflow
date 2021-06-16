@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.house.cjh_cashflow.dao.PlayerDao">
 
-    <insert id="insertPlayer" parameterType="com.house.cjh_cashflow.controller.form.PlayerForm">
+    <insert id="insertPlayer" parameterType="com.house.cjh_cashflow.controller.form.PlayerForm" useGeneratedKeys="true" keyProperty="id">
 
         insert into player(id, name,career,room_code,created_date) values(null,#{name}, #{career}, #{roomCode},now())
     </insert>

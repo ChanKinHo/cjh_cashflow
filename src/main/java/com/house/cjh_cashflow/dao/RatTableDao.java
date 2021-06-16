@@ -20,7 +20,5 @@ public interface RatTableDao {
 
     RatTableDto selectRatById(@Param(value = "ratId") String ratId, @Param(value = "roomCode")String roomCode, @Param(value = "playerId")String playerId);
 
-    List<EstateCompanyDto> selectEstateCompanyList(@Param(value = "ratId")String ratId, @Param(value = "roomCode")String roomCode);
-
-    void insertStockItem(PropertyForm form);
+    void updateRatSummary(RatTableForm form);
 }

@@ -24,7 +24,8 @@ public class PlayerServiceImpl implements PlayerService {
         form.setRoomCode(roomCode);
         playerDao.insertPlayer(form);
 
-        return playerDao.selectId(form);
+        return form.getId();
+
     }
 
     @Override

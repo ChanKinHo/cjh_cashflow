@@ -19,7 +19,7 @@
         from rat_table where is_init = '1' and career = #{career}
     </select>
 
-    <insert id="insertRat" >
+    <insert id="insertRat" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm" useGeneratedKeys="true" keyProperty="id">
         insert into rat_table(
           <include refid="select"/>
         )
@@ -48,11 +48,16 @@
         </if>
     </select>
 
-    <select id="selectEstateCompanyList" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">
-        select
-        id, rat_table_id, name, down_payment, total_cost
-        ,loan ,month_cash_flow
-        from estate_company
-        where rat_table_id = #{ratId} and room_code = #{roomCode}
-    </select>
+    <!--<select id="selectEstateCompanyList" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">-->
+        <!--select-->
+        <!--id, rat_table_id, name, down_payment, total_cost-->
+        <!--,loan ,month_cash_flow-->
+        <!--from estate_company-->
+        <!--where rat_table_id = #{ratId} and room_code = #{roomCode}-->
+    <!--</select>-->
+
+    <update id="updateRatSummary" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
+        update rat_table set passive_income = #{passiveIncome}, total_income = #{totalIncom}
+        , month_cash_flow = #{monthCashFlow} where id = #{id} and player_id = #{playerId}
+    </update>
 </mapper>

@@ -1,9 +1,10 @@
 package com.house.cjh_cashflow.service;
 
-import com.house.cjh_cashflow.controller.form.PropertyForm;
 import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dto.RatTableDto;
+import com.house.cjh_cashflow.dto.StockDto;
 import com.house.cjh_cashflow.exception.ServiceException;
+import org.springframework.stereotype.Service;
 
 public interface RatTableService {
 
@@ -11,5 +12,5 @@ public interface RatTableService {
 
     Long insertRat(RatTableForm ratTableForm);
 
-    RatTableDto addProperties(PropertyForm form) throws ServiceException;
+    StockDto addStock(RatTableForm form) throws ServiceException;
 }

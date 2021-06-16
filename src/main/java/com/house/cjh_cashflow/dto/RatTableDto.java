@@ -4,7 +4,7 @@ import java.util.List;
 
 public class RatTableDto {
 
-    private long id;
+    private Long id;
 
     private String career;
 
@@ -12,7 +12,7 @@ public class RatTableDto {
 
     private String careerName;
 
-    private long playerId;
+    private Long playerId;
 
     private String playerName;
 
@@ -80,35 +80,11 @@ public class RatTableDto {
 
     private String updatedDate;
 
-    public List<StockDto> getStockDtos() {
-        return stockDtos;
-    }
-
-    public void setStockDtos(List<StockDto> stockDtos) {
-        this.stockDtos = stockDtos;
-    }
-
-    public List<EstateCompanyDto> getEstateCompanyDtos() {
-        return estateCompanyDtos;
-    }
-
-    public void setEstateCompanyDtos(List<EstateCompanyDto> estateCompanyDtos) {
-        this.estateCompanyDtos = estateCompanyDtos;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -128,12 +104,20 @@ public class RatTableDto {
         this.careerName = careerName;
     }
 
-    public long getPlayerId() {
+    public Long getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(long playerId) {
+    public void setPlayerId(Long playerId) {
         this.playerId = playerId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public String getIsInit() {
@@ -326,6 +310,22 @@ public class RatTableDto {
 
     public void setBankStore(long bankStore) {
         this.bankStore = bankStore;
+    }
+
+    public List<EstateCompanyDto> getEstateCompanyDtos() {
+        return estateCompanyDtos;
+    }
+
+    public void setEstateCompanyDtos(List<EstateCompanyDto> estateCompanyDtos) {
+        this.estateCompanyDtos = estateCompanyDtos;
+    }
+
+    public List<StockDto> getStockDtos() {
+        return stockDtos;
+    }
+
+    public void setStockDtos(List<StockDto> stockDtos) {
+        this.stockDtos = stockDtos;
     }
 
     public String getCreatedDate() {

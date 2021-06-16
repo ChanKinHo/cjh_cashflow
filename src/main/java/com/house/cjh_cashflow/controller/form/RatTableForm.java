@@ -1,13 +1,8 @@
 package com.house.cjh_cashflow.controller.form;
 
-import com.house.cjh_cashflow.dto.EstateCompanyDto;
-import com.house.cjh_cashflow.dto.StockDto;
-
-import java.util.List;
-
 public class RatTableForm {
 
-    private long id;
+    private Long id;
 
     private String career;
 
@@ -15,7 +10,7 @@ public class RatTableForm {
 
     private String careerName;
 
-    private long playerId;
+    private Long playerId;
 
     private String playerName;
 
@@ -69,59 +64,11 @@ public class RatTableForm {
 
     private PropertyForm property;
 
-    public PropertyForm getProperty() {
-        return property;
-    }
-
-    public void setProperty(PropertyForm property) {
-        this.property = property;
-    }
-
-    public String getRoomCode() {
-        return roomCode;
-    }
-
-    public void setRoomCode(String roomCode) {
-        this.roomCode = roomCode;
-    }
-
-    private List<EstateCompanyDto> stateCompanyDtos;
-
-    private List<StockDto> stockDtos;
-
-    private String createdDate;
-
-    private String updatedDate;
-
-    public List<StockDto> getStockDtos() {
-        return stockDtos;
-    }
-
-    public void setStockDtos(List<StockDto> stockDtos) {
-        this.stockDtos = stockDtos;
-    }
-
-    public List<EstateCompanyDto> getStateCompanyDtos() {
-        return stateCompanyDtos;
-    }
-
-    public void setStateCompanyDtos(List<EstateCompanyDto> stateCompanyDtos) {
-        this.stateCompanyDtos = stateCompanyDtos;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -133,6 +80,14 @@ public class RatTableForm {
         this.career = career;
     }
 
+    public String getRoomCode() {
+        return roomCode;
+    }
+
+    public void setRoomCode(String roomCode) {
+        this.roomCode = roomCode;
+    }
+
     public String getCareerName() {
         return careerName;
     }
@@ -141,12 +96,20 @@ public class RatTableForm {
         this.careerName = careerName;
     }
 
-    public long getPlayerId() {
+    public Long getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(long playerId) {
+    public void setPlayerId(Long playerId) {
         this.playerId = playerId;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public String getIsInit() {
@@ -341,19 +304,11 @@ public class RatTableForm {
         this.bankStore = bankStore;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public PropertyForm getProperty() {
+        return property;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(String updatedDate) {
-        this.updatedDate = updatedDate;
+    public void setProperty(PropertyForm property) {
+        this.property = property;
     }
 }

@@ -2,6 +2,10 @@ package com.house.cjh_cashflow.constant;
 
 public class RespConstant {
 
+    public static final String SYSTEM_SUCCESS_CODE = "000000";
+    public static final String SYSTEM_SUCCESS_MSG = "成功";
+
+
     public static final String ROOM_NUM_EXISTS_CODE = "200201";
     public static final String ROOM_NUM_EXISTS_MSG = "房间号重复，请重新创建房间";
 
@@ -16,4 +20,7 @@ public class RespConstant {
 
     public static final String NO_PROPERTY_PARAM_CODE = "300513";
     public static final String NO_PROPERTY_PARAM_MSG = "资产必要参数没有传入";
+
+    public static final String MUST_WHOLE_NUM_CODE = "500001";
+    public static final String MUST_WHOLE_NUM_MSG = "资产相关参数必须为整数";
 }

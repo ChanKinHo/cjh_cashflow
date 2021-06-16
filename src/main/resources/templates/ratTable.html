@@ -74,9 +74,10 @@
             <div id="stocks">
                 <div th:each="stock, stocks: ${ratObj.stockDtos}">
                     <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${stock.totalCount}" type="text" value="500" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled><input th:value="${stock.perCost}" type="text" value="5" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled>
-                </div><input onclick="requestStock()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
+                </div>
             </div>
             <input type="button" value="点击新增" id="stockBtn" onclick="addStock()">
+            <input onclick="requestStock()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
             <br>
             <br>
             <div style="float: left; font-size: 15px">房产/企业:</div>
@@ -153,56 +154,58 @@
                 return;
             }
 
-            // var regPos = /^-?\\d+$/;
             var $interest = $("#interest");
             var interest = $interest.val();
             var interestNum = parseInt(interest);
 
-            // console.log(regPos.test(stockNum) + ", " + regPos.test(stockValue)  + "," + regPos.test(interestNum))
-            // if (!regPos.test(stockNum) || !regPos.test(stockValue) || !regPos.test(interestNum)) {
-            //     alert("股数、每股价值、分红必须输入整数");
-            //     return;
-            // }
 
             var $passiveIncome = $("#passiveIncome");
             var $totalIncome = $("#totalIncome");
             var $totalCashFlow = $("#totalCashFlow");
 
-            var passiveIncome = $passiveIncome.val();
-            var totalIncome = $totalIncome.val();
-            var totalCashFlow = $totalCashFlow.val();
+            var passiveIncome = interestNum + parseInt($passiveIncome.val());
+            var totalIncome = interestNum + parseInt($totalIncome.val());
+            var totalCashFlow = interestNum + parseInt($totalCashFlow.val());
 
-            var propertyBody = {"passiveIncome":passiveIncome, "totalIncome":totalIncome
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var propertyBody = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                                "passiveIncome":passiveIncome, "totalIncome":totalIncome
                                 , "monthCashFlow":totalCashFlow, "property":{"stockName":stockName
                                 ,"stockNum":stockNum, "stockValue":stockValue, "interest":interest}};
 
+
+
             $.ajax({
-                url: "/test/addStock",
+                url: "/rat/addStock",
                 type: "POST",
-                async: true,
-                data: propertyBody,
+                async: false,
+                contentType: "application/json",
+                data: JSON.stringify(propertyBody),
                 dataType: 'json',
                 success: function (result) {
                     console.log(result);
 
-                    code = result.respCode;
-                    msg = result.respMsg;
-
-                    alert(code + ", " + msg);
-
-                    stockObj = result.data;
-                    var info = "<input value = " + stockObj.name + " style=\"color: red; width: 35px; height: 11px; font-size: 10px\" value=\"0\" disabled> <input value = " + stockObj.totalCount +"  type=\"text\" value=\"500\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled><input value ="+ stockObj.perCost + "  type=\"text\" value=\"5\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled>"
-
-                    $("#stocks").html(info)
+                    // code = result.respCode;
+                    // msg = result.respMsg;
+                    //
+                    // alert(code + ", " + msg);
+                    //
+                    // stockObj = result.data;
+                    // var info = "<input value = " + stockObj.name + " style=\"color: red; width: 35px; height: 11px; font-size: 10px\" value=\"0\" disabled> <input value = " + stockObj.totalCount +"  type=\"text\" value=\"500\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled><input value ="+ stockObj.perCost + "  type=\"text\" value=\"5\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled>"
+                    //
+                    // $("#stocks").html(info)
                 }
 
             });
 
 
 
-            $passiveIncome.attr('value', interestNum + parseInt(passiveIncome));
-            $totalIncome.attr('value', interestNum + parseInt(totalIncome));
-            $totalCashFlow.attr('value', interestNum + parseInt(totalCashFlow));
+            $passiveIncome.attr('value', passiveIncome);
+            $totalIncome.attr('value', totalIncome);
+            $totalCashFlow.attr('value', totalCashFlow);
 
             $stockName.remove();
             $stockNum.remove();
