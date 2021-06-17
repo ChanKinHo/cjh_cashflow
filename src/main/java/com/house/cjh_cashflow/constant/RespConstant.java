@@ -23,4 +23,10 @@ public class RespConstant {
 
     public static final String MUST_WHOLE_NUM_CODE = "500001";
     public static final String MUST_WHOLE_NUM_MSG = "资产相关参数必须为整数";
+
+    public static final String PARAM_TOO_LONG_CODE = "500002";
+    public static final String PARAM_TOO_LONG_MSG = "输入玩家名称或房间名不能超过10个字";
+
+    public static final String FIND_RAT_PARAM_CODE = "500003";
+    public static final String FIND_RAT_PARAM_MSG = "房间号或玩家名称且玩家id为空";
 }

@@ -12,13 +12,15 @@ import java.util.List;
 @Mapper
 public interface RatTableDao {
 
-    RatTableDto getInitRatCareer(@Param(value = "career") String career);
+    RatTableForm getInitRatCareer(@Param(value = "career") String career);
 
     void insertRat(RatTableForm ratTableForm);
 
     Long selectId(RatTableForm ratTableForm);
 
-    RatTableDto selectRatById(@Param(value = "ratId") String ratId, @Param(value = "roomCode")String roomCode, @Param(value = "playerId")String playerId);
+    RatTableDto selectRatBySome(@Param(value = "ratId") String ratId, @Param(value = "roomCode")String roomCode,
+                                @Param(value = "playerId")String playerId,
+                                @Param(value = "playerName") String playerName);
 
     void updateRatSummary(RatTableForm form);
 }

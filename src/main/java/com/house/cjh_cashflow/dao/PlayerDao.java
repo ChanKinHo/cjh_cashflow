@@ -8,7 +8,5 @@ import org.apache.ibatis.annotations.Param;
 public interface PlayerDao {
     void insertPlayer(PlayerForm form);
 
-    Long selectId(PlayerForm form);
-
     Long checkNameExist(@Param(value = "playerName") String playerName, @Param(value = "roomCode") String roomCode);
 }

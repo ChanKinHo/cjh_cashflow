@@ -6,13 +6,11 @@
 
     <insert id="insertPlayer" parameterType="com.house.cjh_cashflow.controller.form.PlayerForm" useGeneratedKeys="true" keyProperty="id">
 
-        insert into player(id, name,career,room_code,created_date) values(null,#{name}, #{career}, #{roomCode},now())
+        insert into player(id, name,career,career_name, room_code,created_date)
+        values(null,#{name}, #{career}, #{careerName}, #{roomCode},now())
     </insert>
 
 
-    <select id="selectId" resultType="java.lang.Long">
-        SELECT id from player where name = #{name} and room_code = #{roomCode}
-    </select>
 
     <select id="checkNameExist" resultType="java.lang.Long">
         select 1 from player where name = #{playerName} and room_code = #{roomCode}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.cjh_cashflow.dao.EstateCompanyDao">
+
+    <select id="findByRatId" parameterType="java.lang.Long" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">
+        select id
+        ,rat_table_id
+        ,name
+        ,down_payment
+        ,total_cost
+        ,loan
+        ,month_cash_flow
+        ,type
+        ,created_date
+        from estate_company  where rat_table_id = #{ratId}
+    </select>
+</mapper>

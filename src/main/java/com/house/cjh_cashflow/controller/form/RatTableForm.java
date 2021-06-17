@@ -16,51 +16,51 @@ public class RatTableForm {
 
     private String isInit;
 
-    private long passiveIncome;
+    private String passiveIncome;
 
-    private long totalIncome;
+    private String totalIncome;
 
-    private long totalPay;
+    private String totalPay;
 
-    private long monthCashFlow;
+    private String monthCashFlow;
 
-    private long salary;
+    private String salary;
 
-    private long payPerChild;
+    private String payPerChild;
 
-    private int childCount;
+    private String childCount;
 
-    private long taxPay;
+    private String taxPay;
 
-    private long housePay;
+    private String housePay;
 
-    private long educationPay;
+    private String educationPay;
 
-    private long carPay;
+    private String carPay;
 
-    private long creditCardPay;
+    private String creditCardPay;
 
-    private long extraPay;
+    private String extraPay;
 
-    private long otherPay;
+    private String otherPay;
 
-    private long childrenPay;
+    private String childrenPay;
 
-    private long bankPay;
+    private String bankPay;
 
-    private long houseLoan;
+    private String houseLoan;
 
-    private long educationLoan;
+    private String educationLoan;
 
-    private long carLoan;
+    private String carLoan;
 
-    private long creditCard;
+    private String creditCard;
 
-    private long extraDebt;
+    private String extraDebt;
 
-    private long bankLoan;
+    private String bankLoan;
 
-    private long bankStore;
+    private String bankStore;
 
     private PropertyForm property;
 
@@ -120,187 +120,187 @@ public class RatTableForm {
         this.isInit = isInit;
     }
 
-    public long getPassiveIncome() {
+    public String getPassiveIncome() {
         return passiveIncome;
     }
 
-    public void setPassiveIncome(long passiveIncome) {
+    public void setPassiveIncome(String passiveIncome) {
         this.passiveIncome = passiveIncome;
     }
 
-    public long getTotalIncome() {
+    public String getTotalIncome() {
         return totalIncome;
     }
 
-    public void setTotalIncome(long totalIncome) {
+    public void setTotalIncome(String totalIncome) {
         this.totalIncome = totalIncome;
     }
 
-    public long getTotalPay() {
+    public String getTotalPay() {
         return totalPay;
     }
 
-    public void setTotalPay(long totalPay) {
+    public void setTotalPay(String totalPay) {
         this.totalPay = totalPay;
     }
 
-    public long getMonthCashFlow() {
+    public String getMonthCashFlow() {
         return monthCashFlow;
     }
 
-    public void setMonthCashFlow(long monthCashFlow) {
+    public void setMonthCashFlow(String monthCashFlow) {
         this.monthCashFlow = monthCashFlow;
     }
 
-    public long getSalary() {
+    public String getSalary() {
         return salary;
     }
 
-    public void setSalary(long salary) {
+    public void setSalary(String salary) {
         this.salary = salary;
     }
 
-    public long getPayPerChild() {
+    public String getPayPerChild() {
         return payPerChild;
     }
 
-    public void setPayPerChild(long payPerChild) {
+    public void setPayPerChild(String payPerChild) {
         this.payPerChild = payPerChild;
     }
 
-    public int getChildCount() {
+    public String getChildCount() {
         return childCount;
     }
 
-    public void setChildCount(int childCount) {
+    public void setChildCount(String childCount) {
         this.childCount = childCount;
     }
 
-    public long getTaxPay() {
+    public String getTaxPay() {
         return taxPay;
     }
 
-    public void setTaxPay(long taxPay) {
+    public void setTaxPay(String taxPay) {
         this.taxPay = taxPay;
     }
 
-    public long getHousePay() {
+    public String getHousePay() {
         return housePay;
     }
 
-    public void setHousePay(long housePay) {
+    public void setHousePay(String housePay) {
         this.housePay = housePay;
     }
 
-    public long getEducationPay() {
+    public String getEducationPay() {
         return educationPay;
     }
 
-    public void setEducationPay(long educationPay) {
+    public void setEducationPay(String educationPay) {
         this.educationPay = educationPay;
     }
 
-    public long getCarPay() {
+    public String getCarPay() {
         return carPay;
     }
 
-    public void setCarPay(long carPay) {
+    public void setCarPay(String carPay) {
         this.carPay = carPay;
     }
 
-    public long getCreditCardPay() {
+    public String getCreditCardPay() {
         return creditCardPay;
     }
 
-    public void setCreditCardPay(long creditCardPay) {
+    public void setCreditCardPay(String creditCardPay) {
         this.creditCardPay = creditCardPay;
     }
 
-    public long getExtraPay() {
+    public String getExtraPay() {
         return extraPay;
     }
 
-    public void setExtraPay(long extraPay) {
+    public void setExtraPay(String extraPay) {
         this.extraPay = extraPay;
     }
 
-    public long getOtherPay() {
+    public String getOtherPay() {
         return otherPay;
     }
 
-    public void setOtherPay(long otherPay) {
+    public void setOtherPay(String otherPay) {
         this.otherPay = otherPay;
     }
 
-    public long getChildrenPay() {
+    public String getChildrenPay() {
         return childrenPay;
     }
 
-    public void setChildrenPay(long childrenPay) {
+    public void setChildrenPay(String childrenPay) {
         this.childrenPay = childrenPay;
     }
 
-    public long getBankPay() {
+    public String getBankPay() {
         return bankPay;
     }
 
-    public void setBankPay(long bankPay) {
+    public void setBankPay(String bankPay) {
         this.bankPay = bankPay;
     }
 
-    public long getHouseLoan() {
+    public String getHouseLoan() {
         return houseLoan;
     }
 
-    public void setHouseLoan(long houseLoan) {
+    public void setHouseLoan(String houseLoan) {
         this.houseLoan = houseLoan;
     }
 
-    public long getEducationLoan() {
+    public String getEducationLoan() {
         return educationLoan;
     }
 
-    public void setEducationLoan(long educationLoan) {
+    public void setEducationLoan(String educationLoan) {
         this.educationLoan = educationLoan;
     }
 
-    public long getCarLoan() {
+    public String getCarLoan() {
         return carLoan;
     }
 
-    public void setCarLoan(long carLoan) {
+    public void setCarLoan(String carLoan) {
         this.carLoan = carLoan;
     }
 
-    public long getCreditCard() {
+    public String getCreditCard() {
         return creditCard;
     }
 
-    public void setCreditCard(long creditCard) {
+    public void setCreditCard(String creditCard) {
         this.creditCard = creditCard;
     }
 
-    public long getExtraDebt() {
+    public String getExtraDebt() {
         return extraDebt;
     }
 
-    public void setExtraDebt(long extraDebt) {
+    public void setExtraDebt(String extraDebt) {
         this.extraDebt = extraDebt;
     }
 
-    public long getBankLoan() {
+    public String getBankLoan() {
         return bankLoan;
     }
 
-    public void setBankLoan(long bankLoan) {
+    public void setBankLoan(String bankLoan) {
         this.bankLoan = bankLoan;
     }
 
-    public long getBankStore() {
+    public String getBankStore() {
         return bankStore;
     }
 
-    public void setBankStore(long bankStore) {
+    public void setBankStore(String bankStore) {
         this.bankStore = bankStore;
     }
 

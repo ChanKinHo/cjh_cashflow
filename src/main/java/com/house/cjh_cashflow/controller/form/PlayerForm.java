@@ -10,7 +10,17 @@ public class PlayerForm {
 
     private String career;
 
+    private String careerName;
+
     private String isRich;
+
+    public String getCareerName() {
+        return careerName;
+    }
+
+    public void setCareerName(String careerName) {
+        this.careerName = careerName;
+    }
 
     public String getRoomCode() {
         return roomCode;

@@ -8,23 +8,23 @@ public class PropertyForm {
 
     private Long playerId;
 
-    private Long stockName;
+    private String stockName;
 
-    private Long stockNum;
+    private String stockNum;
 
-    private Long stockValue;
+    private String stockValue;
 
-    private Long interest;
+    private String interest;
 
-    private Long estateName;
+    private String estateName;
 
-    private Long downPayment;
+    private String downPayment;
 
-    private Long totalValue;
+    private String totalValue;
 
-    private Long monthCashFlow;
+    private String monthCashFlow;
 
-    private Long estateLoan;
+    private String estateLoan;
 
     public Long getRatId() {
         return ratId;
@@ -50,75 +50,75 @@ public class PropertyForm {
         this.playerId = playerId;
     }
 
-    public Long getStockName() {
+    public String getStockName() {
         return stockName;
     }
 
-    public void setStockName(Long stockName) {
+    public void setStockName(String stockName) {
         this.stockName = stockName;
     }
 
-    public Long getStockNum() {
+    public String getStockNum() {
         return stockNum;
     }
 
-    public void setStockNum(Long stockNum) {
+    public void setStockNum(String stockNum) {
         this.stockNum = stockNum;
     }
 
-    public Long getStockValue() {
+    public String getStockValue() {
         return stockValue;
     }
 
-    public void setStockValue(Long stockValue) {
+    public void setStockValue(String stockValue) {
         this.stockValue = stockValue;
     }
 
-    public Long getInterest() {
+    public String getInterest() {
         return interest;
     }
 
-    public void setInterest(Long interest) {
+    public void setInterest(String interest) {
         this.interest = interest;
     }
 
-    public Long getEstateName() {
+    public String getEstateName() {
         return estateName;
     }
 
-    public void setEstateName(Long estateName) {
+    public void setEstateName(String estateName) {
         this.estateName = estateName;
     }
 
-    public Long getDownPayment() {
+    public String getDownPayment() {
         return downPayment;
     }
 
-    public void setDownPayment(Long downPayment) {
+    public void setDownPayment(String downPayment) {
         this.downPayment = downPayment;
     }
 
-    public Long getTotalValue() {
+    public String getTotalValue() {
         return totalValue;
     }
 
-    public void setTotalValue(Long totalValue) {
+    public void setTotalValue(String totalValue) {
         this.totalValue = totalValue;
     }
 
-    public Long getMonthCashFlow() {
+    public String getMonthCashFlow() {
         return monthCashFlow;
     }
 
-    public void setMonthCashFlow(Long monthCashFlow) {
+    public void setMonthCashFlow(String monthCashFlow) {
         this.monthCashFlow = monthCashFlow;
     }
 
-    public Long getEstateLoan() {
+    public String getEstateLoan() {
         return estateLoan;
     }
 
-    public void setEstateLoan(Long estateLoan) {
+    public void setEstateLoan(String estateLoan) {
         this.estateLoan = estateLoan;
     }
 }

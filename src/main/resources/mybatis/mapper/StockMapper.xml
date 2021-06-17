@@ -8,4 +8,15 @@
         insert into stock(rat_table_id, name, total_count, per_cost, interest, created_date) values
         (#{ratId}, #{stockName}, #{stockNum}, #{stockValue}, #{interest}, now())
     </insert>
+
+    <select id="findByRatId" parameterType="java.lang.Long" resultType="com.house.cjh_cashflow.dto.StockDto">
+        select id
+        ,rat_table_id
+        ,name
+        ,total_count
+        ,per_cost
+        ,interest
+        ,created_date
+        from stock where rat_table_id = #{ratId}
+    </select>
 </mapper>

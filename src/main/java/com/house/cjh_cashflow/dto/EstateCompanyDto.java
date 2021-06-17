@@ -2,7 +2,7 @@ package com.house.cjh_cashflow.dto;
 
 public class EstateCompanyDto {
 
-    private long id;
+    private Long id;
 
     private int ratTableId;
 
@@ -30,11 +30,11 @@ public class EstateCompanyDto {
         this.roomCode = roomCode;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

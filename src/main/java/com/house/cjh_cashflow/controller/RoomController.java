@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,34 +32,37 @@ public class RoomController {
 
 
     @RequestMapping(value = "/room/create", method = RequestMethod.POST)
-    public String create(@RequestParam(value = "playerName") String playerName,
-                         @RequestParam(value = "roomName") String roomName,
-                         @RequestParam(value = "career") String career,
-                         ModelMap map) {
+    public ModelAndView create(@RequestParam(value = "playerName") String playerName,
+                               @RequestParam(value = "roomName") String roomName,
+                               @RequestParam(value = "career") String career) {
 
         logger.info("创建房间入参: playerName = " + playerName + ", roomName = " + roomName +", career = " + career);
 
+        ModelAndView mv = new ModelAndView();
         if (playerName.length() > 10 || roomName.length() > 10 ) {
-            map.addAttribute("msg", "输入玩家名称或房间名不能超过10个字");
-            return "createRoomError";
-        }
-
-        if (StringUtils.isBlank(career)) {
-            return "ratTable";
+            mv.addObject("code",RespConstant.PARAM_TOO_LONG_CODE);
+            mv.addObject("msg",RespConstant.PARAM_TOO_LONG_MSG);
+            mv.setViewName("createRoomError");
+            return mv;
         }
 
         try {
-            roomService.createAndFeedBack(roomName, playerName, career, map);
+            roomService.createAndFeedBack(roomName, playerName, career, mv);
         } catch (ServiceException se) {
-            map.addAttribute("msg", se.getMsg());
-            return "createRoomError";
+            mv.addObject("code",se.getCode());
+            mv.addObject("msg",se.getMsg());
+            mv.setViewName("createRoomError");
+            return mv;
         } catch (Exception e) {
-            map.addAttribute("msg", RespConstant.SYSTEM_FAIL_CODE_MSG);
+            mv.addObject("code",RespConstant.SYSTEM_FAIL_CODE);
+            mv.addObject("msg", RespConstant.SYSTEM_FAIL_CODE_MSG);
+            mv.setViewName("createRoomError");
             logger.error("RoomController createRoom err ",e);
-            return "createRoomError";
+            return mv;
         }
 
-        return "ratTable";
+        mv.setViewName("redirect:/rat/findExactRat");
+        return mv;
 
     }
 
