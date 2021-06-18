@@ -3,8 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <title>回到对局</title>
+
+    <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
+    <h1>输入对局信息寻找对局</h1>
+
+    <form action="/rat/findExactRat" method="get">
+        <div style="font-size: 20px">房间号: <input name="roomCode" id="roomCode" type="text" placeholder="请输入房间号" style="width: 130px; height: 21px; margin-left: 100px"></div>
+        <div style="font-size: 20px">玩家名称: <input name="playerName" type="text" placeholder="和玩家id必输一个" style="width: 130px; height: 21px; margin-left: 80px"></div>
+        <div style="font-size: 20px">玩家id: <input name="playerId" type="text" placeholder="和玩家名称必输一个" style="width: 130px; height: 21px; margin-left: 100px"></div>
+        <input type="submit" value="回到战局" style="font-size: 20px">
+    </form>
+    <br>
+    <button onclick="checkPlayers()" style="font-size: 18px; color: red">输入房间号查询玩家信息</button>
+    <table id="playerInfo" border="1" style="visibility: hidden">
+        <tr>
+            <th>玩家id</th>
+            <th>玩家名称</th>
+        </tr>
+    </table>
+
+    <button onclick="getRecentRoom()" style="font-size: 18px; color: red">查询最近的房间</button>
+    <table id="roomInfo" border="1" style="visibility: hidden">
+        <tr>
+            <th>房间名称</th>
+            <th>房间号码</th>
+        </tr>
+    </table>
 
 </body>
+    <script>
+        function checkPlayers() {
+           var roomCode = $("#roomCode").val();
+
+           if (roomCode === "" || roomCode === undefined) {
+               alert("请输入房间号, please");
+           }
+
+           var temp = "";
+           $.ajax({
+               url: "/room/findPlayers",
+               type: "GET",
+               async: false,
+               data: {"roomCode":roomCode},
+               dataType: "json",
+               success: function (result) {
+                   console.log(result);
+
+                   var playerList = result.data;
+                   for (var i = 0; i < playerList.length; i++) {
+                       temp +=
+                           "<tr>" +
+                           "<td>" + playerList[i].id +"</td>" +
+                           "<td>" + playerList[i].name +"</td>" +
+                           "</tr>";
+                   }
+                   $("#playerInfo").append(temp)
+               }
+           });
+
+           $("#playerInfo").attr("style","visibility: display");
+        }
+    </script>
+
+    <script>
+        function getRecentRoom() {
+            var temp = "";
+            $.ajax({
+                url: "/room/findRecentRooms",
+                type: "GET",
+                async: false,
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+
+                    var roomList = result.data;
+                    for (var i = 0; i < roomList.length; i++) {
+                        temp +=
+                            "<tr>" +
+                            "<td>" + roomList[i].name +"</td>" +
+                            "<td>" + roomList[i].code +"</td>" +
+                            "</tr>";
+                    }
+                    $("#roomInfo").append(temp)
+                }
+            });
+
+            $("#roomInfo").attr("style","visibility: display");
+        }
+    </script>
 </html>

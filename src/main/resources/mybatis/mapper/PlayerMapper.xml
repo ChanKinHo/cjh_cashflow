@@ -11,8 +11,18 @@
     </insert>
 
 
-
     <select id="checkNameExist" resultType="java.lang.Long">
         select 1 from player where name = #{playerName} and room_code = #{roomCode}
+    </select>
+
+    <select id="findListByRoomCode" resultType="com.house.cjh_cashflow.dto.PlayerDto">
+        select id
+          ,name
+          ,room_code
+          ,is_rich
+          ,career
+          ,career_name
+          ,created_date
+          from player where room_code = #{roomCode}
     </select>
 </mapper>

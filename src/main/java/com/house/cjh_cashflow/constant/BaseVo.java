@@ -8,13 +8,13 @@ public class BaseVo<T> {
 
     private T data;
 
-    public static BaseVo succ(){
+    public static<T> BaseVo<T> succ(){
         return succ(null);
     }
 
-    public static BaseVo succ(Object data){
+    public static<T> BaseVo<T> succ(T data){
 
-        BaseVo<Object> baseVo = new BaseVo<Object>();
+        BaseVo<T> baseVo = new BaseVo<>();
         baseVo.setRespCode(RespConstant.SYSTEM_SUCCESS_CODE);
         baseVo.setRespMsg(RespConstant.SYSTEM_SUCCESS_MSG);
         baseVo.setData(data);
@@ -28,6 +28,12 @@ public class BaseVo<T> {
         return baseVo;
     }
 
+    public static BaseVo fail() {
+        BaseVo baseVo = new BaseVo();
+        baseVo.setRespCode(RespConstant.SYSTEM_FAIL_CODE);
+        baseVo.setRespMsg(RespConstant.SYSTEM_FAIL_CODE_MSG);
+        return baseVo;
+    }
 
     public String getRespCode() {
         return respCode;

@@ -15,4 +15,5 @@ public interface RoomDao {
 
     Long checkRoomCodeExist(String roomCode);
 
+    List<RoomDto> findRecentRooms();
 }

@@ -21,4 +21,8 @@
     <select id="checkRoomCodeExist" resultType="java.lang.Long" >
         select 1 from room where code = #{roomCode}
     </select>
+
+    <select id="findRecentRooms" resultType="com.house.cjh_cashflow.dto.RoomDto">
+        select name, code from room order by created_date desc LIMIT 0,3
+    </select>
 </mapper>

@@ -4,7 +4,9 @@ import com.house.cjh_cashflow.constant.CareerEunm;
 import com.house.cjh_cashflow.constant.RespConstant;
 import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.controller.form.RoomForm;
+import com.house.cjh_cashflow.dao.PlayerDao;
 import com.house.cjh_cashflow.dao.RoomDao;
+import com.house.cjh_cashflow.dto.PlayerDto;
 import com.house.cjh_cashflow.dto.RoomDto;
 import com.house.cjh_cashflow.exception.ServiceException;
 import com.house.cjh_cashflow.service.PlayerService;
@@ -29,6 +31,9 @@ public class RoomSerivceImpl implements RoomService {
 
     @Resource
     RoomDao roomDao;
+
+    @Resource
+    PlayerDao playerDao;
 
     @Resource
     RatTableService ratTableService;
@@ -100,5 +105,16 @@ public class RoomSerivceImpl implements RoomService {
         mv.addObject(ROOM_CODE,roomCode);
         mv.addObject(RAT_ID,ratId);
 
+    }
+
+    @Override
+    public List<PlayerDto> findPlayers(String roomCode) {
+
+        return playerDao.findListByRoomCode(roomCode);
+    }
+
+    @Override
+    public List<RoomDto> findRooms() {
+        return roomDao.findRecentRooms();
     }
 }

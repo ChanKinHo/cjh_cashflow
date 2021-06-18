@@ -1,33 +1,29 @@
 package com.house.cjh_cashflow.controller;
 
+import com.house.cjh_cashflow.constant.BaseVo;
 import com.house.cjh_cashflow.constant.RespConstant;
-import com.house.cjh_cashflow.controller.form.PlayerForm;
-import com.house.cjh_cashflow.dto.RatTableDto;
+import com.house.cjh_cashflow.dto.PlayerDto;
 import com.house.cjh_cashflow.dto.RoomDto;
 import com.house.cjh_cashflow.exception.ServiceException;
-import com.house.cjh_cashflow.service.PlayerService;
-import com.house.cjh_cashflow.service.RatTableService;
 import com.house.cjh_cashflow.service.RoomService;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
 public class RoomController {
 
-    Logger logger = LoggerFactory.getLogger(RoomController.class);
+    private Logger logger = LoggerFactory.getLogger(RoomController.class);
 
-    @Autowired
+    @Resource
     RoomService roomService;
 
 
@@ -66,16 +62,34 @@ public class RoomController {
 
     }
 
-    @RequestMapping("/room/check")
+    @RequestMapping(value = "/room/findPlayers")
     @ResponseBody
-    public List<RoomDto> checkRoom() {
+    public BaseVo findPlayers(@RequestParam(value = "roomCode") String roomCode) {
 
-        return roomService.queryRooms();
+        logger.info("RoomController findPlayers params: roomCode=" + roomCode);
+
+        List<PlayerDto> list;
+        try {
+            list = roomService.findPlayers(roomCode);
+        } catch (Exception e) {
+            logger.error("RoomController findPlayers err ",e);
+            return BaseVo.fail();
+        }
+
+        return BaseVo.succ(list);
     }
 
-    @RequestMapping("/room/test")
-    public String checkRat() {
+    @RequestMapping(value = "/room/findRecentRooms")
+    @ResponseBody
+    public BaseVo findRooms(){
+        List<RoomDto> roomDtos;
+        try {
+            roomDtos = roomService.findRooms();
+        } catch (Exception e) {
+            logger.error("RoomController findRooms err ",e);
+            return BaseVo.fail();
+        }
 
-        return "ratTable";
+        return BaseVo.succ(roomDtos);
     }
 }
