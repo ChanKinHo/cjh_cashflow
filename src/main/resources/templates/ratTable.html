@@ -71,7 +71,6 @@
         <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 35px">月现金流(美元): <input id="totalCashFlow" th:value="${ratObj.monthCashFlow}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 70px"></div>
     </div>
 
-    <!--<form action="/room/testAdd" method="post">-->
     <div style="float: left; margin-left: 30px; margin-top: 15px; border: 1px solid">
         <div style="font-weight: bold; font-size: 20px; color: deeppink">资产负债表</div>
         <div style="float: left">
@@ -93,6 +92,7 @@
                         <td th:text="${stock.id}" style="visibility: hidden"></td>
                         <td th:text="${stock.ratTableId}" style="visibility: hidden;"></td>
                         <td th:text="${stock.roomCode}" style="visibility: hidden"></td>
+                        <td th:text="${stock.interest}" style="visibility: hidden"></td>
                         <td><a href="#" onclick="sellStock(this)">出售</a></td>
                     </tr>
                 </table>
@@ -150,12 +150,74 @@
         <input th:value="${ratObj.roomCode}" id="roomCode" type="hidden">
         <input th:value="${ratObj.playerId}" id="playerId" type="hidden">
         <input th:value="${ratObj.id}" id="ratId" type="hidden">
-        <!--<input type="submit" value="点击提交" style="font-size: 15px; color: deeppink">-->
 
-    <!--</form>-->
 
 
 </body>
+    <script>
+        function sellStock(obj) {
+            var tds = $(obj).parent("td").parent("tr").find("td");
+            var id = tds[3].innerHTML;
+            var ratId = tds[4].innerHTML;
+            var roomCode = tds[5].innerHTML;
+            var interest = tds[6].innerHTML;
+
+            var interestNum = parseInt(interest);
+
+            var $passiveIncome = $("#passiveIncome");
+            var $totalIncome = $("#totalIncome");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var passiveIncome =parseInt($passiveIncome.val());
+            var totalIncome = parseInt($totalIncome.val())- interestNum;
+            var totalCashFlow = parseInt($totalCashFlow.val()) - interestNum;
+
+            var myForm = document.createElement("form");
+            document.body.appendChild(myForm);
+
+            var param1 = document.createElement("input");
+            param1.setAttribute("name","stockId");
+            param1.setAttribute("value",id);
+            param1.setAttribute("type","hidden");
+
+            var param2 = document.createElement("input");
+            param2.setAttribute("name","ratId");
+            param2.setAttribute("value",ratId);
+            param2.setAttribute("type","hidden");
+
+            var param3 = document.createElement("input");
+            param3.setAttribute("name","roomCode");
+            param3.setAttribute("value",roomCode);
+            param3.setAttribute("type","hidden");
+
+            var param4 = document.createElement("input");
+            param4.setAttribute("name","passiveIncome");
+            param4.setAttribute("value",passiveIncome);
+            param4.setAttribute("type","hidden");
+
+            var param5 = document.createElement("input");
+            param5.setAttribute("name","totalIncome");
+            param5.setAttribute("value",totalIncome);
+            param5.setAttribute("type","hidden");
+
+            var param6 = document.createElement("input");
+            param6.setAttribute("name","totalCashFlow");
+            param6.setAttribute("value",totalCashFlow);
+            param6.setAttribute("type","hidden");
+
+            myForm.appendChild(param1);
+            myForm.appendChild(param2);
+            myForm.appendChild(param3);
+            myForm.appendChild(param4);
+            myForm.appendChild(param5);
+            myForm.appendChild(param6);
+
+            myForm.method = "post";
+            myForm.action = "/rat/sellStock";
+            myForm.target = "";
+            myForm.submit();
+        }
+    </script>
 
     <script>
         function requestStock() {
@@ -234,6 +296,7 @@
                         "<td style='visibility:hidden;'>"+ stockObj.id +"</td>" +
                         "<td style='visibility: hidden'>"+ stockObj.ratTableId +"</td>" +
                         "<td style='visibility:hidden;'>"+ stockObj.roomCode +"</td>" +
+                        "<td style='visibility:hidden;'>"+ stockObj.interest +"</td>" +
                         "<td><a href=\"#\" onclick=\"sellStock(this)\">出售</a></td>" +
                         "</tr>";
                     $("#stocksTable").append(info);
@@ -261,12 +324,6 @@
             $interest.remove();
         }
 
-    </script>
-
-    <script>
-        function sellStock() {
-            
-        }
     </script>
 
     <script type="text/javascript">

@@ -14,4 +14,6 @@ public interface StockDao {
     void addOneItemByRatId(PropertyForm property);
 
     List<StockDto> findByRatId(@Param(value = "ratId") Long ratId);
+
+    void sellStockById(@Param(value = "id")String stockId, @Param(value = "ratId")String ratId, @Param(value = "roomCode")String roomCode);
 }

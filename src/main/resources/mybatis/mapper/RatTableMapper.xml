@@ -65,6 +65,12 @@
 
     <update id="updateRatSummary" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
         update rat_table set passive_income = #{passiveIncome}, total_income = #{totalIncome}
-        , month_cash_flow = #{monthCashFlow} where room_code = #{roomCode} and player_id = #{playerId}
+        , month_cash_flow = #{monthCashFlow} where room_code = #{roomCode}
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
     </update>
 </mapper>

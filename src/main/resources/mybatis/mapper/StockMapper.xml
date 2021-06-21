@@ -5,8 +5,8 @@
 <mapper namespace="com.house.cjh_cashflow.dao.StockDao">
 
     <insert id="addOneItemByRatId" useGeneratedKeys="true" keyProperty="stockId" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm">
-        insert into stock(rat_table_id, name, total_count, per_cost, interest, created_date) values
-        (#{ratId}, #{stockName}, #{stockNum}, #{stockValue}, #{interest}, now())
+        insert into stock(rat_table_id, name, room_code, total_count, per_cost, interest, created_date) values
+        (#{ratId}, #{stockName}, #{roomCode}, #{stockNum}, #{stockValue}, #{interest}, now())
     </insert>
 
     <select id="findByRatId" parameterType="java.lang.Long" resultType="com.house.cjh_cashflow.dto.StockDto">
@@ -20,4 +20,14 @@
         ,created_date
         from stock where rat_table_id = #{ratId}
     </select>
+
+    <delete id="sellStockById" parameterType="java.lang.String">
+        delete from stock where id = #{id}
+        <if test="ratId != null and ratId != ''">
+            and rat_table_id = #{ratId}
+        </if>
+        <if test="roomCode != null and roomCode != ''">
+            and room_code = #{roomCode}
+        </if>
+    </delete>
 </mapper>

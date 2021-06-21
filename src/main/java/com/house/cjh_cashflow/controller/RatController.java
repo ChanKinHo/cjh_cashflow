@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 
@@ -40,7 +41,7 @@ public class RatController {
                                ModelMap map) {
         logger.info("RatController findExactRat param : playerId=" + playerId + ", roomCode=" +roomCode + ", ratId=" + ratId + ", playerName=" + playerName);
 
-        if (StringUtils.isBlank(roomCode) || (StringUtils.isBlank(playerId) && StringUtils.isBlank(playerName))) {
+        if (StringUtils.isBlank(roomCode) || (StringUtils.isBlank(playerId) && StringUtils.isBlank(playerName) && StringUtils.isBlank(ratId))) {
             map.put(CODE,RespConstant.FIND_RAT_PARAM_CODE);
             map.put(MSG,RespConstant.FIND_RAT_PARAM_MSG);
             return "findRatError";
@@ -85,18 +86,28 @@ public class RatController {
         return BaseVo.succ(stockDto);
     }
 
-    @RequestMapping(value = "/test/addStock")
-    @ResponseBody
-    public BaseVo testAddStock(PropertyForm form){
+    @RequestMapping(value = "/rat/sellStock")
+    public ModelAndView sellStock(@RequestParam(value = "stockId") String stockId,
+                                  @RequestParam(value = "ratId") String ratId,
+                                  @RequestParam(value = "roomCode") String roomCode,
+                                  @RequestParam(value = "passiveIncome") String passiveIncome,
+                                  @RequestParam(value = "totalIncome") String totalIncome,
+                                  @RequestParam(value = "totalCashFlow") String totalCashFlow){
 
-        System.out.println("查询到的body: " + JSON.toJSONString(form));
+        logger.info("sellStock params: stockId="+ stockId + ", ratId=" + ratId + ", roomCode=" + roomCode
+        + ", passiveIncome=" + passiveIncome + ", totalIncome=" + totalIncome + ", totalCashFlow="+totalCashFlow);
+        ModelAndView mv = new ModelAndView();
+        if (StringUtils.isBlank(stockId) || (StringUtils.isBlank(ratId) && StringUtils.isBlank(roomCode))) {
+            mv.setViewName("redirect:findRat.html");
+            return mv;
+        }
 
-        StockDto stockDto = new StockDto();
-        stockDto.setName("MYT4U");
-        stockDto.setPerCost(30);
-        stockDto.setInterest(0);
-        stockDto.setTotalCount(600);
+        ratTableService.sellStockById(stockId, ratId, roomCode,passiveIncome,totalIncome,totalCashFlow);
 
-        return BaseVo.succ(stockDto);
+        mv.addObject("roomCode",roomCode);
+        mv.addObject("ratId",ratId);
+        mv.setViewName("redirect:/rat/findExactRat");
+
+        return mv;
     }
 }

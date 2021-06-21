@@ -49,6 +49,21 @@ public class RatTableServiceImpl implements RatTableService {
     }
 
     @Override
+    public void sellStockById(String stockId, String ratId, String roomCode,
+                              String passiveIncome, String totalIncome, String totalCashFlow) {
+
+        RatTableForm ratTableForm = new RatTableForm();
+        ratTableForm.setPassiveIncome(passiveIncome);
+        ratTableForm.setTotalIncome(totalIncome);
+        ratTableForm.setMonthCashFlow(totalCashFlow);
+        ratTableForm.setId(Long.parseLong(ratId));
+        ratTableForm.setRoomCode(roomCode);
+        ratTableDao.updateRatSummary(ratTableForm);
+
+        stockDao.sellStockById(stockId,ratId,roomCode);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public RatTableForm getInitRatCareer(String career, long playerId, String roomCode) {
         return ratTableDao.getInitRatCareer(career);
@@ -87,9 +102,9 @@ public class RatTableServiceImpl implements RatTableService {
 
         //新增股票基金表
         property.setRatId(form.getId());
+        property.setRoomCode(form.getRoomCode());
         stockDao.addOneItemByRatId(property);
 
-        System.out.println("返回的股票id: " + property.getStockId());
 
         StockDto stockDto = new StockDto();
         stockDto.setRatTableId(form.getId());

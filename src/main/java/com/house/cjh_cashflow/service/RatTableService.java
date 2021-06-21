@@ -14,4 +14,7 @@ public interface RatTableService {
     StockDto addStock(RatTableForm form) throws ServiceException;
 
     RatTableDto findExactRatInfo(String playerId, String roomCode, String ratId, String playerName);
+
+
+    void sellStockById(String stockId, String ratId, String roomCode, String passiveIncome, String totalIncome, String totalCashFlow);
 }
