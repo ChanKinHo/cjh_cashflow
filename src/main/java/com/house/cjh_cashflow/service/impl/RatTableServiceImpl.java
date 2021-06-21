@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.regex.Pattern;
+
 
 @Service
 public class RatTableServiceImpl implements RatTableService {
@@ -63,43 +63,44 @@ public class RatTableServiceImpl implements RatTableService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public StockDto addStock(RatTableForm form) throws ServiceException {
 
-//        if (StringUtils.isBlank(form.getRoomCode()) || StringUtils.isBlank(form.getPlayerId())
-//                || StringUtils.isBlank(form.getId())) {
-//            throw new ServiceException(RespConstant.MUST_PARAM_NONE_CODE, RespConstant.MUST_PARAM_NONE_MSG);
-//        }
-//
-//        PropertyForm property = form.getProperty();
-//        String stockValue = property.getStockValue();
-//        String stockNum = property.getStockNum();
-//        String interest = property.getInterest();
-//        String stockName = property.getStockName();
-//
-//        if (StringUtils.isBlank(stockName) || StringUtils.isBlank(stockNum) || StringUtils.isBlank(stockValue) || StringUtils.isBlank(interest)) {
-//            throw new ServiceException(RespConstant.NO_PROPERTY_PARAM_CODE, RespConstant.NO_PROPERTY_PARAM_MSG);
-//        }
-//
-//        if (!Pattern.matches(MATCH_REG,stockNum) || !Pattern.matches(MATCH_REG,stockValue)
-//            || !Pattern.matches(MATCH_REG,interest)) {
-//            throw new ServiceException(RespConstant.MUST_WHOLE_NUM_CODE,RespConstant.MUST_WHOLE_NUM_MSG);
-//        }
+        if (StringUtils.isBlank(form.getRoomCode()) || form.getPlayerId() == null
+            || form.getId() == null) {
+            throw new ServiceException(RespConstant.MUST_PARAM_NONE_CODE, RespConstant.MUST_PARAM_NONE_MSG);
+        }
+
+        PropertyForm property = form.getProperty();
+        String stockValue = property.getStockValue();
+        String stockNum = property.getStockNum();
+        String interest = property.getInterest();
+        String stockName = property.getStockName();
+
+        if (StringUtils.isBlank(stockName) || StringUtils.isBlank(stockNum) || StringUtils.isBlank(stockValue) || StringUtils.isBlank(interest)) {
+            throw new ServiceException(RespConstant.NO_PROPERTY_PARAM_CODE, RespConstant.NO_PROPERTY_PARAM_MSG);
+        }
+
 
         //修改玩家老鼠表
-//        ratTableDao.updateRatSummary(form);
-//
-//        //新增股票基金表
-//        property.setRatId(form.getId());
-//        stockDao.addOneItemByRatId(property);
-//
-//        StockDto stockDto = new StockDto();
-//        stockDto.setRatTableId(Long.parseLong(form.getId()));
-//        stockDto.setName(stockName);
-//        stockDto.setTotalCount(Integer.parseInt(stockNum));
-//        stockDto.setPerCost(Long.parseLong(stockValue));
-//        stockDto.setInterest(Long.parseLong(interest));
+        ratTableDao.updateRatSummary(form);
 
-        return null;
+        //新增股票基金表
+        property.setRatId(form.getId());
+        stockDao.addOneItemByRatId(property);
+
+        System.out.println("返回的股票id: " + property.getStockId());
+
+        StockDto stockDto = new StockDto();
+        stockDto.setRatTableId(form.getId());
+        stockDto.setRoomCode(form.getRoomCode());
+        stockDto.setId(property.getStockId());
+        stockDto.setName(stockName);
+        stockDto.setTotalCount(Integer.parseInt(stockNum));
+        stockDto.setPerCost(Long.parseLong(stockValue));
+        stockDto.setInterest(Long.parseLong(interest));
+
+        return stockDto;
     }
 
 

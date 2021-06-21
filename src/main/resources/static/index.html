@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <!--<script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
 </head>
 <body>
     <h1 style="text-align: center">欢迎使用现金流记账软件</h1>
@@ -22,5 +24,57 @@
 
     <button onclick="window.location.href='head/findRat.html'" style="text-align: center; display: block; margin:0 auto; width: 300px; height: 60px">回到对局</button>
 
+    <table border="1" id="ta">
+        <!--<tr>-->
+            <!--<th>股票名称</th>-->
+            <!--<th>数量</th>-->
+            <!--<th>每股价值</th>-->
+        <!--</tr>-->
+        <tr>
+            <td><input type="text" value="MYT4U"></td>
+            <td>500</td>
+            <td>5</td>
+            <td><a href="#" onclick="sell(this)">出售</a></td>
+        </tr>
+        <tr>
+            <td>OK4U</td>
+            <td>300</td>
+            <td>5</td>
+            <td><a href="#" onclick="sell(this)">出售</a></td>
+        </tr>
+    </table><button onclick="sell1()">点击</button>
+
 </body>
+
+    <script>
+        function sell1() {
+
+
+
+            // var parent = $(obj).parent("td").parent("tr").find("td");
+            // var children = parent[0].innerHTML;
+            // var children1 = parent[1].innerHTML;
+            //
+            // alert(children + " ," + children1);
+
+            var trs = $("#ta").children("tr");
+
+            var find = trs.eq(0).find("td");
+
+            var val = find.eq(0).find('input').val();
+            alert(val);
+
+            for (var i = 0; i < trs.length; i++) {
+                var tds = trs.eq(i).find("td");
+                alert(tds[0].innerHTML)
+                // + ", "+tds[1].innerHTML + "," +tds[2].innerHTML
+
+            }
+
+
+
+            // $(obj).parent("td").parent("tr").remove();
+
+        }
+    </script>
 </html>

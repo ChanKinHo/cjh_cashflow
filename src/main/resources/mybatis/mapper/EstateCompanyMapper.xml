@@ -8,6 +8,7 @@
         select id
         ,rat_table_id
         ,name
+        ,room_code
         ,down_payment
         ,total_cost
         ,loan

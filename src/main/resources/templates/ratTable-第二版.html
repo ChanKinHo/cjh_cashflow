@@ -21,31 +21,20 @@
         <div style="float: left; color: blue">项目</div><div style="margin-left: 250px; float: left; color: blue">现金流</div>
 
         <br><div style="float: left;margin-top: 11px">工资: </div><input id="salary" th:value="${ratObj.salary}" type="text" value="0" disabled style="margin-left:250px; margin-top: 10px; width: 50px"/>
-        <div>利息/分红被动:</div>
-        <div>
-            <table border="1" id="stockShow">
-                <tr>
-                    <th>股票/基金</th>
-                    <th>利息</th>
-                </tr>
-                <tr style="font-size: 10px; color: red" th:each="stock,stocks: ${ratObj.stockDtos}">
-                    <td th:text="${stock.name}"></td>
-                    <td th:text="${stock.interest}"></td>
-                </tr>
-            </table>
+        <div>利息/分红</div>
+        <div id="stockShow">
+            <div th:each="stock,stocks: ${ratObj.stockDtos}">
+                <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled><input th:value="${stock.interest}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
+            </div>
         </div>
-        <div>房地产/企业被动:</div>
+
+        <div>房地产/企业</div>
         <div>
-            <table border="1">
-                <tr>
-                    <th>房产/企业</th>
-                    <th>现金流</th>
-                </tr>
-                <tr style="font-size: 10px; color: red" th:each="estate, estates: ${ratObj.estateCompanyDtos}">
-                    <td th:text="${estate.name}"></td>
-                    <td th:text="${estate.monthCashFlow}"></td>
-                </tr>
-            </table>
+            <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
+                <!--<div th:text="${state.name}+'&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'+${state.monthCashFlow}" style="font-size: 10px; color: red">xxx企业: <input th:value="${state.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled></div>-->
+                <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.monthCashFlow}" style="color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px" value="0" disabled>
+
+            </div>
         </div>
 
         <br><div style="font-weight: bold;margin-top: 5px; font-size: 18px">支出</div>
@@ -78,24 +67,14 @@
             <div style="font-weight: bold; font-size: 18px">资产</div>
             <div>--------------------------------------</div>
             <div style="font-size: 15px">银行存款: <input th:value="${ratObj.bankStore}" type="text" disabled style="width: 35px;margin-left: 100px" value="0"></div>
+            <div style="float: left; font-size: 15px">股票/债权:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">股数:</div>
+            <div style="float: left; margin-left: 50px; font-size: 15px">价值(股):</div>
             <br>
             <div id="stocks">
-                <table border="1" id="stocksTable">
-                    <tr>
-                        <th>股票/基金</th>
-                        <th>股数</th>
-                        <th>价值(股)</th>
-                    </tr>
-                    <tr style="font-size: 10px; color: red" th:each="stock,stocks: ${ratObj.stockDtos}">
-                        <td th:text="${stock.name}"></td>
-                        <td th:text="${stock.totalCount}"></td>
-                        <td th:text="${stock.perCost}"></td>
-                        <td th:text="${stock.id}" style="visibility: hidden"></td>
-                        <td th:text="${stock.ratTableId}" style="visibility: hidden;"></td>
-                        <td th:text="${stock.roomCode}" style="visibility: hidden"></td>
-                        <td><a href="#" onclick="sellStock(this)">出售</a></td>
-                    </tr>
-                </table>
+                <div th:each="stock, stocks: ${ratObj.stockDtos}">
+                    <input th:value="${stock.name}" style="color: red; width: 35px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${stock.totalCount}" type="text" value="500" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled><input th:value="${stock.perCost}" type="text" value="5" style="color: red; margin-left: 65px; font-size: 10px; width: 30px" disabled><button onclick="sellStock()">出售</button>
+                </div>
             </div>
             <input type="button" value="点击新增" id="stockBtn" onclick="addStock()">
             <input onclick="requestStock()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
@@ -227,21 +206,13 @@
 
                     console.log("返回的对象: " + stockObj);
 
-                    var info = "<tr style=\"font-size: 10px; color: red\">" +
-                        "<td>"+ stockObj.name +"</td>" +
-                        "<td>"+ stockObj.totalCount +"</td>" +
-                        "<td>"+ stockObj.perCost +"</td>" +
-                        "<td style='visibility:hidden;'>"+ stockObj.id +"</td>" +
-                        "<td style='visibility: hidden'>"+ stockObj.ratTableId +"</td>" +
-                        "<td style='visibility:hidden;'>"+ stockObj.roomCode +"</td>" +
-                        "<td><a href=\"#\" onclick=\"sellStock(this)\">出售</a></td>" +
-                        "</tr>";
-                    $("#stocksTable").append(info);
+                    var info = "<input value = " + stockObj.name + " type=\"text\" style=\"color: red; width: 35px; height: 11px; font-size: 10px\" disabled>" +
+                                "<input value = " + stockObj.totalCount +"  type=\"text\" value=\"500\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled>"+
+                                "<input value ="+ stockObj.perCost + "  type=\"text\" value=\"5\" style=\"color: red; margin-left: 65px; font-size: 10px; width: 30px\" disabled>" + 
+                                "<button onclick=\"sellStock()\">出售</button>";
+                    $("#stocks").append(info);
 
-                    var show = "<tr style=\"font-size: 10px; color: red\">" +
-                        "<td>"+ stockObj.name +"</td>" +
-                        "<td>"+ stockObj.interest +"</td>" +
-                        "</tr>";
+                    var show = "<input value=" + stockObj.name +" type=\"text\" style=\"color: red; width: 35px; height: 11px; font-size: 10px\" value=\"0\" disabled><input value= " + stockObj.interest + " style=\"color: red; margin-left: 150px; width: 35px; height: 11px; font-size: 10px\" value=\"0\" disabled>"
                     $("#stockShow").append(show);
                 }
 
@@ -275,29 +246,26 @@
             input1.setAttribute('type', 'text');
             input1.setAttribute('name', 'stockName');
             input1.setAttribute('id', 'stockName');
-            input1.setAttribute('placeHolder','输入股票名称');
-            input1.setAttribute('style','color: red; font-size: 10px');
+            input1.setAttribute('style','color: red; font-size: 10px; width: 45px');
 
             var input2 = document.createElement('input');
             input2.setAttribute('type', 'text');
             input2.setAttribute('name', 'stockNum');
             input2.setAttribute('id', 'stockNum');
-            input2.setAttribute('placeHolder','输入购买股数');
-            input2.setAttribute('style','color: red; margin-left: 1px; font-size: 10px')
+            input2.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
             var input3 = document.createElement('input');
             input3.setAttribute('type', 'text');
             input3.setAttribute('name', 'stockValue');
             input3.setAttribute('id', 'stockValue');
-            input3.setAttribute('placeHolder','输入每股价值');
-            input3.setAttribute('style','color: red; margin-left: 1px; font-size: 10px')
+            input3.setAttribute('style','color: red; margin-left: 50px; font-size: 10px; width: 45px')
 
             var input4 = document.createElement('input');
             input4.setAttribute('type', 'text');
             input4.setAttribute('name', 'interest');
             input4.setAttribute('id', 'interest');
-            input4.setAttribute('placeHolder', '请输入股票分红');
-            input4.setAttribute('style','color: red; margin-left: 1px; font-size: 13px; width: 100px; font-weight: bold')
+            input4.setAttribute('placeHolder', '请输入分红');
+            input4.setAttribute('style','color: red; margin-left: 65px; font-size: 13px; width: 100px; font-weight: bold')
 
             var stocks = document.getElementById("stocks");
             stocks.insertBefore(input1,null);

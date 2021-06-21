@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.house.cjh_cashflow.dao.StockDao">
 
-    <insert id="addOneItemByRatId" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm">
+    <insert id="addOneItemByRatId" useGeneratedKeys="true" keyProperty="stockId" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm">
         insert into stock(rat_table_id, name, total_count, per_cost, interest, created_date) values
         (#{ratId}, #{stockName}, #{stockNum}, #{stockValue}, #{interest}, now())
     </insert>
@@ -13,6 +13,7 @@
         select id
         ,rat_table_id
         ,name
+        ,room_code
         ,total_count
         ,per_cost
         ,interest

@@ -4,6 +4,10 @@ public class PropertyForm {
 
     private Long ratId;
 
+    private Long stockId;
+
+    private Long estateCompanyId;
+
     private String roomCode;
 
     private Long playerId;
@@ -25,6 +29,22 @@ public class PropertyForm {
     private String monthCashFlow;
 
     private String estateLoan;
+
+    public Long getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Long stockId) {
+        this.stockId = stockId;
+    }
+
+    public Long getEstateCompanyId() {
+        return estateCompanyId;
+    }
+
+    public void setEstateCompanyId(Long estateCompanyId) {
+        this.estateCompanyId = estateCompanyId;
+    }
 
     public Long getRatId() {
         return ratId;

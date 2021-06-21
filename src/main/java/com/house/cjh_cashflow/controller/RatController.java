@@ -24,9 +24,9 @@ import javax.annotation.Resource;
 @Controller
 public class RatController {
 
-    public static final String CODE = "code";
-    public static final String MSG = "msg";
-    public static final String RAT_OBJ = "ratObj";
+    private static final String CODE = "code";
+    private static final String MSG = "msg";
+    private static final String RAT_OBJ = "ratObj";
     private Logger logger = LoggerFactory.getLogger(RatController.class);
 
     @Resource
@@ -56,6 +56,12 @@ public class RatController {
             return "findRatError";
         }
 
+        if (ratTableDto == null) {
+            map.put(CODE,RespConstant.NO_RAT_PLAYER_CODE);
+            map.put(MSG,RespConstant.NO_RAT_PLAYER_MSG);
+            return "findRatError";
+        }
+
         map.put(RAT_OBJ,ratTableDto);
         return "ratTable";
     }
@@ -65,18 +71,18 @@ public class RatController {
     public BaseVo addStockPropety(@RequestBody RatTableForm form) {
         logger.info("RatController addStockPropety form " + JSON.toJSONString(form));
 
-//        StockDto stockDto;
-//        try {
-//            stockDto = ratTableService.addStock(form);
-//        } catch (ServiceException se) {
-//            return BaseVo.fail(se.getCode(),se.getMsg());
-//
-//        } catch (Exception e) {
-//            logger.error("RatController addStockPropety err ", e);
-//            return BaseVo.fail(RespConstant.SYSTEM_FAIL_CODE, RespConstant.SYSTEM_FAIL_CODE_MSG);
-//        }
+        StockDto stockDto;
+        try {
+            stockDto = ratTableService.addStock(form);
+        } catch (ServiceException se) {
+            return BaseVo.fail(se.getCode(),se.getMsg());
 
-        return BaseVo.succ(JSON.toJSONString(form));
+        } catch (Exception e) {
+            logger.error("RatController addStockPropety err ", e);
+            return BaseVo.fail(RespConstant.SYSTEM_FAIL_CODE, RespConstant.SYSTEM_FAIL_CODE_MSG);
+        }
+
+        return BaseVo.succ(stockDto);
     }
 
     @RequestMapping(value = "/test/addStock")

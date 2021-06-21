@@ -29,4 +29,7 @@ public class RespConstant {
 
     public static final String FIND_RAT_PARAM_CODE = "500003";
     public static final String FIND_RAT_PARAM_MSG = "房间号或玩家名称且玩家id为空";
+
+    public static final String NO_RAT_PLAYER_CODE = "500113";
+    public static final String NO_RAT_PLAYER_MSG = "还未加入过房间";
 }
