@@ -7,6 +7,6 @@ CREATE TABLE cashflow.estate_company
 		total_cost BIGINT COMMENT '总成本',
 		loan BIGINT COMMENT '资产贷款',
 		month_cash_flow BIGINT COMMENT '月现金流',
-		type VARCHAR(2) COMMENT '类型 1-房地产 2-企业',
+		type VARCHAR(2) COMMENT '类型 1-老鼠产业 2-富人产业',
 		created_date TIMESTAMP COMMENT '创建时间'
 )ENGINE=INNODB COMMENT '房产企业表';

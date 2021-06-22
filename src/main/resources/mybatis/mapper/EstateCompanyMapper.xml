@@ -15,6 +15,12 @@
         ,month_cash_flow
         ,type
         ,created_date
-        from estate_company  where rat_table_id = #{ratId}
+        from estate_company  where rat_table_id = #{ratId} and type = '1'
     </select>
+
+    <insert id="addOneItemByRatId" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm" useGeneratedKeys="true" keyProperty="estateCompanyId">
+        insert into estate_company(rat_table_id,name,down_payment,total_cost
+        ,loan,month_cash_flow,type,created_date) values (#{ratId}, #{estateName},#{downPayment}
+        ,#{estateTotalValue},#{estateLoan},#{estateMonthCashFlow},"1",now());
+    </insert>
 </mapper>

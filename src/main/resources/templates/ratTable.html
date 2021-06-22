@@ -36,7 +36,7 @@
         </div>
         <div>房地产/企业被动:</div>
         <div>
-            <table border="1">
+            <table border="1" id="estateShow">
                 <tr>
                     <th>房产/企业</th>
                     <th>现金流</th>
@@ -100,17 +100,28 @@
             <input type="button" value="点击新增" id="stockBtn" onclick="addStock()">
             <input onclick="requestStock()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
             <br>
-            <br>
-            <div style="float: left; font-size: 15px">房产/企业:</div>
-            <div style="float: left; margin-left: 50px; font-size: 15px">首付:</div>
-            <div style="float: left; margin-left: 50px; font-size: 15px">价值(套):</div>
-            <br>
             <div id="estates" >
-                <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
-                    <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.downPayment}" type="text" value="20000" style="color: red; margin-left: 65px; font-size: 10px; width: 50px" disabled><input th:value="${estate.totalCost}" type="text" value="650000" style="color: red; margin-left: 40px; font-size: 10px; width: 50px" disabled>
-                </div>
+                <table border="1" id="estateTable">
+                    <tr>
+                        <th>房产/企业</th>
+                        <th>首付</th>
+                        <th>价值(套)</th>
+                    </tr>
+                    <tr th:each="estate, estates: ${ratObj.estateCompanyDtos}" style="font-size: 10px; color: red">
+                        <td th:text="${estate.name}"></td>
+                        <td th:text="${estate.downPayment}"></td>
+                        <td th:text="${estate.totalCost}"></td>
+                        <td th:text="${estate.id}" style="visibility: hidden"></td>
+                        <td th:text="${estate.ratTableId}" style="visibility: hidden"></td>
+                        <td th:text="${estate.roomCode}" style="visibility: hidden"></td>
+                        <td th:text="${estate.monthCashFlow}" style="visibility: hidden"></td>
+                        <td th:text="${estate.loan}" style="visibility: hidden"></td>
+                        <td><a href="#" onclick="sellEstate(this)">出售</a></td>
+                    </tr>
+                </table>
             </div>
             <input type="button" value="点击新增" id="estateBtn" onclick="addState()">
+            <input onclick="requestEstate()" type="button" value="点击提交" style="font-size: 15px; color: deeppink">
         </div>
         <br>
         <div style="float: left">
@@ -119,15 +130,21 @@
             <div>房屋贷款: <input th:value="${ratObj.houseLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
             <div>教育贷款: <input th:value="${ratObj.educationLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
             <div>购车贷款: <input th:value="${ratObj.carLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
-            <div>信用卡透支: <input th:value="${ratObj.creditCard}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>信用卡透支: <input th:value="${ratObj.creditCard}" type="text" disabled style="margin-left: 130px; width: 50px" value="0"></div>
             <div>额外负债: <input th:value="${ratObj.extraDebt}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
-            <div style="float: left; font-size: 15px">房产/企业:</div>
-            <div style="float: left; margin-left: 150px; font-size: 15px">抵押/贷款:</div>
+
             <br>
-            <div id="estateLoan">
-                <div th:each="estate, estates: ${ratObj.estateCompanyDtos}">
-                    <input th:value="${estate.name}" style="color: red; width: 50px; height: 11px; font-size: 10px" value="0" disabled> <input th:value="${estate.loan}" type="text" value="20000" style="color: red; margin-left: 150px; font-size: 10px; width: 50px" disabled>
-                </div>
+            <div id="estateLoans">
+                <table border="1" id="estateLoanTable">
+                    <tr>
+                        <th>房产/企业</th>
+                        <th>抵押/贷款</th>
+                    </tr>
+                    <tr th:each="estate, estates: ${ratObj.estateCompanyDtos}" style="font-size: 10px; color: red">
+                        <td th:text="${estate.name}"></td>
+                        <td th:text="${estate.loan}"></td>
+                    </tr>
+                </table>
             </div>
 
             <br>
@@ -154,7 +171,11 @@
 
 
 </body>
-    <script>
+    <script type="text/javascript">
+        /**
+         * 出售股票
+         * @param obj
+         */
         function sellStock(obj) {
             var tds = $(obj).parent("td").parent("tr").find("td");
             var id = tds[3].innerHTML;
@@ -213,13 +234,15 @@
             myForm.appendChild(param6);
 
             myForm.method = "post";
-            myForm.action = "/rat/sellStock";
+            myForm.action = "/stock/sellStock";
             myForm.target = "";
             myForm.submit();
         }
-    </script>
 
-    <script>
+
+        /**
+         * 添加股票
+         */
         function requestStock() {
             var $stockName = $("#stockName");
             var stockName = $stockName.val();
@@ -269,7 +292,7 @@
 
             var stop = false;
             $.ajax({
-                url: "/rat/addStock",
+                url: "/stock/addStock",
                 type: "POST",
                 async: false,
                 contentType: "application/json",
@@ -289,23 +312,25 @@
 
                     console.log("返回的对象: " + stockObj);
 
-                    var info = "<tr style=\"font-size: 10px; color: red\">" +
-                        "<td>"+ stockObj.name +"</td>" +
-                        "<td>"+ stockObj.totalCount +"</td>" +
-                        "<td>"+ stockObj.perCost +"</td>" +
-                        "<td style='visibility:hidden;'>"+ stockObj.id +"</td>" +
-                        "<td style='visibility: hidden'>"+ stockObj.ratTableId +"</td>" +
-                        "<td style='visibility:hidden;'>"+ stockObj.roomCode +"</td>" +
-                        "<td style='visibility:hidden;'>"+ stockObj.interest +"</td>" +
-                        "<td><a href=\"#\" onclick=\"sellStock(this)\">出售</a></td>" +
-                        "</tr>";
-                    $("#stocksTable").append(info);
+                    if (stockObj != null) {
+                        var info = "<tr style=\"font-size: 10px; color: red\">" +
+                            "<td>"+ stockObj.name +"</td>" +
+                            "<td>"+ stockObj.totalCount +"</td>" +
+                            "<td>"+ stockObj.perCost +"</td>" +
+                            "<td style='visibility:hidden;'>"+ stockObj.id +"</td>" +
+                            "<td style='visibility: hidden'>"+ stockObj.ratTableId +"</td>" +
+                            "<td style='visibility:hidden;'>"+ stockObj.roomCode +"</td>" +
+                            "<td style='visibility:hidden;'>"+ stockObj.interest +"</td>" +
+                            "<td><a href=\"#\" onclick=\"sellStock(this)\">出售</a></td>" +
+                            "</tr>";
+                        $("#stocksTable").append(info);
 
-                    var show = "<tr style=\"font-size: 10px; color: red\">" +
-                        "<td>"+ stockObj.name +"</td>" +
-                        "<td>"+ stockObj.interest +"</td>" +
-                        "</tr>";
-                    $("#stockShow").append(show);
+                        var show = "<tr style=\"font-size: 10px; color: red\">" +
+                            "<td>"+ stockObj.name +"</td>" +
+                            "<td>"+ stockObj.interest +"</td>" +
+                            "</tr>";
+                        $("#stockShow").append(show);
+                    }
                 }
 
             });
@@ -324,9 +349,9 @@
             $interest.remove();
         }
 
-    </script>
-
-    <script type="text/javascript">
+        /**
+         * 添加股票输入框
+         */
         function addStock(){
             var input1 = document.createElement('input');
             input1.setAttribute('type', 'text');
@@ -371,27 +396,166 @@
     </script>
 
     <script type="text/javascript">
+        /**
+         * 购买房产
+         */
+        function requestEstate() {
+            var $estateName = $("#estateName");
+            var estateName = $estateName.val();
+
+            var $downPayment = $("#downPayment");
+            var downPayment = $downPayment.val();
+
+            var $totalValue = $("#totalValue");
+            var totalValue = $totalValue.val();
+
+            var $monthCashFlow = $("#monthCashFlow");
+            var monthCashFlow = $monthCashFlow.val();
+
+            var $estateLoan = $("#estateLoan");
+            var estateLoan = $estateLoan.val();
+
+            console.log(estateName + "," + downPayment + "," + totalValue + ","
+                + monthCashFlow + "," + estateLoan);
+
+            if (estateName === undefined || estateName === '' || downPayment === undefined || downPayment === ''
+                || totalValue === undefined || totalValue === '' || monthCashFlow === undefined || monthCashFlow === ''
+                || estateLoan === undefined || estateLoan === '') {
+                alert("产业名称、首付、总价值、月现金流或贷款为空");
+                return;
+            }
+
+            var pos = /^[0-9]*[1-9][0-9]*$/;
+            var neg = /^-[0-9]*[1-9][0-9]*$/;
+
+            if (!pos.test(downPayment) && !neg.test(downPayment) && downPayment !== "0"
+                && !pos.test(totalValue) && !neg.test(totalValue) && totalValue !== "0"
+                && !pos.test(monthCashFlow) && !neg.test(monthCashFlow) && monthCashFlow !== "0"
+                && !pos.test(estateLoan) && !neg.test(estateLoan) && estateLoan !== "0") {
+                alert("首付、总价值，月现金流、贷款请输入整数");
+                return;
+            }
+
+
+
+            var monthCashFlowNum = parseInt(monthCashFlow);
+
+            var $passiveIncome = $("#passiveIncome");
+            var $totalIncome = $("#totalIncome");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var passiveIncome = monthCashFlowNum + parseInt($passiveIncome.val());
+            var totalIncome = monthCashFlowNum + parseInt($totalIncome.val());
+            var totalCashFlow = monthCashFlowNum + parseInt($totalCashFlow.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var propertyBody = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "passiveIncome":passiveIncome, "totalIncome":totalIncome
+                , "monthCashFlow":totalCashFlow, "property":{"estateName":estateName
+                    ,"downPayment":downPayment, "estateTotalValue":totalValue,
+                    "estateMonthCashFlow":monthCashFlow, "estateLoan":estateLoan}};
+
+
+            var stop = false;
+            $.ajax({
+                url: "/estate/addEstate",
+                type: "POST",
+                async: false,
+                contentType: "application/json",
+                data: JSON.stringify(propertyBody),
+                dataType: 'json',
+                success: function (result) {
+                    console.log(result);
+                    code = result.respCode;
+                    msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert("错误！" + code + "," + msg);
+                        stop = true;
+                    }
+
+                    var estateObj = result.data;
+
+                    console.log("返回的对象: " + estateObj);
+
+                    if (estateObj != null) {
+                        var info = "<tr style=\"font-size: 10px; color: red\">" +
+                            "<td>"+ estateObj.name +"</td>" +
+                            "<td>"+ estateObj.downPayment +"</td>" +
+                            "<td>"+ estateObj.totalCost +"</td>" +
+                            "<td style='visibility:hidden;'>"+ estateObj.id +"</td>" +
+                            "<td style='visibility: hidden'>"+ estateObj.ratTableId +"</td>" +
+                            "<td style='visibility:hidden;'>"+ estateObj.roomCode +"</td>" +
+                            "<td style='visibility:hidden;'>"+ estateObj.monthCashFlow +"</td>" +
+                            "<td><a href=\"#\" onclick=\"sellEstate(this)\">出售</a></td>" +
+                            "</tr>";
+                        $("#estateTable").append(info);
+
+                        var loanInfo = "<tr style=\"font-size: 10px; color: red\">" +
+                            "<td>"+ estateObj.name +"</td>" +
+                            "<td>"+ estateObj.loan +"</td>" +
+                            "</tr>";
+                        $("#estateLoanTable").append(loanInfo);
+
+                        var show = "<tr style=\"font-size: 10px; color: red\">" +
+                            "<td>"+ estateObj.name +"</td>" +
+                            "<td>"+ estateObj.monthCashFlow +"</td>" +
+                            "</tr>";
+                        $("#estateShow").append(show);
+                    }
+                }
+
+            });
+
+            if (stop === true) {
+                return;
+            }
+
+            $passiveIncome.attr('value', passiveIncome);
+            $totalIncome.attr('value', totalIncome);
+            $totalCashFlow.attr('value', totalCashFlow);
+
+            $estateName.remove();
+            $estateLoan.remove();
+            $downPayment.remove();
+            $totalValue.remove();
+            $monthCashFlow.remove();
+
+        }
+
+        /**
+         * 添加房产/企业输入框
+         */
         function addState(){
             var input1 = document.createElement('input');
             input1.setAttribute('type', 'text');
             input1.setAttribute('name', 'estateName');
-            input1.setAttribute('style','color: red; font-size: 10px; width: 50px');
+            input1.setAttribute('id', 'estateName');
+            input1.setAttribute('placeHolder','输入房产/企业名称');
+            input1.setAttribute('style','color: red; font-size: 10px');
 
             var input2 = document.createElement('input');
             input2.setAttribute('type', 'text');
+            input2.setAttribute('id', 'downPayment');
             input2.setAttribute('name', 'downPayment');
-            input2.setAttribute('style','color: red; margin-left: 65px; font-size: 10px; width: 50px')
+            input2.setAttribute('placeHolder','输入首付金额');
+            input2.setAttribute('style','color: red; margin-left: 1px; font-size: 10px');
 
             var input3 = document.createElement('input');
             input3.setAttribute('type', 'text');
-            input3.setAttribute('name', 'totalValue');
-            input3.setAttribute('style','color: red; margin-left: 40px; font-size: 10px; width: 50px')
+            input3.setAttribute('id', 'totalValue');
+            input3.setAttribute('placeHolder','输入总价金额');
+            input3.setAttribute('style','color: red; margin-left: 1px; font-size: 10px');
 
             var input6 = document.createElement('input');
             input6.setAttribute('type', 'text');
+            input6.setAttribute('id', 'monthCashFlow');
             input6.setAttribute('name', 'monthCashFlow');
             input6.setAttribute('placeHolder', '请输入月现金流');
-            input6.setAttribute('style','color: red; margin-left: 50px; font-size: 13px; width: 100px; font-weight: bold')
+            input6.setAttribute('style','color: red; margin-left: 1px; font-size: 13px; font-weight: bold');
 
             var states = document.getElementById("estates");
             states.insertBefore(input1,null);
@@ -407,9 +571,11 @@
 
             var input5 = document.createElement('input');
             input5.setAttribute('type', 'text');
+            input5.setAttribute('id', 'estateLoan');
             input5.setAttribute('name', 'estateLoan');
-            input5.setAttribute('style','color: red; margin-left: 150px; font-size: 10px; width: 50px')
-            var stateLoan = document.getElementById("estateLoan");
+            input5.setAttribute('placeHolder','输入贷款金额');
+            input5.setAttribute('style','color: red; margin-left: 100px; font-size: 10px')
+            var stateLoan = document.getElementById("estateLoans");
             stateLoan.insertBefore(input4,null);
             stateLoan.insertBefore(input5,null);
 
@@ -428,6 +594,7 @@
     </script>
 
 
+    <!-- 金额相加demo -->
     <script>
         function addSum() {
             var salary = parseInt($("#salary").val()) + 1000;

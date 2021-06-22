@@ -35,6 +35,15 @@ public class BaseVo<T> {
         return baseVo;
     }
 
+    public static<T> BaseVo<T> fail(T data){
+
+        BaseVo<T> baseVo = new BaseVo<>();
+        baseVo.setRespCode(RespConstant.SYSTEM_FAIL_CODE);
+        baseVo.setRespMsg(RespConstant.SYSTEM_FAIL_CODE_MSG);
+        baseVo.setData(data);
+        return baseVo;
+    }
+
     public String getRespCode() {
         return respCode;
     }

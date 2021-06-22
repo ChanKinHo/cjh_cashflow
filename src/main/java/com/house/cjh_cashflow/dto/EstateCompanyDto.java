@@ -4,7 +4,7 @@ public class EstateCompanyDto {
 
     private Long id;
 
-    private int ratTableId;
+    private Long ratTableId;
 
     private String roomCode;
 
@@ -46,11 +46,11 @@ public class EstateCompanyDto {
         this.name = name;
     }
 
-    public int getRatTableId() {
+    public Long getRatTableId() {
         return ratTableId;
     }
 
-    public void setRatTableId(int ratTableId) {
+    public void setRatTableId(Long ratTableId) {
         this.ratTableId = ratTableId;
     }
 
@@ -100,6 +100,9 @@ public class EstateCompanyDto {
 
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public EstateCompanyDto() {
     }
 
     public EstateCompanyDto(String name, long monthCashFlow, long downPayment, long totalCost, long loan) {

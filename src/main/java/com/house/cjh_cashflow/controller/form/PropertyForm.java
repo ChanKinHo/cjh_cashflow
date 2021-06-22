@@ -24,9 +24,9 @@ public class PropertyForm {
 
     private String downPayment;
 
-    private String totalValue;
+    private String estateTotalValue;
 
-    private String monthCashFlow;
+    private String estateMonthCashFlow;
 
     private String estateLoan;
 
@@ -118,27 +118,27 @@ public class PropertyForm {
         this.downPayment = downPayment;
     }
 
-    public String getTotalValue() {
-        return totalValue;
-    }
-
-    public void setTotalValue(String totalValue) {
-        this.totalValue = totalValue;
-    }
-
-    public String getMonthCashFlow() {
-        return monthCashFlow;
-    }
-
-    public void setMonthCashFlow(String monthCashFlow) {
-        this.monthCashFlow = monthCashFlow;
-    }
-
     public String getEstateLoan() {
         return estateLoan;
     }
 
     public void setEstateLoan(String estateLoan) {
         this.estateLoan = estateLoan;
+    }
+
+    public String getEstateTotalValue() {
+        return estateTotalValue;
+    }
+
+    public void setEstateTotalValue(String estateTotalValue) {
+        this.estateTotalValue = estateTotalValue;
+    }
+
+    public String getEstateMonthCashFlow() {
+        return estateMonthCashFlow;
+    }
+
+    public void setEstateMonthCashFlow(String estateMonthCashFlow) {
+        this.estateMonthCashFlow = estateMonthCashFlow;
     }
 }
