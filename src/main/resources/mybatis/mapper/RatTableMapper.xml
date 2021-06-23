@@ -97,4 +97,46 @@
             and player_id = #{playerId}
         </if>
     </update>
+
+    <update id="updateFixLoans" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
+        update rat_table set month_cash_flow = #{monthCashFlow},total_pay = #{totalPay}
+        <if test="houseLoan != null and houseLoan != ''">
+            ,house_loan = #{houseLoan}
+        </if>
+        <if test="housePay != null and housePay != ''">
+            ,house_pay = #{housePay}
+        </if>
+        <if test="educationLoan != null and educationLoan != ''">
+            ,education_loan = #{educationLoan}
+        </if>
+        <if test="educationPay != null and educationPay != ''">
+            ,education_pay = #{educationPay}
+        </if>
+        <if test="carLoan != null and carLoan != ''">
+            ,car_loan = #{carLoan}
+        </if>
+        <if test="carPay != null and carPay != ''">
+            ,car_pay = #{carPay}
+        </if>
+        <if test="creditCard != null and creditCard != ''">
+            ,credit_card = #{creditCard}
+        </if>
+        <if test="creditCardPay != null and creditCardPay != ''">
+            ,credit_card_pay = #{creditCardPay}
+        </if>
+        <if test="extraDebt != null and extraDebt != ''">
+            ,extra_debt = #{extraDebt}
+        </if>
+        <if test="extraPay != null and extraPay != ''">
+            ,extra_pay = #{extraPay}
+        </if>
+
+        where room_code = #{roomCode}
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
+    </update>
 </mapper>

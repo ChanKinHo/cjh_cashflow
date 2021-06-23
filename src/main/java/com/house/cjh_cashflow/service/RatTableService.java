@@ -15,4 +15,6 @@ public interface RatTableService {
     void borrowBank(RatTableForm form);
 
     void makeChild(RatTableForm form);
+
+    void backFixLoans(RatTableForm form);
 }

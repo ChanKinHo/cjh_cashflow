@@ -27,4 +27,6 @@ public interface RatTableDao {
     void updateBanKByRatId(RatTableForm form);
 
     void updateChildInfoByRatId(RatTableForm form);
+
+    void updateFixLoans(RatTableForm form);
 }

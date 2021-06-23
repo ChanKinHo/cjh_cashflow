@@ -51,11 +51,11 @@
         <br><div style="font-weight: bold;margin-top: 5px; font-size: 18px">支出</div>
         <div>----------------------------------------------</div>
         <div>个人所得税: <input th:value="${ratObj.taxPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
-        <div>房屋按揭款: <input th:value="${ratObj.housePay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
-        <div>教育按揭款: <input th:value="${ratObj.educationPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
-        <div>购车按揭款: <input th:value="${ratObj.carPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
-        <div>信用卡利息: <input th:value="${ratObj.creditCardPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
-        <div>额外债务支出: <input th:value="${ratObj.extraPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>房屋按揭款: <input id="housePay" th:value="${ratObj.housePay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>教育按揭款: <input id="educationPay" th:value="${ratObj.educationPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>购车按揭款: <input id="carPay" th:value="${ratObj.carPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>信用卡利息: <input id="creditCardPay" th:value="${ratObj.creditCardPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
+        <div>额外债务支出: <input id="extraPay" th:value="${ratObj.extraPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
         <div>其他生活支出: <input th:value="${ratObj.otherPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
         <div>孩子相关支出: <input id="childPay" th:value="${ratObj.childrenPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
         <div>银行贷款信息: <input id="bankPay" th:value="${ratObj.bankPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
@@ -126,11 +126,11 @@
         <div style="float: left">
             <div style="font-weight: bold; font-size: 18px; margin-top: 10px">负债</div>
             <div>--------------------------------------</div>
-            <div>房屋贷款: <input th:value="${ratObj.houseLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
-            <div>教育贷款: <input th:value="${ratObj.educationLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
-            <div>购车贷款: <input th:value="${ratObj.carLoan}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
-            <div>信用卡透支: <input th:value="${ratObj.creditCard}" type="text" disabled style="margin-left: 130px; width: 50px" value="0"></div>
-            <div>额外负债: <input th:value="${ratObj.extraDebt}" type="text" disabled style="margin-left: 150px; width: 50px" value="0"></div>
+            <div>房屋贷款: <input id="houseLoan" th:value="${ratObj.houseLoan}" type="text" disabled style="margin-left: 100px; width: 50px" value="0"><input onclick="backHouseLoan()" type="button" value="还清"></div>
+            <div>教育贷款: <input id="educationLoan" th:value="${ratObj.educationLoan}" type="text" disabled style="margin-left: 100px; width: 50px" value="0"><input onclick="backEducationLoan()" type="button" value="还清"></div>
+            <div>购车贷款: <input id="carLoan" th:value="${ratObj.carLoan}" type="text" disabled style="margin-left: 100px; width: 50px" value="0"><input onclick="backCarLoan()" type="button" value="还清"></div>
+            <div>信用卡透支: <input id="creditCard" th:value="${ratObj.creditCard}" type="text" disabled style="margin-left: 90px; width: 50px" value="0"><input onclick="backCreditCard()" type="button" value="还清"></div>
+            <div>额外负债: <input id="extraDebt" th:value="${ratObj.extraDebt}" type="text" disabled style="margin-left: 100px; width: 50px" value="0"><input onclick="backExtraLoan()" type="button" value="还清"></div>
 
             <br>
             <div id="estateLoans">
@@ -171,6 +171,264 @@
 
 
 </body>
+    <script>
+        /**
+         * 还额外贷
+         */
+        function backExtraLoan() {
+
+            var $extraDebt = $("#extraDebt");
+            var $extraPay = $("#extraPay");
+
+            if ($extraDebt.val() === "0") {
+                alert("该款项已还清");
+                return;
+            }
+
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var totalCost = parseInt($totalCost.val()) - parseInt($extraPay.val());
+            var totalCashFlow = parseInt($totalCashFlow.val()) + parseInt($extraPay.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "extraDebt":"0", "extraPay":"0", "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/backFixLoans",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $extraPay.attr("value","0");
+            $extraDebt.attr("value","0");
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+        /**
+         * 还信用卡
+         */
+        function backCreditCard() {
+
+            var $creditCard = $("#creditCard");
+            var $creditCardPay = $("#creditCardPay");
+
+            if ($creditCard.val() === "0") {
+                alert("该款项已还清");
+                return;
+            }
+
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var totalCost = parseInt($totalCost.val()) - parseInt($creditCardPay.val());
+            var totalCashFlow = parseInt($totalCashFlow.val()) + parseInt($creditCardPay.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "creditCard":"0", "creditCardPay":"0", "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/backFixLoans",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $creditCardPay.attr("value","0");
+            $creditCard.attr("value","0");
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+        /**
+         * 还教育贷
+         */
+        function backEducationLoan() {
+
+            var $educationLoan = $("#educationLoan");
+            var $educationPay = $("#educationPay");
+
+            if ($educationLoan.val() === "0") {
+                alert("该款项已还清");
+                return;
+            }
+
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var totalCost = parseInt($totalCost.val()) - parseInt($educationPay.val());
+            var totalCashFlow = parseInt($totalCashFlow.val()) + parseInt($educationPay.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "educationLoan":"0", "educationPay":"0", "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/backFixLoans",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $educationPay.attr("value","0");
+            $educationLoan.attr("value","0");
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+
+
+        /**
+         * 还车贷
+         */
+        function backCarLoan() {
+
+            var $carLoan = $("#carLoan");
+            var $carPay = $("#carPay");
+
+            if ($carLoan.val() === "0") {
+                alert("该款项已还清");
+                return;
+            }
+
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var totalCost = parseInt($totalCost.val()) - parseInt($carPay.val());
+            var totalCashFlow = parseInt($totalCashFlow.val()) + parseInt($carPay.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "carLoan":"0", "carPay":"0", "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/backFixLoans",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $carPay.attr("value","0");
+            $carLoan.attr("value","0");
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+        /**
+         * 还房贷
+         */
+        function backHouseLoan() {
+
+            var $houseLoan = $("#houseLoan");
+            var $housePay = $("#housePay");
+
+            if ($houseLoan.val() === "0") {
+                alert("该款项已还清");
+                return;
+            }
+
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var totalCost = parseInt($totalCost.val()) - parseInt($housePay.val());
+            var totalCashFlow = parseInt($totalCashFlow.val()) + parseInt($housePay.val());
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "houseLoan":"0", "housePay":"0", "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/backFixLoans",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $housePay.attr("value","0");
+            $houseLoan.attr("value","0");
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+    </script>
     <script>
         function makeChild() {
             //小孩个数

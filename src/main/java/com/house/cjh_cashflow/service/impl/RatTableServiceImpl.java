@@ -68,4 +68,10 @@ public class RatTableServiceImpl implements RatTableService {
     public void makeChild(RatTableForm form) {
         ratTableDao.updateChildInfoByRatId(form);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void backFixLoans(RatTableForm form) {
+        ratTableDao.updateFixLoans(form);
+    }
 }

@@ -90,4 +90,16 @@ public class RatController {
         return BaseVo.succ();
     }
 
+    @RequestMapping(value = "/rat/backFixLoans")
+    @ResponseBody
+    public BaseVo backFixLoans(@RequestBody RatTableForm form){
+        try {
+            ratTableService.backFixLoans(form);
+        } catch (Exception e){
+            logger.error("RatController borrowBank err",e);
+            return BaseVo.fail();
+        }
+
+        return BaseVo.succ();
+    }
 }
