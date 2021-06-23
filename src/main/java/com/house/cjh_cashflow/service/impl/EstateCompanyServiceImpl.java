@@ -50,4 +50,17 @@ public class EstateCompanyServiceImpl implements EstateCompanyService {
 
         return estateCompanyDto;
     }
+
+    @Override
+    public void sellEstateById(String estateId, String ratId, String roomCode, String passiveIncome, String totalIncome, String totalCashFlow) {
+        RatTableForm ratTableForm = new RatTableForm();
+        ratTableForm.setPassiveIncome(passiveIncome);
+        ratTableForm.setTotalIncome(totalIncome);
+        ratTableForm.setMonthCashFlow(totalCashFlow);
+        ratTableForm.setId(Long.parseLong(ratId));
+        ratTableForm.setRoomCode(roomCode);
+        ratTableDao.updateRatSummary(ratTableForm);
+
+        estateCompanyDao.sellEstateById(estateId,ratId,roomCode);
+    }
 }

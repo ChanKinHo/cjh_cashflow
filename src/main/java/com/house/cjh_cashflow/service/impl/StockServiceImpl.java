@@ -65,6 +65,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void sellStockById(String stockId, String ratId, String roomCode,
                               String passiveIncome, String totalIncome, String totalCashFlow) {
 

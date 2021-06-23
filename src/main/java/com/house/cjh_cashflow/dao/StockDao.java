@@ -1,7 +1,6 @@
 package com.house.cjh_cashflow.dao;
 
 import com.house.cjh_cashflow.controller.form.PropertyForm;
-import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dto.StockDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

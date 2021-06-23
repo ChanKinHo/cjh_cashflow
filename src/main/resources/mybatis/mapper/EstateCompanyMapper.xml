@@ -19,8 +19,19 @@
     </select>
 
     <insert id="addOneItemByRatId" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm" useGeneratedKeys="true" keyProperty="estateCompanyId">
-        insert into estate_company(rat_table_id,name,down_payment,total_cost
-        ,loan,month_cash_flow,type,created_date) values (#{ratId}, #{estateName},#{downPayment}
-        ,#{estateTotalValue},#{estateLoan},#{estateMonthCashFlow},"1",now());
+        insert into estate_company(rat_table_id,name,room_code,down_payment,total_cost
+        ,loan,month_cash_flow,type,created_date) values (#{ratId}, #{estateName}
+        ,#{roomCode},#{downPayment},#{estateTotalValue},#{estateLoan}
+        ,#{estateMonthCashFlow},"1",now());
     </insert>
+
+    <delete id="sellEstateById" parameterType="java.lang.String">
+        delete from estate_company where id = #{id}
+        <if test="ratId != null and ratId != ''">
+            and rat_table_id = #{ratId}
+        </if>
+        <if test="roomCode != null and roomCode != ''">
+            and room_code = #{roomCode}
+        </if>
+    </delete>
 </mapper>

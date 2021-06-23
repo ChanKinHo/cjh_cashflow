@@ -11,4 +11,8 @@ public interface RatTableService {
     Long insertRat(RatTableForm ratTableForm);
 
     RatTableDto findExactRatInfo(String playerId, String roomCode, String ratId, String playerName);
+
+    void borrowBank(RatTableForm form);
+
+    void makeChild(RatTableForm form);
 }

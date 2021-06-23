@@ -13,4 +13,6 @@ public interface EstateCompanyDao {
     List<EstateCompanyDto> findByRatId(@Param(value = "ratId") Long ratId);
 
     void addOneItemByRatId(PropertyForm property);
+
+    void sellEstateById(@Param(value = "id") String estateId, @Param(value = "ratId")String ratId, @Param(value = "roomCode")String roomCode);
 }

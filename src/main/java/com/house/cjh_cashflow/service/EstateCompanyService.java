@@ -6,4 +6,6 @@ import com.house.cjh_cashflow.exception.ServiceException;
 
 public interface EstateCompanyService {
     EstateCompanyDto saveEstateInfo(RatTableForm form) throws ServiceException;
+
+    void sellEstateById(String estateId, String ratId, String roomCode, String passiveIncome, String totalIncome, String totalCashFlow);
 }

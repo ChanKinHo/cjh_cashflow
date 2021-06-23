@@ -44,6 +44,12 @@ public class RatTableServiceImpl implements RatTableService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    public void borrowBank(RatTableForm form) {
+        ratTableDao.updateBanKByRatId(form);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public RatTableForm getInitRatCareer(String career, long playerId, String roomCode) {
         return ratTableDao.getInitRatCareer(career);
     }
@@ -57,6 +63,9 @@ public class RatTableServiceImpl implements RatTableService {
     }
 
 
-
-
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void makeChild(RatTableForm form) {
+        ratTableDao.updateChildInfoByRatId(form);
+    }
 }

@@ -1,6 +1,8 @@
 package com.house.cjh_cashflow.controller;
 
+import com.house.cjh_cashflow.constant.BaseVo;
 import com.house.cjh_cashflow.constant.RespConstant;
+import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.service.RatTableService;
 import org.apache.commons.lang.StringUtils;
@@ -8,8 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.annotation.Resource;
 
 @Controller
@@ -55,6 +60,34 @@ public class RatController {
 
         map.put(RAT_OBJ,ratTableDto);
         return "ratTable";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/rat/borrowOrBackBank")
+    public BaseVo borrowOrBackBank(@RequestBody RatTableForm form){
+
+        try {
+            ratTableService.borrowBank(form);
+        } catch (Exception e){
+            logger.error("RatController borrowBank err",e);
+            return BaseVo.fail();
+        }
+
+        return BaseVo.succ();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/rat/makeChild")
+    public BaseVo makeChild(@RequestBody RatTableForm form){
+
+        try {
+            ratTableService.makeChild(form);
+        } catch (Exception e){
+            logger.error("RatController borrowBank err",e);
+            return BaseVo.fail();
+        }
+
+        return BaseVo.succ();
     }
 
 }

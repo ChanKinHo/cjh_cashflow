@@ -73,4 +73,28 @@
             and player_id = #{playerId}
         </if>
     </update>
+
+    <update id="updateBanKByRatId" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
+        update rat_table set month_cash_flow = #{monthCashFlow}
+        ,total_pay = #{totalPay} ,bank_pay = #{bankPay} ,bank_loan = #{bankLoan}
+        where room_code = #{roomCode}
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
+    </update>
+
+    <update id="updateChildInfoByRatId" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
+        update rat_table set month_cash_flow = #{monthCashFlow}
+        ,total_pay = #{totalPay} ,child_count = #{childCount} ,children_pay = #{childrenPay}
+        where room_code = #{roomCode}
+        <if test="id != null and id != ''">
+            and id = #{id}
+        </if>
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
+    </update>
 </mapper>

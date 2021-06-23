@@ -57,17 +57,17 @@
         <div>信用卡利息: <input th:value="${ratObj.creditCardPay}" type="text" disabled style="margin-left: 200px; width: 50px" value="0"></div>
         <div>额外债务支出: <input th:value="${ratObj.extraPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
         <div>其他生活支出: <input th:value="${ratObj.otherPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
-        <div>孩子相关支出: <input th:value="${ratObj.childrenPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
-        <div>银行贷款信息: <input th:value="${ratObj.bankPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>孩子相关支出: <input id="childPay" th:value="${ratObj.childrenPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
+        <div>银行贷款信息: <input id="bankPay" th:value="${ratObj.bankPay}" type="text" disabled style="margin-left: 185px; width: 50px" value="0"></div>
     </div>
 
     <div style="float: left; border: 1px solid; margin-left: 10px">
         <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 50px">被动收入(美元): <input id="passiveIncome" th:value="${ratObj.passiveIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
         <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 60px">总收入(美元): <input id="totalIncome" th:value="${ratObj.totalIncome}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
         <div style="margin-left: 50px; margin-top: 20px">----------------------------------</div>
-        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 30px; color: blue">孩子个数: <input th:value="${ratObj.childCount}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 30px"></div>
-        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 20px; color: blue">每个孩子支出(美元): <input th:value="${ratObj.payPerChild}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 10px"></div>
-        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 30px">总支出(美元): <input th:value="${ratObj.totalPay}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
+        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 30px; color: blue">孩子个数: <input id="childCount" th:value="${ratObj.childCount}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 30px"><input onclick="makeChild()" type="button" value="生一个"></div>
+        <div style="font-weight: bold; font-size: 15px; margin-left: 50px; margin-top: 20px; color: blue">每个孩子支出(美元): <input id="childCost" th:value="${ratObj.payPerChild}" type="text" value="0" disabled style="font-weight: bold; font-size: 15px; width: 50px; color: blue; margin-left: 10px"></div>
+        <div style="font-weight: bold; font-size: 20px; margin-left: 60px; margin-top: 30px">总支出(美元): <input id="totalCost" th:value="${ratObj.totalPay}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 80px"></div>
         <div style="font-weight: bold; font-size: 20px; margin-left: 50px; margin-top: 35px">月现金流(美元): <input id="totalCashFlow" th:value="${ratObj.monthCashFlow}" type="text" value="0" disabled style="font-weight: bold; font-size: 20px; width: 70px"></div>
     </div>
 
@@ -115,7 +115,6 @@
                         <td th:text="${estate.ratTableId}" style="visibility: hidden"></td>
                         <td th:text="${estate.roomCode}" style="visibility: hidden"></td>
                         <td th:text="${estate.monthCashFlow}" style="visibility: hidden"></td>
-                        <td th:text="${estate.loan}" style="visibility: hidden"></td>
                         <td><a href="#" onclick="sellEstate(this)">出售</a></td>
                     </tr>
                 </table>
@@ -150,9 +149,9 @@
             <br>
             <div style="font-size: 15px">银行贷款:</div>
             <div id="bank">
-                <div style="font-size: 13px; color: red">当前借款: <input th:value="${ratObj.bankLoan}" type="text" value="20000" style="color: red; margin-left: 50px; font-size: 10px; width: 50px" disabled></div>
+                <div style="font-size: 13px; color: red">当前借款: <input id="bankLoan" th:value="${ratObj.bankLoan}" type="text" value="20000" style="color: red; margin-left: 50px; font-size: 10px; width: 50px" disabled></div>
             </div>
-            <select id="bankLoan">
+            <select id="bankMoney">
                 <option value="0">--请选择--</option>
                 <option value="1000">1000</option>
                 <option value="2000">2000</option>
@@ -161,7 +160,8 @@
                 <option value="5000">5000</option>
                 <option value="6000">6000</option>
             </select>
-            <input type="button" id="bankBtn" value="点击借款" onclick="addBank()">
+            <input type="button" value="点击借款" onclick="borrowBank()">
+            <input type="button" value="点击还款" onclick="backBank()">
         </div>
     </div><br>
         <input th:value="${ratObj.roomCode}" id="roomCode" type="hidden">
@@ -171,6 +171,169 @@
 
 
 </body>
+    <script>
+        function makeChild() {
+            //小孩个数
+            var childCost = parseInt($("#childCost").val());
+            var $childCount = $("#childCount");
+
+            var childCount = parseInt($childCount.val()) + 1;
+            if (childCount > 3) {
+                alert("你已结扎");
+                return;
+            }
+
+            var $childPay = $("#childPay");
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var childPay = parseInt($childPay.val()) + childCost;
+            var totalCost = parseInt($totalCost.val()) + childCost;
+            var totalCashFlow = parseInt($totalCashFlow.val()) - childCost;
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "childrenPay":childPay, "childCount":childCount, "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/makeChild",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $childCount.attr("value",childCount);
+            $childPay.attr("value",childPay);
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+
+        }
+    </script>
+
+    <script>
+        /**
+         * 还钱
+         */
+        function backBank() {
+            var bankMoney = parseInt($("#bankMoney").val());
+
+            var $bankLoan = $("#bankLoan");
+            var bankLoanNum = parseInt($bankLoan.val());
+
+            if (bankMoney > bankLoanNum || bankMoney === 0) {
+                alert("你没借那么多，兄逮");
+                return;
+            }
+
+            var $bankPay = $("#bankPay");
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var bankLoan = bankLoanNum - bankMoney;
+            var bankPay = parseInt($bankPay.val()) - bankMoney*0.1 ;
+            var totalCost = parseInt($totalCost.val()) - bankMoney*0.1;
+            var totalCashFlow = parseInt($totalCashFlow.val()) + bankMoney*0.1;
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "bankLoan":bankLoan, "bankPay":bankPay, "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+
+            $.ajax({
+                url: "/rat/borrowOrBackBank",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $bankLoan.attr("value",bankLoan);
+            $bankPay.attr("value",bankPay);
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+        /**
+         * 借钱
+         */
+        function borrowBank() {
+            var bankMoney = parseInt($("#bankMoney").val());
+            if (bankMoney === 0) {
+               alert("请选择需要借的钱");
+               return;
+            }
+
+            var $bankLoan = $("#bankLoan");
+            var $bankPay = $("#bankPay");
+            var $totalCost = $("#totalCost");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var bankLoan = bankMoney + parseInt($bankLoan.val());
+            var bankPay = bankMoney*0.1 + parseInt($bankPay.val());
+            var totalCost = parseInt($totalCost.val()) + bankMoney*0.1;
+            var totalCashFlow = parseInt($totalCashFlow.val()) - bankMoney*0.1;
+
+            var ratId = $("#ratId").val();
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            var requestParam = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+                "bankLoan":bankLoan, "bankPay":bankPay, "monthCashFlow":totalCashFlow,
+                "totalPay":totalCost};
+            $.ajax({
+                url: "/rat/borrowBank",
+                type: "POST",
+                async: true,
+                contentType: "application/json",
+                data: JSON.stringify(requestParam),
+                dataType: 'json',
+                success: function (result) {
+                    var code = result.respCode;
+                    var msg = result.respMsg;
+
+                    if (code !== "000000") {
+                        alert(code + "," + msg);
+                        window.location.reload();
+                    }
+                }
+            });
+
+            $bankLoan.attr("value",bankLoan);
+            $bankPay.attr("value",bankPay);
+            $totalCost.attr("value",totalCost);
+            $totalCashFlow.attr("value",totalCashFlow);
+        }
+
+    </script>
+
     <script type="text/javascript">
         /**
          * 出售股票
@@ -189,7 +352,7 @@
             var $totalIncome = $("#totalIncome");
             var $totalCashFlow = $("#totalCashFlow");
 
-            var passiveIncome =parseInt($passiveIncome.val());
+            var passiveIncome =parseInt($passiveIncome.val()) - interestNum;
             var totalIncome = parseInt($totalIncome.val())- interestNum;
             var totalCashFlow = parseInt($totalCashFlow.val()) - interestNum;
 
@@ -347,6 +510,12 @@
             $stockNum.remove();
             $stockValue.remove();
             $interest.remove();
+
+            var btn1 = document.getElementById("stockBtn");
+            btn1.removeAttribute('disabled');
+
+            var btn2 = document.getElementById("estateBtn");
+            btn2.removeAttribute('disabled');
         }
 
         /**
@@ -396,6 +565,74 @@
     </script>
 
     <script type="text/javascript">
+        /**
+         * 出售房产
+         * @param obj
+         */
+        function sellEstate(obj) {
+            var tds = $(obj).parent("td").parent("tr").find("td");
+            var id = tds[3].innerHTML;
+            var ratId = tds[4].innerHTML;
+            var roomCode = tds[5].innerHTML;
+            var monthCashFlow = tds[6].innerHTML;
+
+            var monthCashFlowtNum = parseInt(monthCashFlow);
+
+            var $passiveIncome = $("#passiveIncome");
+            var $totalIncome = $("#totalIncome");
+            var $totalCashFlow = $("#totalCashFlow");
+
+            var passiveIncome =parseInt($passiveIncome.val()) - monthCashFlowtNum;
+            var totalIncome = parseInt($totalIncome.val())- monthCashFlowtNum;
+            var totalCashFlow = parseInt($totalCashFlow.val()) - monthCashFlowtNum;
+
+            var myForm = document.createElement("form");
+            document.body.appendChild(myForm);
+
+            var param1 = document.createElement("input");
+            param1.setAttribute("name","estateId");
+            param1.setAttribute("value",id);
+            param1.setAttribute("type","hidden");
+
+            var param2 = document.createElement("input");
+            param2.setAttribute("name","ratId");
+            param2.setAttribute("value",ratId);
+            param2.setAttribute("type","hidden");
+
+            var param3 = document.createElement("input");
+            param3.setAttribute("name","roomCode");
+            param3.setAttribute("value",roomCode);
+            param3.setAttribute("type","hidden");
+
+            var param4 = document.createElement("input");
+            param4.setAttribute("name","passiveIncome");
+            param4.setAttribute("value",passiveIncome);
+            param4.setAttribute("type","hidden");
+
+            var param5 = document.createElement("input");
+            param5.setAttribute("name","totalIncome");
+            param5.setAttribute("value",totalIncome);
+            param5.setAttribute("type","hidden");
+
+            var param6 = document.createElement("input");
+            param6.setAttribute("name","totalCashFlow");
+            param6.setAttribute("value",totalCashFlow);
+            param6.setAttribute("type","hidden");
+
+            myForm.appendChild(param1);
+            myForm.appendChild(param2);
+            myForm.appendChild(param3);
+            myForm.appendChild(param4);
+            myForm.appendChild(param5);
+            myForm.appendChild(param6);
+
+            myForm.method = "post";
+            myForm.action = "/estate/sellEstate";
+            myForm.target = "";
+            myForm.submit();
+        }
+
+
         /**
          * 购买房产
          */
@@ -523,6 +760,12 @@
             $downPayment.remove();
             $totalValue.remove();
             $monthCashFlow.remove();
+
+            var btn1 = document.getElementById("stockBtn");
+            btn1.removeAttribute('disabled');
+
+            var btn2 = document.getElementById("estateBtn");
+            btn2.removeAttribute('disabled');
 
         }
 

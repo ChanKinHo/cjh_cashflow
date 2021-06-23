@@ -23,4 +23,8 @@ public interface RatTableDao {
                                 @Param(value = "playerName") String playerName);
 
     void updateRatSummary(RatTableForm form);
+
+    void updateBanKByRatId(RatTableForm form);
+
+    void updateChildInfoByRatId(RatTableForm form);
 }
