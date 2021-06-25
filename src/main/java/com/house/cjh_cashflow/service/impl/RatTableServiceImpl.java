@@ -2,12 +2,14 @@ package com.house.cjh_cashflow.service.impl;
 
 import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dao.EstateCompanyDao;
+import com.house.cjh_cashflow.dao.PlayerDao;
 import com.house.cjh_cashflow.dao.RatTableDao;
 import com.house.cjh_cashflow.dao.StockDao;
 import com.house.cjh_cashflow.dto.EstateCompanyDto;
 import com.house.cjh_cashflow.dto.RatTableDto;
 import com.house.cjh_cashflow.dto.StockDto;
 import com.house.cjh_cashflow.service.RatTableService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,9 @@ public class RatTableServiceImpl implements RatTableService {
 
     @Resource
     StockDao stockDao;
+
+    @Resource
+    PlayerDao playerDao;
 
     @Resource
     EstateCompanyDao estateCompanyDao;
@@ -73,5 +78,18 @@ public class RatTableServiceImpl implements RatTableService {
     @Transactional(rollbackFor = Exception.class)
     public void backFixLoans(RatTableForm form) {
         ratTableDao.updateFixLoans(form);
+    }
+
+    @Override
+    public boolean judgeIsRich(String playerId, String playerName, String roomCode) {
+
+        String isRich = playerDao.checkRich(playerId,playerName,roomCode);
+
+        if (StringUtils.isBlank(isRich) || "0".equals(isRich)) {
+            return false;
+
+        }
+
+        return true;
     }
 }

@@ -13,6 +13,7 @@
     <input type="button" value="变回穷逼" onclick="backRat()">
     <input th:value="${richObj.roomCode}" id="roomCode" type="hidden">
     <input th:value="${richObj.playerId}" id="playerId" type="hidden">
+    <input th:value="${richObj.id}" id="richId" type="hidden">
     <br>
     <br>
     <div style="border: 1px solid; width: 500px">
@@ -27,13 +28,13 @@
         <div style="text-align: center; font-size: 18px; font-weight: bold; border: 1px solid; color: darkblue">获胜条件</div>
         <div>你的初始"现金流量日"收入 $:<input th:value="${richObj.initCashFlow}" disabled type="text" value="0" style="margin-left: 80px"></div>
         <div>"快车道"所需要增加的现金流量      ----------- $50000</div>
-        <div>获胜"现金流量日"收入 $:<input th:value="${richObj.winCashFlow}" type="text" value="0" style="margin-left: 110px"></div>
+        <div>获胜"现金流量日"收入 $:<input th:value="${richObj.winCashFlow}" disabled type="text" value="0" style="margin-left: 110px"></div>
     </div>
 
     <br>
-    <div style="border: 1px solid; width: 500px">
+    <div id="estateDiv" style="border: 1px solid; width: 500px">
         <div style="text-align: center; font-size: 18px; font-weight: bold; border: 1px solid; color: darkblue">月现金流记录</div>
-        <div style="font-size: 18px">当前"现金流量日"收入$:<input th:value="${richObj.richCashFlow}" disabled type="text" value="0" style="margin-left: 20px; font-size: 18px; font-weight: bold; color: red"></div>
+        <div style="font-size: 18px">当前"现金流量日"收入$:<input id="richCashFlow" th:value="${richObj.richCashFlow}" disabled type="text" value="0" style="margin-left: 20px; font-size: 18px; font-weight: bold; color: red"></div>
 
         <br>
         <table id="" border="1">
@@ -47,14 +48,117 @@
             </tr>
         </table>
     </div>
-    <button onclick="">新增投资企业</button>
+    <button id="estateBtn" onclick="addRichEstate()">新增投资企业</button>
+    <button onclick="investRichEstate()">投资该企业</button>
+
+
 
 </body>
+
+    <script>
+        function investRichEstate() {
+
+            var estateName = $("#estateName").val();
+            var monthCashFlow = $("#monthCashFlow").val();
+
+            if (estateName === undefined || monthCashFlow === undefined || estateName === '' || monthCashFlow === ''){
+                alert("产业名称、月现金流为空");
+                return;
+            }
+
+            var pos = /^[0-9]*[1-9][0-9]*$/;
+            var neg = /^-[0-9]*[1-9][0-9]*$/;
+            if (!pos.test(monthCashFlow) && !neg.test(monthCashFlow) && monthCashFlow !== '0'){
+                alert("月现金流请输入整数");
+                return;
+            }
+
+            var richCashFlow = parseInt(monthCashFlow) + parseInt($("#richCashFlow").val())
+
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+            var richId = $("#richId").val();
+
+            var myForm = document.createElement("form");
+            document.body.appendChild(myForm);
+
+            var param1 = document.createElement("input");
+            param1.setAttribute("name","playerId");
+            param1.setAttribute("value",playerId);
+            param1.setAttribute("type","hidden");
+
+            var param2 = document.createElement("input");
+            param2.setAttribute("name","roomCode");
+            param2.setAttribute("value",roomCode);
+            param2.setAttribute("type","hidden");
+
+            var param3 = document.createElement("input");
+            param3.setAttribute("name","richCashFlow");
+            param3.setAttribute("value",richCashFlow);
+            param3.setAttribute("type","hidden");
+
+            var param6 = document.createElement("input");
+            param6.setAttribute("name","estateMonthCashFlow");
+            param6.setAttribute("value",monthCashFlow);
+            param6.setAttribute("type","hidden");
+
+            var param8 = document.createElement("input");
+            param8.setAttribute("name","estateName");
+            param8.setAttribute("value",estateName);
+            param8.setAttribute("type","hidden");
+
+            var param9 = document.createElement("input");
+            param9.setAttribute("name","richId");
+            param9.setAttribute("value",richId);
+            param9.setAttribute("type","hidden");
+
+            myForm.appendChild(param1);
+            myForm.appendChild(param2);
+            myForm.appendChild(param3);
+            myForm.appendChild(param8);
+            myForm.appendChild(param6);
+            myForm.appendChild(param9);
+
+            myForm.method = "post";
+            myForm.action = "/estate/addRichEstate";
+            myForm.target = "";
+            myForm.submit();
+
+        }
+
+
+        function addRichEstate() {
+            var input1 = document.createElement('input');
+            input1.setAttribute('type', 'text');
+            input1.setAttribute('name', 'estateName');
+            input1.setAttribute('id', 'estateName');
+            input1.setAttribute('placeHolder','输入房产/企业名称');
+            input1.setAttribute('style','color: red; font-size: 10px');
+
+            var input6 = document.createElement('input');
+            input6.setAttribute('type', 'text');
+            input6.setAttribute('id', 'monthCashFlow');
+            input6.setAttribute('name', 'monthCashFlow');
+            input6.setAttribute('placeHolder', '请输入月现金流');
+            input6.setAttribute('style','color: red; margin-left: 1px; font-size: 13px; font-weight: bold');
+
+
+            var estates = document.getElementById("estateDiv");
+            estates.insertBefore(input1,null);
+            estates.insertBefore(input6,null);
+
+            var btn1 = document.getElementById("estateBtn");
+            btn1.setAttribute('disabled',true);
+
+
+        }
+    </script>
 
     <script>
         function backRat(){
             var roomCode = $("#roomCode").val();
             var playerId = $("#playerId").val();
+            var richId = $("#richId").val();
 
             if (roomCode === undefined || roomCode === '' || playerId === undefined || playerId === '') {
                 alert("房间号或玩家id为空");
@@ -75,8 +179,14 @@
             param2.setAttribute("value",roomCode);
             param2.setAttribute("type","hidden");
 
+            var param3 = document.createElement("input");
+            param3.setAttribute("name","richId");
+            param3.setAttribute("value",richId);
+            param3.setAttribute("type","hidden");
+
             myForm.appendChild(param1);
             myForm.appendChild(param2);
+            myForm.appendChild(param3);
 
             myForm.method = "get";
             myForm.action = "/rich/backRat";

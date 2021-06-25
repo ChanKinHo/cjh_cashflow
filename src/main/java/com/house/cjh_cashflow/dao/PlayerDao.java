@@ -17,7 +17,9 @@ public interface PlayerDao {
 
     String findNameById(@Param(value = "id") String playerId);
 
-    void becomeRich(@Param(value = "playerId") String playerId);
+    void becomeRich(@Param(value = "playerId") Long playerId);
 
-    void becomeRat(String playerId);
+    void becomeRat(Long playerId);
+
+    String checkRich(@Param(value = "playerId")String playerId, @Param(value = "playerName") String playerName, @Param(value = "roomCode") String roomCode);
 }

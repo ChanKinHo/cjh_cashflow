@@ -10,7 +10,7 @@
         ,player_name ,created_date ,updated_date
     </sql>
 
-    <insert id="createPlayerRich" useGeneratedKeys="true" keyProperty="id" parameterType="com.house.cjh_cashflow.controller.form.RichTableForm">
+    <insert id="createPlayerRich" parameterType="com.house.cjh_cashflow.controller.form.RichTableForm">
         insert into rich_table(<include refid="params"/> ) values (#{playerId}
         ,#{roomCode},#{richCashFlow} ,#{monthCashFlow} ,#{initCashFlow} ,#{winCashFlow}
         ,#{playerName} ,now() ,now());
@@ -38,4 +38,10 @@
         delete from rich_table where room_code = #{roomCode}
         and player_id = #{playerId}
     </delete>
+
+    <update id="updateRichCashFlow" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm">
+        update rich_table set rich_cash_flow = #{richCashFlow}, updated_date = now()
+        where room_code = #{roomCode}
+        and player_id = #{playerId}
+    </update>
 </mapper>

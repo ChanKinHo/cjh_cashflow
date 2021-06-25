@@ -5,6 +5,7 @@ import com.house.cjh_cashflow.controller.form.PropertyForm;
 import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dao.EstateCompanyDao;
 import com.house.cjh_cashflow.dao.RatTableDao;
+import com.house.cjh_cashflow.dao.RichDao;
 import com.house.cjh_cashflow.dto.EstateCompanyDto;
 import com.house.cjh_cashflow.exception.ServiceException;
 import com.house.cjh_cashflow.service.EstateCompanyService;
@@ -21,6 +22,9 @@ public class EstateCompanyServiceImpl implements EstateCompanyService {
     RatTableDao ratTableDao;
     @Resource
     EstateCompanyDao estateCompanyDao;
+
+    @Resource
+    RichDao richDao;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -45,6 +49,7 @@ public class EstateCompanyServiceImpl implements EstateCompanyService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void sellEstateById(String estateId, String ratId, String roomCode, String passiveIncome, String totalIncome, String totalCashFlow) {
         RatTableForm ratTableForm = new RatTableForm();
         ratTableForm.setPassiveIncome(passiveIncome);
@@ -55,5 +60,14 @@ public class EstateCompanyServiceImpl implements EstateCompanyService {
         ratTableDao.updateRatSummary(ratTableForm);
 
         estateCompanyDao.sellEstateById(estateId,ratId,roomCode);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addRichEstate(PropertyForm form) {
+
+        estateCompanyDao.addOneRichItem(form);
+
+        richDao.updateRichCashFlow(form);
     }
 }

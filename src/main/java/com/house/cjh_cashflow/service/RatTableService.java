@@ -17,4 +17,7 @@ public interface RatTableService {
     void makeChild(RatTableForm form);
 
     void backFixLoans(RatTableForm form);
+
+    boolean judgeIsRich(String playerId, String playerName, String roomCode);
+
 }

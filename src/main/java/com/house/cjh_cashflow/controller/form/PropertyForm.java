@@ -45,6 +45,16 @@ public class PropertyForm {
 
     private String estateLoan;
 
+    private String richCashFlow;
+
+    public String getRichCashFlow() {
+        return richCashFlow;
+    }
+
+    public void setRichCashFlow(String richCashFlow) {
+        this.richCashFlow = richCashFlow;
+    }
+
     public Long getRichId() {
         return richId;
     }

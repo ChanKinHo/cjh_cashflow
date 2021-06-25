@@ -1,5 +1,6 @@
 package com.house.cjh_cashflow.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.house.cjh_cashflow.controller.form.RichTableForm;
 import com.house.cjh_cashflow.dao.EstateCompanyDao;
 import com.house.cjh_cashflow.dao.PlayerDao;
@@ -25,7 +26,7 @@ public class RichServiceImpl implements RichService {
 
 
     @Override
-    public void createRich(String roomCode, String playerId, String monthCashFlow) {
+    public void createRich(String roomCode, String playerId, String passiveIncome) {
 
         Long exist = richDao.checkExist(roomCode,playerId);
 
@@ -33,7 +34,7 @@ public class RichServiceImpl implements RichService {
             return;
         }
 
-        Long cashFlow = Long.parseLong(monthCashFlow);
+        Long cashFlow = Long.parseLong(passiveIncome);
         Long richCashFlow = cashFlow *100;
         Long initCashFlow = cashFlow * 100;
         Long winCashFlow = initCashFlow + 50000;
@@ -47,7 +48,9 @@ public class RichServiceImpl implements RichService {
         richTableForm.setWinCashFlow(winCashFlow);
 
         String playerName = playerDao.findNameById(playerId);
-        playerDao.becomeRich(playerId);
+
+        System.out.println("创建富人playerId=" +playerId);
+        playerDao.becomeRich(Long.parseLong(playerId));
         richTableForm.setPlayerName(playerName);
 
         richDao.createPlayerRich(richTableForm);
@@ -59,21 +62,23 @@ public class RichServiceImpl implements RichService {
 
         RichTableDto richTableDto = richDao.findExactOne(roomCode,playerId,playerName);
 
-        Long richId = null;
+        Long richId;
         if (richTableDto != null) {
             richId = richTableDto.getId();
+
+            List<EstateCompanyDto> estateCompanyDtos = estateCompanyDao.findListByRichId(roomCode,richId);
+            
+            richTableDto.setEstateCompanyDtos(estateCompanyDtos);
         }
-
-        List<EstateCompanyDto> estateCompanyDtos = estateCompanyDao.findListByRichId(roomCode,richId);
-
-        richTableDto.setEstateCompanyDtos(estateCompanyDtos);
 
         return richTableDto;
     }
 
     @Override
-    public void backToRat(String roomCode, String playerId) {
-        playerDao.becomeRat(playerId);
+    public void backToRat(String roomCode, String playerId, String richId) {
+        playerDao.becomeRat(Long.parseLong(playerId));
+
+        estateCompanyDao.sellRichEstate(Long.parseLong(richId),roomCode);
         richDao.backRat(roomCode,playerId);
     }
 }

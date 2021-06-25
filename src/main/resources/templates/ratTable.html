@@ -493,8 +493,13 @@
             var $bankLoan = $("#bankLoan");
             var bankLoanNum = parseInt($bankLoan.val());
 
-            if (bankMoney > bankLoanNum || bankMoney === 0) {
+            if (bankMoney > bankLoanNum) {
                 alert("你没借那么多，兄逮");
+                return;
+            }
+
+            if (bankMoney === 0) {
+                alert("选择还款金额");
                 return;
             }
 
@@ -1174,11 +1179,7 @@
         }
     </script>
 
-    <script>
-        function addBank() {
 
-        }
-    </script>
 
 
     <!-- 金额相加demo -->

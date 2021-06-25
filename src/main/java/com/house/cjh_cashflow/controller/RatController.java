@@ -4,7 +4,9 @@ import com.house.cjh_cashflow.constant.BaseVo;
 import com.house.cjh_cashflow.constant.RespConstant;
 import com.house.cjh_cashflow.controller.form.RatTableForm;
 import com.house.cjh_cashflow.dto.RatTableDto;
+import com.house.cjh_cashflow.dto.RichTableDto;
 import com.house.cjh_cashflow.service.RatTableService;
+import com.house.cjh_cashflow.service.RichService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +30,9 @@ public class RatController {
     @Resource
     RatTableService ratTableService;
 
+    @Resource
+    RichService richService;
+
     @RequestMapping(value = "/rat/findExactRat")
     public String findExactRat(@RequestParam(value = "playerId", required = false) String playerId,
                                @RequestParam(value = "roomCode", required = false) String roomCode,
@@ -42,9 +47,17 @@ public class RatController {
             return "findRatError";
         }
 
-        RatTableDto ratTableDto;
+        RatTableDto ratTableDto = null;
+        RichTableDto richTableDto = null;
+        boolean isRich;
         try {
-            ratTableDto = ratTableService.findExactRatInfo(playerId,roomCode,ratId,playerName);
+            isRich = ratTableService.judgeIsRich(playerId,playerName,roomCode);
+            if (isRich) {
+                richTableDto = richService.findOneRich(roomCode,playerId,playerName);
+            } else {
+                ratTableDto = ratTableService.findExactRatInfo(playerId,roomCode,ratId,playerName);
+
+            }
         } catch (Exception e) {
             logger.error("RatController findExactRat err", e);
             map.put(CODE,RespConstant.SYSTEM_FAIL_CODE);
@@ -52,14 +65,21 @@ public class RatController {
             return "findRatError";
         }
 
-        if (ratTableDto == null) {
+        if (ratTableDto == null && richTableDto == null) {
             map.put(CODE,RespConstant.NO_RAT_PLAYER_CODE);
             map.put(MSG,RespConstant.NO_RAT_PLAYER_MSG);
             return "findRatError";
         }
 
+        if (isRich) {
+            map.put("richObj",richTableDto);
+            return "richTable";
+        }
+
         map.put(RAT_OBJ,ratTableDto);
         return "ratTable";
+
+
     }
 
     @ResponseBody

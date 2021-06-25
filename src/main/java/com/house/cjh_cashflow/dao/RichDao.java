@@ -1,5 +1,6 @@
 package com.house.cjh_cashflow.dao;
 
+import com.house.cjh_cashflow.controller.form.PropertyForm;
 import com.house.cjh_cashflow.controller.form.RichTableForm;
 import com.house.cjh_cashflow.dto.RichTableDto;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,6 @@ public interface RichDao {
 
     void backRat(@Param(value = "roomCode") String roomCode,
                  @Param(value = "playerId")String playerId);
+
+    void updateRichCashFlow(PropertyForm form);
 }

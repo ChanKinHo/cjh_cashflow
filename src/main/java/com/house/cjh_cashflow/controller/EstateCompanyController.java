@@ -3,6 +3,7 @@ package com.house.cjh_cashflow.controller;
 import com.alibaba.fastjson.JSON;
 import com.house.cjh_cashflow.constant.RespConstant;
 import com.house.cjh_cashflow.controller.form.PropertyForm;
+import com.house.cjh_cashflow.dto.EstateCompanyDto;
 import com.house.cjh_cashflow.exception.ServiceException;
 import com.house.cjh_cashflow.service.EstateCompanyService;
 import org.apache.commons.lang.StringUtils;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -41,12 +43,11 @@ public class EstateCompanyController {
 
         Long passiveIncome = Long.parseLong(form.getPassiveIncome());
         Long totalPay = Long.parseLong(form.getTotalPay());
-        Long monthCashFlow = Long.parseLong(form.getMonthCashFlow());
 
         if (passiveIncome > totalPay) {
             mv.addObject("roomCode",form.getRoomCode());
             mv.addObject("playerId",form.getPlayerId());
-            mv.addObject("monthCashFlow",monthCashFlow);
+            mv.addObject("passiveIncome",passiveIncome);
             mv.setViewName("redirect:/rich/createRich");
             return mv;
         }
@@ -95,6 +96,30 @@ public class EstateCompanyController {
         mv.addObject("ratId",ratId);
         mv.setViewName("redirect:/rat/findExactRat");
 
+        return mv;
+    }
+
+    @RequestMapping(value = "/estate/addRichEstate")
+    public ModelAndView investRichEstate(PropertyForm form) {
+
+        logger.info("添加富人资产入参/" + JSON.toJSONString(form));
+
+        ModelAndView mv = new ModelAndView();
+
+        try {
+            estateCompanyService.addRichEstate(form);
+        } catch (Exception e) {
+            logger.error("EstateCompanyController investRichEstate err ",e);
+            mv.addObject("code", RespConstant.SYSTEM_FAIL_CODE);
+            mv.addObject("msg",RespConstant.SYSTEM_FAIL_CODE_MSG);
+            mv.setViewName("findRatError");
+            return mv;
+
+        }
+
+        mv.addObject("roomCode",form.getRoomCode());
+        mv.addObject("playerId",form.getPlayerId());
+        mv.setViewName("redirect:/rich/findExactRich");
         return mv;
     }
 }

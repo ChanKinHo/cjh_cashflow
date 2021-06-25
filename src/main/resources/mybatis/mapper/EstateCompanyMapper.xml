@@ -51,4 +51,16 @@
             and room_code = #{roomCode}
         </if>
     </select>
+
+    <delete id="sellRichEstate">
+        delete from estate_company where rich_id = #{richId} and type = "2"
+        <if test="roomCode != null and roomCode != ''">
+            and room_code = #{roomCode}
+        </if>
+    </delete>
+
+    <insert id="addOneRichItem" parameterType="com.house.cjh_cashflow.controller.form.PropertyForm">
+        insert into estate_company(rich_table_id,room_code,name,month_cash_flow,type,created_date)
+        values (#{richId},#{roomCode},#{estateName},#{estateMonthCashFlow},'2',now());
+    </insert>
 </mapper>

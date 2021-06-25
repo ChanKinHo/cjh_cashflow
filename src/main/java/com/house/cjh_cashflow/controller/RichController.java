@@ -26,10 +26,10 @@ public class RichController {
     @RequestMapping(value = "/rich/createRich")
     public ModelAndView createRich(@RequestParam(value = "roomCode", required = false) String roomCode,
                                    @RequestParam(value = "playerId", required = false) String playerId,
-                                   @RequestParam(value = "monthCashFlow", required = false) String monthCashFlow) {
+                                   @RequestParam(value = "passiveIncome", required = false) String passiveIncome) {
 
         ModelAndView mv = new ModelAndView();
-        if (StringUtils.isBlank(roomCode) || StringUtils.isBlank(playerId) || StringUtils.isBlank(monthCashFlow)) {
+        if (StringUtils.isBlank(roomCode) || StringUtils.isBlank(playerId) || StringUtils.isBlank(passiveIncome)) {
             mv.addObject("code", RespConstant.MUST_PARAM_NONE_CODE);
             mv.addObject("msg",RespConstant.MUST_PARAM_NONE_MSG);
             mv.setViewName("findRatError");
@@ -37,7 +37,7 @@ public class RichController {
 
 
         try {
-            richService.createRich(roomCode,playerId,monthCashFlow);
+            richService.createRich(roomCode,playerId,passiveIncome);
 
         } catch (Exception e) {
             logger.error("RichController createRich err ",e);
@@ -77,21 +77,22 @@ public class RichController {
 
     @RequestMapping(value = "/rich/backRat")
     public ModelAndView backRatMan(@RequestParam(value = "roomCode", required = false) String roomCode,
-                                   @RequestParam(value = "playerId", required = false) String playerId){
+                                   @RequestParam(value = "playerId", required = false) String playerId,
+                                   @RequestParam(value = "richId", required = false) String richId){
 
         ModelAndView mv = new ModelAndView();
 
-        System.out.println("roomCode=" + roomCode + ", playerId="+playerId);
+        System.out.println("roomCode=" + roomCode + ", playerId="+playerId + "richId="+richId);
 
 
-        if (StringUtils.isBlank(roomCode) || StringUtils.isBlank(playerId)) {
+        if (StringUtils.isBlank(roomCode) || StringUtils.isBlank(playerId) || StringUtils.isBlank(richId)) {
             mv.addObject("code", RespConstant.MUST_PARAM_NONE_CODE);
             mv.addObject("msg",RespConstant.MUST_PARAM_NONE_MSG);
             mv.setViewName("findRatError");
             return mv;
         }
         try {
-            richService.backToRat(roomCode,playerId);
+            richService.backToRat(roomCode,playerId,richId);
 
         } catch (Exception e) {
             logger.error("RichController backRatMan err ",e);

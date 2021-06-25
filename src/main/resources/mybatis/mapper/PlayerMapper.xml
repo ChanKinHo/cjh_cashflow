@@ -37,4 +37,16 @@
     <update id="becomeRat" parameterType="java.lang.Long">
         update player set is_rich = '0' where id = #{playerId}
     </update>
+
+    <select id="checkRich" resultType="java.lang.String">
+        select is_rich from player where room_code = #{roomCode}
+        <if test="playerId != null and playerId != ''">
+            and id = #{playerId}
+        </if>
+        <if test="playerName != null and playerName != ''">
+            and name = #{playerName}
+        </if>
+
+
+    </select>
 </mapper>
