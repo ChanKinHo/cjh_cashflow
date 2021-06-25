@@ -25,4 +25,16 @@
           ,created_date
           from player where room_code = #{roomCode}
     </select>
+
+    <select id="findNameById" resultType="java.lang.String">
+        select name from player where id = #{id}
+    </select>
+
+    <update id="becomeRich" parameterType="java.lang.Long">
+        update player set is_rich = '1' where id = #{playerId}
+    </update>
+
+    <update id="becomeRat" parameterType="java.lang.Long">
+        update player set is_rich = '0' where id = #{playerId}
+    </update>
 </mapper>

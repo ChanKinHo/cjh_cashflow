@@ -34,4 +34,21 @@
             and room_code = #{roomCode}
         </if>
     </delete>
+
+    <select id="findListByRichId" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">
+        select id
+        ,rich_table_id
+        ,name
+        ,room_code
+        ,down_payment
+        ,total_cost
+        ,loan
+        ,month_cash_flow
+        ,type
+        ,created_date
+        from estate_company  where rich_table_id = #{richId} and type = '2'
+        <if test="roomCode != null and roomCode != ''">
+            and room_code = #{roomCode}
+        </if>
+    </select>
 </mapper>

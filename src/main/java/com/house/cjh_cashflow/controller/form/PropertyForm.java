@@ -4,13 +4,28 @@ public class PropertyForm {
 
     private Long ratId;
 
-    private Long stockId;
-
-    private Long estateCompanyId;
-
+    private Long richId;
     private String roomCode;
 
     private Long playerId;
+
+    /**
+     * start
+     */
+    private String passiveIncome;
+
+    private String totalIncome;
+
+    private String totalPay;
+
+    private String monthCashFlow;
+    /**
+     * end
+     */
+
+    private Long stockId;
+
+    private Long estateCompanyId;
 
     private String stockName;
 
@@ -29,6 +44,46 @@ public class PropertyForm {
     private String estateMonthCashFlow;
 
     private String estateLoan;
+
+    public Long getRichId() {
+        return richId;
+    }
+
+    public void setRichId(Long richId) {
+        this.richId = richId;
+    }
+
+    public String getPassiveIncome() {
+        return passiveIncome;
+    }
+
+    public void setPassiveIncome(String passiveIncome) {
+        this.passiveIncome = passiveIncome;
+    }
+
+    public String getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(String totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public String getTotalPay() {
+        return totalPay;
+    }
+
+    public void setTotalPay(String totalPay) {
+        this.totalPay = totalPay;
+    }
+
+    public String getMonthCashFlow() {
+        return monthCashFlow;
+    }
+
+    public void setMonthCashFlow(String monthCashFlow) {
+        this.monthCashFlow = monthCashFlow;
+    }
 
     public Long getStockId() {
         return stockId;

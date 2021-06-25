@@ -24,31 +24,24 @@ public class EstateCompanyServiceImpl implements EstateCompanyService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public EstateCompanyDto saveEstateInfo(RatTableForm form) throws ServiceException {
+    public void saveEstateInfo(PropertyForm form) throws ServiceException {
 
         if (StringUtils.isBlank(form.getRoomCode()) || form.getPlayerId() == null
-                || form.getId() == null) {
+                || form.getRatId() == null) {
             throw new ServiceException(RespConstant.MUST_PARAM_NONE_CODE, RespConstant.MUST_PARAM_NONE_MSG);
         }
         //更新被动收入等
-        ratTableDao.updateRatSummary(form);
+        RatTableForm ratTableForm = new RatTableForm();
+        ratTableForm.setId(form.getRatId());
+        ratTableForm.setRoomCode(form.getRoomCode());
+        ratTableForm.setPlayerId(form.getPlayerId());
+        ratTableForm.setMonthCashFlow(form.getMonthCashFlow());
+        ratTableForm.setTotalIncome(form.getTotalIncome());
+        ratTableForm.setPassiveIncome(form.getPassiveIncome());
+        ratTableDao.updateRatSummary(ratTableForm);
 
-        PropertyForm property = form.getProperty();
-        property.setRoomCode(form.getRoomCode());
-        property.setRatId(form.getId());
-        estateCompanyDao.addOneItemByRatId(property);
 
-        EstateCompanyDto estateCompanyDto = new EstateCompanyDto();
-        estateCompanyDto.setId(property.getEstateCompanyId());
-        estateCompanyDto.setRoomCode(form.getRoomCode());
-        estateCompanyDto.setRatTableId(form.getId());
-        estateCompanyDto.setDownPayment(Long.parseLong(property.getDownPayment()));
-        estateCompanyDto.setLoan(Long.parseLong(property.getEstateLoan()));
-        estateCompanyDto.setMonthCashFlow(Long.parseLong(property.getEstateMonthCashFlow()));
-        estateCompanyDto.setName(property.getEstateName());
-        estateCompanyDto.setTotalCost(Long.parseLong(property.getEstateTotalValue()));
-
-        return estateCompanyDto;
+        estateCompanyDao.addOneItemByRatId(form);
     }
 
     @Override

@@ -14,4 +14,10 @@ public interface PlayerDao {
     Long checkNameExist(@Param(value = "playerName") String playerName, @Param(value = "roomCode") String roomCode);
 
     List<PlayerDto> findListByRoomCode(@Param(value = "roomCode") String roomCode);
+
+    String findNameById(@Param(value = "id") String playerId);
+
+    void becomeRich(@Param(value = "playerId") String playerId);
+
+    void becomeRat(String playerId);
 }

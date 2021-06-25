@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.cjh_cashflow.dao.RichDao">
+
+    <sql id="params">
+        player_id, room_code, rich_cash_flow
+        ,month_cash_flow ,init_cash_flow ,win_cash_flow
+        ,player_name ,created_date ,updated_date
+    </sql>
+
+    <insert id="createPlayerRich" useGeneratedKeys="true" keyProperty="id" parameterType="com.house.cjh_cashflow.controller.form.RichTableForm">
+        insert into rich_table(<include refid="params"/> ) values (#{playerId}
+        ,#{roomCode},#{richCashFlow} ,#{monthCashFlow} ,#{initCashFlow} ,#{winCashFlow}
+        ,#{playerName} ,now() ,now());
+    </insert>
+
+    <select id="findExactOne" parameterType="java.lang.String" resultType="com.house.cjh_cashflow.dto.RichTableDto">
+        select id,
+        <include refid="params"/>
+        from rich_table
+        where room_code = #{roomCode}
+        <if test="playerId != null and playerId != ''">
+            and player_id = #{playerId}
+        </if>
+        <if test="playerName != null and playerName != ''">
+            and player_name = #{playerName}
+        </if>
+    </select>
+
+    <select id="checkExist" resultType="java.lang.Long">
+        select 1 from rich_table where room_code = #{roomCode}
+        and player_id = #{playerId}
+    </select>
+
+    <delete id="backRat">
+        delete from rich_table where room_code = #{roomCode}
+        and player_id = #{playerId}
+    </delete>
+</mapper>

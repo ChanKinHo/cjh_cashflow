@@ -1,9 +1,8 @@
 package com.house.cjh_cashflow.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.house.cjh_cashflow.constant.BaseVo;
-import com.house.cjh_cashflow.controller.form.RatTableForm;
-import com.house.cjh_cashflow.dto.EstateCompanyDto;
+import com.house.cjh_cashflow.constant.RespConstant;
+import com.house.cjh_cashflow.controller.form.PropertyForm;
 import com.house.cjh_cashflow.exception.ServiceException;
 import com.house.cjh_cashflow.service.EstateCompanyService;
 import org.apache.commons.lang.StringUtils;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -27,22 +25,52 @@ public class EstateCompanyController {
     private EstateCompanyService estateCompanyService;
 
     @RequestMapping(value = "/estate/addEstate")
-    @ResponseBody
-    public BaseVo addEstateInfo(@RequestBody RatTableForm form) {
+    public ModelAndView addEstateInfo(PropertyForm form) {
 
         logger.info("EstateCompanyController addEstateInfo param: " + JSON.toJSONString(form));
 
-        EstateCompanyDto estateCompanyDto;
-        try {
-            estateCompanyDto = estateCompanyService.saveEstateInfo(form);
-        } catch (ServiceException se) {
-            return BaseVo.fail(se.getCode(),se.getMsg());
-        } catch (Exception e) {
-            logger.error("EstateCompanyController addEstateInfo err ",e);
-            return BaseVo.fail();
+        ModelAndView mv = new ModelAndView();
+
+        if (StringUtils.isBlank(form.getPassiveIncome()) || StringUtils.isBlank(form.getTotalPay())
+            || StringUtils.isBlank(form.getRoomCode()) || form.getPlayerId() == null) {
+            mv.addObject("code", RespConstant.MUST_PARAM_NONE_CODE);
+            mv.addObject("msg",RespConstant.MUST_PARAM_NONE_MSG);
+            mv.setViewName("findRatError");
+            return mv;
         }
 
-        return BaseVo.succ(estateCompanyDto);
+        Long passiveIncome = Long.parseLong(form.getPassiveIncome());
+        Long totalPay = Long.parseLong(form.getTotalPay());
+        Long monthCashFlow = Long.parseLong(form.getMonthCashFlow());
+
+        if (passiveIncome > totalPay) {
+            mv.addObject("roomCode",form.getRoomCode());
+            mv.addObject("playerId",form.getPlayerId());
+            mv.addObject("monthCashFlow",monthCashFlow);
+            mv.setViewName("redirect:/rich/createRich");
+            return mv;
+        }
+
+        try {
+            estateCompanyService.saveEstateInfo(form);
+        } catch (ServiceException se) {
+            mv.addObject("code", se.getCode());
+            mv.addObject("msg",se.getMsg());
+            mv.setViewName("findRatError");
+            return mv;
+        } catch (Exception e) {
+            logger.error("EstateCompanyController addEstateInfo err ",e);
+            mv.addObject("code", RespConstant.SYSTEM_FAIL_CODE);
+            mv.addObject("msg",RespConstant.SYSTEM_FAIL_CODE_MSG);
+            mv.setViewName("findRatError");
+            return mv;
+        }
+
+        mv.addObject("roomCode",form.getRoomCode());
+        mv.addObject("ratId",form.getRatId());
+        mv.setViewName("redirect:/rat/findExactRat");
+
+        return mv;
     }
 
     @RequestMapping(value = "/estate/sellEstate")

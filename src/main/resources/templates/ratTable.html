@@ -947,83 +947,168 @@
             var roomCode = $("#roomCode").val();
             var playerId = $("#playerId").val();
 
-            var propertyBody = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
-                "passiveIncome":passiveIncome, "totalIncome":totalIncome
-                , "monthCashFlow":totalCashFlow, "property":{"estateName":estateName
-                    ,"downPayment":downPayment, "estateTotalValue":totalValue,
-                    "estateMonthCashFlow":monthCashFlow, "estateLoan":estateLoan}};
+            var totalCost = parseInt($("#totalCost").val());
+
+            var myForm = document.createElement("form");
+            document.body.appendChild(myForm);
+
+            var param1 = document.createElement("input");
+            param1.setAttribute("name","ratId");
+            param1.setAttribute("value",ratId);
+            param1.setAttribute("type","hidden");
+
+            var param2 = document.createElement("input");
+            param2.setAttribute("name","roomCode");
+            param2.setAttribute("value",roomCode);
+            param2.setAttribute("type","hidden");
+
+            var param3 = document.createElement("input");
+            param3.setAttribute("name","playerId");
+            param3.setAttribute("value",playerId);
+            param3.setAttribute("type","hidden");
+
+            var param4 = document.createElement("input");
+            param4.setAttribute("name","passiveIncome");
+            param4.setAttribute("value",passiveIncome);
+            param4.setAttribute("type","hidden");
+
+            var param5 = document.createElement("input");
+            param5.setAttribute("name","totalIncome");
+            param5.setAttribute("value",totalIncome);
+            param5.setAttribute("type","hidden");
+
+            var param6 = document.createElement("input");
+            param6.setAttribute("name","monthCashFlow");
+            param6.setAttribute("value",totalCashFlow);
+            param6.setAttribute("type","hidden");
+
+            var param7 = document.createElement("input");
+            param7.setAttribute("name","totalPay");
+            param7.setAttribute("value",totalCost);
+            param7.setAttribute("type","hidden");
+
+            var param8 = document.createElement("input");
+            param8.setAttribute("name","estateName");
+            param8.setAttribute("value",estateName);
+            param8.setAttribute("type","hidden");
+
+            var param9 = document.createElement("input");
+            param9.setAttribute("name","downPayment");
+            param9.setAttribute("value",downPayment);
+            param9.setAttribute("type","hidden");
+
+            var param10 = document.createElement("input");
+            param10.setAttribute("name","estateTotalValue");
+            param10.setAttribute("value",totalValue);
+            param10.setAttribute("type","hidden");
+
+            var param11 = document.createElement("input");
+            param11.setAttribute("name","estateMonthCashFlow");
+            param11.setAttribute("value",monthCashFlow);
+            param11.setAttribute("type","hidden");
+
+            var param12 = document.createElement("input");
+            param12.setAttribute("name","estateLoan");
+            param12.setAttribute("value",estateLoan);
+            param12.setAttribute("type","hidden");
+
+            myForm.appendChild(param1);
+            myForm.appendChild(param2);
+            myForm.appendChild(param3);
+            myForm.appendChild(param4);
+            myForm.appendChild(param5);
+            myForm.appendChild(param6);
+            myForm.appendChild(param7);
+            myForm.appendChild(param8);
+            myForm.appendChild(param9);
+            myForm.appendChild(param10);
+            myForm.appendChild(param11);
+            myForm.appendChild(param12);
+
+            myForm.method = "post";
+            myForm.action = "/estate/addEstate";
+            myForm.target = "";
+            myForm.submit();
 
 
-            var stop = false;
-            $.ajax({
-                url: "/estate/addEstate",
-                type: "POST",
-                async: false,
-                contentType: "application/json",
-                data: JSON.stringify(propertyBody),
-                dataType: 'json',
-                success: function (result) {
-                    console.log(result);
-                    code = result.respCode;
-                    msg = result.respMsg;
+            // var propertyBody = {"id":ratId, "roomCode": roomCode, "playerId":playerId,
+            //     "passiveIncome":passiveIncome, "totalIncome":totalIncome
+            //     , "monthCashFlow":totalCashFlow, "property":{"estateName":estateName
+            //         ,"downPayment":downPayment, "estateTotalValue":totalValue,
+            //         "estateMonthCashFlow":monthCashFlow, "estateLoan":estateLoan}};
 
-                    if (code !== "000000") {
-                        alert("错误！" + code + "," + msg);
-                        stop = true;
-                    }
 
-                    var estateObj = result.data;
-
-                    console.log("返回的对象: " + estateObj);
-
-                    if (estateObj != null) {
-                        var info = "<tr style=\"font-size: 10px; color: red\">" +
-                            "<td>"+ estateObj.name +"</td>" +
-                            "<td>"+ estateObj.downPayment +"</td>" +
-                            "<td>"+ estateObj.totalCost +"</td>" +
-                            "<td style='visibility:hidden;'>"+ estateObj.id +"</td>" +
-                            "<td style='visibility: hidden'>"+ estateObj.ratTableId +"</td>" +
-                            "<td style='visibility:hidden;'>"+ estateObj.roomCode +"</td>" +
-                            "<td style='visibility:hidden;'>"+ estateObj.monthCashFlow +"</td>" +
-                            "<td><a href=\"#\" onclick=\"sellEstate(this)\">出售</a></td>" +
-                            "</tr>";
-                        $("#estateTable").append(info);
-
-                        var loanInfo = "<tr style=\"font-size: 10px; color: red\">" +
-                            "<td>"+ estateObj.name +"</td>" +
-                            "<td>"+ estateObj.loan +"</td>" +
-                            "</tr>";
-                        $("#estateLoanTable").append(loanInfo);
-
-                        var show = "<tr style=\"font-size: 10px; color: red\">" +
-                            "<td>"+ estateObj.name +"</td>" +
-                            "<td>"+ estateObj.monthCashFlow +"</td>" +
-                            "</tr>";
-                        $("#estateShow").append(show);
-                    }
-                }
-
-            });
-
-            if (stop === true) {
-                return;
-            }
-
-            $passiveIncome.attr('value', passiveIncome);
-            $totalIncome.attr('value', totalIncome);
-            $totalCashFlow.attr('value', totalCashFlow);
-
-            $estateName.remove();
-            $estateLoan.remove();
-            $downPayment.remove();
-            $totalValue.remove();
-            $monthCashFlow.remove();
-
-            var btn1 = document.getElementById("stockBtn");
-            btn1.removeAttribute('disabled');
-
-            var btn2 = document.getElementById("estateBtn");
-            btn2.removeAttribute('disabled');
+            // var stop = false;
+            // $.ajax({
+            //     url: "/estate/addEstate",
+            //     type: "POST",
+            //     async: false,
+            //     contentType: "application/json",
+            //     data: JSON.stringify(propertyBody),
+            //     dataType: 'json',
+            //     success: function (result) {
+                    // console.log(result);
+                    // code = result.respCode;
+                    // msg = result.respMsg;
+                    //
+                    // if (code !== "000000") {
+                    //     alert("错误！" + code + "," + msg);
+                    //     stop = true;
+                    // }
+                    //
+                    // var estateObj = result.data;
+                    //
+                    // console.log("返回的对象: " + estateObj);
+                    //
+                    // if (estateObj != null) {
+                    //     var info = "<tr style=\"font-size: 10px; color: red\">" +
+                    //         "<td>"+ estateObj.name +"</td>" +
+                    //         "<td>"+ estateObj.downPayment +"</td>" +
+                    //         "<td>"+ estateObj.totalCost +"</td>" +
+                    //         "<td style='visibility:hidden;'>"+ estateObj.id +"</td>" +
+                    //         "<td style='visibility: hidden'>"+ estateObj.ratTableId +"</td>" +
+                    //         "<td style='visibility:hidden;'>"+ estateObj.roomCode +"</td>" +
+                    //         "<td style='visibility:hidden;'>"+ estateObj.monthCashFlow +"</td>" +
+                    //         "<td><a href=\"#\" onclick=\"sellEstate(this)\">出售</a></td>" +
+                    //         "</tr>";
+                    //     $("#estateTable").append(info);
+                    //
+                    //     var loanInfo = "<tr style=\"font-size: 10px; color: red\">" +
+                    //         "<td>"+ estateObj.name +"</td>" +
+                    //         "<td>"+ estateObj.loan +"</td>" +
+                    //         "</tr>";
+                    //     $("#estateLoanTable").append(loanInfo);
+                    //
+                    //     var show = "<tr style=\"font-size: 10px; color: red\">" +
+                    //         "<td>"+ estateObj.name +"</td>" +
+                    //         "<td>"+ estateObj.monthCashFlow +"</td>" +
+                    //         "</tr>";
+                    //     $("#estateShow").append(show);
+                    // }
+            //     }
+            //
+            // });
+            //
+            // if (stop === true) {
+            //     return;
+            // }
+            //
+            // $passiveIncome.attr('value', passiveIncome);
+            // $totalIncome.attr('value', totalIncome);
+            // $totalCashFlow.attr('value', totalCashFlow);
+            //
+            // $estateName.remove();
+            // $estateLoan.remove();
+            // $downPayment.remove();
+            // $totalValue.remove();
+            // $monthCashFlow.remove();
+            // $("#estateLoanIndex").remove();
+            //
+            // var btn1 = document.getElementById("stockBtn");
+            // btn1.removeAttribute('disabled');
+            //
+            // var btn2 = document.getElementById("estateBtn");
+            // btn2.removeAttribute('disabled');
 
         }
 
@@ -1067,6 +1152,7 @@
             var input4 = document.createElement('input');
             input4.setAttribute('type', 'text');
             input4.setAttribute('value', '请输入贷款');
+            input4.setAttribute("id","estateLoanIndex");
             input4.setAttribute('disabled', true);
             input4.setAttribute('style','color: red; font-size: 10px; width: 50px');
 

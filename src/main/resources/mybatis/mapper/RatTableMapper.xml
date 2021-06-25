@@ -55,17 +55,9 @@
 
     </select>
 
-    <!--<select id="selectEstateCompanyList" resultType="com.house.cjh_cashflow.dto.EstateCompanyDto">-->
-        <!--select-->
-        <!--id, rat_table_id, name, down_payment, total_cost-->
-        <!--,loan ,month_cash_flow-->
-        <!--from estate_company-->
-        <!--where rat_table_id = #{ratId} and room_code = #{roomCode}-->
-    <!--</select>-->
-
     <update id="updateRatSummary" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
         update rat_table set passive_income = #{passiveIncome}, total_income = #{totalIncome}
-        , month_cash_flow = #{monthCashFlow} where room_code = #{roomCode}
+        , month_cash_flow = #{monthCashFlow},updated_date = now() where room_code = #{roomCode}
         <if test="id != null and id != ''">
             and id = #{id}
         </if>
@@ -76,7 +68,8 @@
 
     <update id="updateBanKByRatId" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
         update rat_table set month_cash_flow = #{monthCashFlow}
-        ,total_pay = #{totalPay} ,bank_pay = #{bankPay} ,bank_loan = #{bankLoan}
+        ,total_pay = #{totalPay} ,bank_pay = #{bankPay}
+        ,bank_loan = #{bankLoan} ,updated_date = now()
         where room_code = #{roomCode}
         <if test="id != null and id != ''">
             and id = #{id}
@@ -88,7 +81,8 @@
 
     <update id="updateChildInfoByRatId" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
         update rat_table set month_cash_flow = #{monthCashFlow}
-        ,total_pay = #{totalPay} ,child_count = #{childCount} ,children_pay = #{childrenPay}
+        ,total_pay = #{totalPay} ,child_count = #{childCount}
+        ,children_pay = #{childrenPay} ,updated_date = now()
         where room_code = #{roomCode}
         <if test="id != null and id != ''">
             and id = #{id}
@@ -99,7 +93,8 @@
     </update>
 
     <update id="updateFixLoans" parameterType="com.house.cjh_cashflow.controller.form.RatTableForm">
-        update rat_table set month_cash_flow = #{monthCashFlow},total_pay = #{totalPay}
+        update rat_table set month_cash_flow = #{monthCashFlow}
+        ,total_pay = #{totalPay} ,updated_date = now()
         <if test="houseLoan != null and houseLoan != ''">
             ,house_loan = #{houseLoan}
         </if>

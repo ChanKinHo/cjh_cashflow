@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>富人表</title>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <h1>Congratulation you fucking baby</h1>
+    <div style="float: left; font-weight:bold">玩家: </div>  <div th:text="${richObj.playerName}" style="float: left; margin-left:10px"></div>
+    <div style="float: left; font-weight:bold;margin-left:250px">房间号: </div>  <div th:text="${richObj.roomCode}" style="float: left; margin-left:10px"></div>
+    <input type="button" value="变回穷逼" onclick="backRat()">
+    <input th:value="${richObj.roomCode}" id="roomCode" type="hidden">
+    <input th:value="${richObj.playerId}" id="playerId" type="hidden">
+    <br>
+    <br>
+    <div style="border: 1px solid; width: 500px">
+        <div style="text-align: center; font-size: 18px; font-weight: bold; border: 1px solid; color: darkblue">你已经得到的全部资产</div>
+        <div>你的非工资收入("老鼠仔"阶段) $:<input th:value="${richObj.monthCashFlow}" disabled type="text" value="0" style="margin-left: 50px"></div>
+        <div>---------------------------------------------------- x100</div>
+        <div>"快车道"初始阶段"现金流量日"收入 $:<input th:value="${richObj.initCashFlow}" type="text" value="0" style="margin-left: 15px"></div>
+    </div>
+
+    <br>
+    <div style="border: 1px solid; width: 500px">
+        <div style="text-align: center; font-size: 18px; font-weight: bold; border: 1px solid; color: darkblue">获胜条件</div>
+        <div>你的初始"现金流量日"收入 $:<input th:value="${richObj.initCashFlow}" disabled type="text" value="0" style="margin-left: 80px"></div>
+        <div>"快车道"所需要增加的现金流量      ----------- $50000</div>
+        <div>获胜"现金流量日"收入 $:<input th:value="${richObj.winCashFlow}" type="text" value="0" style="margin-left: 110px"></div>
+    </div>
+
+    <br>
+    <div style="border: 1px solid; width: 500px">
+        <div style="text-align: center; font-size: 18px; font-weight: bold; border: 1px solid; color: darkblue">月现金流记录</div>
+        <div style="font-size: 18px">当前"现金流量日"收入$:<input th:value="${richObj.richCashFlow}" disabled type="text" value="0" style="margin-left: 20px; font-size: 18px; font-weight: bold; color: red"></div>
+
+        <br>
+        <table id="" border="1">
+            <tr>
+                <th style="width: 200px">企业</th>
+                <th style="width: 300px">月现金流</th>
+            </tr>
+            <tr th:each="estate, estates: ${richObj.estateCompanyDtos}" style="color:red;">
+                <td th:text="${estate.name}"></td>
+                <td th:text="${estate.monthCashFlow}"></td>
+            </tr>
+        </table>
+    </div>
+    <button onclick="">新增投资企业</button>
+
+</body>
+
+    <script>
+        function backRat(){
+            var roomCode = $("#roomCode").val();
+            var playerId = $("#playerId").val();
+
+            if (roomCode === undefined || roomCode === '' || playerId === undefined || playerId === '') {
+                alert("房间号或玩家id为空");
+                return;
+            }
+
+
+            var myForm = document.createElement("form");
+            document.body.appendChild(myForm);
+
+            var param1 = document.createElement("input");
+            param1.setAttribute("name","playerId");
+            param1.setAttribute("value",playerId);
+            param1.setAttribute("type","hidden");
+
+            var param2 = document.createElement("input");
+            param2.setAttribute("name","roomCode");
+            param2.setAttribute("value",roomCode);
+            param2.setAttribute("type","hidden");
+
+            myForm.appendChild(param1);
+            myForm.appendChild(param2);
+
+            myForm.method = "get";
+            myForm.action = "/rich/backRat";
+            myForm.target = "";
+            myForm.submit();
+        }
+    </script>
+</html>

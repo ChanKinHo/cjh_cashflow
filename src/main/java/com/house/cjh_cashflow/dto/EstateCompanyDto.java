@@ -6,6 +6,8 @@ public class EstateCompanyDto {
 
     private Long ratTableId;
 
+    private Long richTableId;
+
     private String roomCode;
 
     private String name;
@@ -21,6 +23,14 @@ public class EstateCompanyDto {
     private String type;
 
     private String createdDate;
+
+    public Long getRichTableId() {
+        return richTableId;
+    }
+
+    public void setRichTableId(Long richTableId) {
+        this.richTableId = richTableId;
+    }
 
     public String getRoomCode() {
         return roomCode;
