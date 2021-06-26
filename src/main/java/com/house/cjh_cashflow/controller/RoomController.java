@@ -92,4 +92,36 @@ public class RoomController {
 
         return BaseVo.succ(roomDtos);
     }
+
+    @RequestMapping(value = "/room/join", method = RequestMethod.POST)
+    public ModelAndView joinRoom(@RequestParam(value = "playerName") String playerName,
+                                 @RequestParam(value = "roomCode") String roomCode,
+                                 @RequestParam(value = "career") String career){
+
+        ModelAndView mv = new ModelAndView();
+        if (playerName.length() > 10 ) {
+            mv.addObject("code",RespConstant.PARAM_TOO_LONG_CODE);
+            mv.addObject("msg",RespConstant.PARAM_TOO_LONG_MSG);
+            mv.setViewName("joinRoomError");
+            return mv;
+        }
+
+        try {
+            roomService.joinRoom(playerName,roomCode,career,mv);
+        } catch (ServiceException se) {
+            mv.addObject("code",se.getCode());
+            mv.addObject("msg", se.getMsg());
+            mv.setViewName("joinRoomError");
+            return mv;
+        } catch (Exception e) {
+            mv.addObject("code",RespConstant.SYSTEM_FAIL_CODE);
+            mv.addObject("msg", RespConstant.SYSTEM_FAIL_CODE_MSG);
+            mv.setViewName("joinRoomError");
+            logger.error("RoomController joinRoom err ",e);
+            return mv;
+        }
+
+        mv.setViewName("redirect:/rat/findExactRat");
+        return mv;
+    }
 }

@@ -76,6 +76,11 @@ public class RoomSerivceImpl implements RoomService {
         //保存房间
         String roomCode = createRoom(roomName, playerName);
 
+        creatNewRatTable(playerName,career,mv,roomCode);
+
+    }
+
+    private void creatNewRatTable(String playerName, String career, ModelAndView mv,String roomCode) throws ServiceException {
         //检测同一房间玩家名重复
         Long count = playerService.checkPlayerNameExist(playerName, roomCode);
         if (count != null && count>0) {
@@ -104,7 +109,6 @@ public class RoomSerivceImpl implements RoomService {
         mv.addObject(PLAYER_ID,playerId);
         mv.addObject(ROOM_CODE,roomCode);
         mv.addObject(RAT_ID,ratId);
-
     }
 
     @Override
@@ -116,5 +120,18 @@ public class RoomSerivceImpl implements RoomService {
     @Override
     public List<RoomDto> findRooms() {
         return roomDao.findRecentRooms();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void joinRoom(String playerName, String roomCode, String career, ModelAndView mv) throws ServiceException {
+
+        Long isExist = roomDao.checkRoomCodeExist(roomCode);
+
+        if (isExist == null || isExist == 0) {
+            throw new ServiceException(RespConstant.ROOM_NUM_NOT_EXISTS_CODE, RespConstant.ROOM_NUM_NOT_EXISTS_MSG);
+        }
+
+        creatNewRatTable(playerName,career,mv,roomCode);
     }
 }

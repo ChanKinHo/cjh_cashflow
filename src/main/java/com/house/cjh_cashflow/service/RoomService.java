@@ -19,4 +19,5 @@ public interface RoomService {
 
     List<RoomDto> findRooms();
 
+    void joinRoom(String playerName, String roomCode, String career, ModelAndView mv) throws ServiceException;
 }

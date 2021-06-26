@@ -8,5 +8,4 @@ CREATE TABLE cashflow.player
 		created_date TIMESTAMP COMMENT '创建时间'
 )ENGINE=INNODB COMMENT '玩家表';
 
-CREATE UNIQUE INDEX player_room_code_uidx on cashflow.player(room_code);
 CREATE INDEX player_name_idx ON cashflow.player(name);

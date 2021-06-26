@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>加入房间</title>
+    <script type="text/javascript" src="/webjars/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body>
+<h2 style="text-align: center">请输入信息加入房间</h2>
+
+<form action="/room/join" method="post" onsubmit="return check()">
+    <p style="text-align: center">请输入玩家名称:</p>
+    <input type="text" name="playerName" id="playerName" placeholder="请输入玩家名称" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px"/>
+    <p>
+
+
+    </p>
+
+    <p style="text-align: center">请输入房间号:</p>
+    <input type="text" name="roomCode" id="roomCode" placeholder="请输入房间号" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px"/>
+
+    <p>
+
+
+    </p>
+
+    <p style="text-align: center">请选择职业:</p>
+    <select id="career" name="career" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px">
+        <option value="">--请选择--</option>
+        <option value="1">飞机驾驶员</option>
+        <option value="2">律师</option>
+        <option value="3">工程师</option>
+    </select>
+
+    <p>
+
+
+    </p>
+    <input type="submit" value="加入对局" style="display: block; margin: 0 auto; width: 200px; height: 30px; font-size: 20px" />
+</form>
+</body>
+
+<script>
+    function check() {
+        var playerName = $("#playerName").val();
+        var roomCode = $("#roomCode").val();
+        var career = $("#career").val();
+
+        if (playerName === undefined || playerName === "" || roomCode === undefined || roomName === ""
+            || career === undefined || career === "") {
+            alert("玩家名称、房间号、职业不能为空");
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+</html>

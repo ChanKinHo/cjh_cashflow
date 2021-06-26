@@ -1,6 +1,5 @@
 package com.house.cjh_cashflow.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.house.cjh_cashflow.controller.form.RichTableForm;
 import com.house.cjh_cashflow.dao.EstateCompanyDao;
 import com.house.cjh_cashflow.dao.PlayerDao;
@@ -67,7 +66,7 @@ public class RichServiceImpl implements RichService {
             richId = richTableDto.getId();
 
             List<EstateCompanyDto> estateCompanyDtos = estateCompanyDao.findListByRichId(roomCode,richId);
-            
+
             richTableDto.setEstateCompanyDtos(estateCompanyDtos);
         }
 
