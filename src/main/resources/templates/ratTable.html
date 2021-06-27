@@ -177,6 +177,12 @@
          */
         function backExtraLoan() {
 
+            var flag = confirm("确定偿还此款项吗？");
+
+            if (!flag) {
+                return;
+            }
+
             var $extraDebt = $("#extraDebt");
             var $extraPay = $("#extraPay");
 
@@ -227,6 +233,11 @@
          * 还信用卡
          */
         function backCreditCard() {
+            var flag = confirm("确定偿还此款项吗？");
+
+            if (!flag) {
+                return;
+            }
 
             var $creditCard = $("#creditCard");
             var $creditCardPay = $("#creditCardPay");
@@ -278,6 +289,11 @@
          * 还教育贷
          */
         function backEducationLoan() {
+            var flag = confirm("确定偿还此款项吗？");
+
+            if (!flag) {
+                return;
+            }
 
             var $educationLoan = $("#educationLoan");
             var $educationPay = $("#educationPay");
@@ -331,6 +347,11 @@
          * 还车贷
          */
         function backCarLoan() {
+            var flag = confirm("确定偿还此款项吗？");
+
+            if (!flag) {
+                return;
+            }
 
             var $carLoan = $("#carLoan");
             var $carPay = $("#carPay");
@@ -382,6 +403,11 @@
          * 还房贷
          */
         function backHouseLoan() {
+            var flag = confirm("确定偿还此款项吗？");
+
+            if (!flag) {
+                return;
+            }
 
             var $houseLoan = $("#houseLoan");
             var $housePay = $("#housePay");
@@ -431,6 +457,12 @@
     </script>
     <script>
         function makeChild() {
+            var flag = confirm("确定生孩子吗？");
+
+            if (!flag) {
+                return;
+            }
+
             //小孩个数
             var childCost = parseInt($("#childCost").val());
             var $childCount = $("#childCount");
@@ -953,6 +985,10 @@
             var playerId = $("#playerId").val();
 
             var totalCost = parseInt($("#totalCost").val());
+
+            if (passiveIncome > totalCost) {
+                alert("恭喜！！你将进入富人圈");
+            }
 
             var myForm = document.createElement("form");
             document.body.appendChild(myForm);

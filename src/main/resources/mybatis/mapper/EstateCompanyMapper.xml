@@ -53,7 +53,7 @@
     </select>
 
     <delete id="sellRichEstate">
-        delete from estate_company where rich_id = #{richId} and type = "2"
+        delete from estate_company where rich_table_id = #{richId} and type = "2"
         <if test="roomCode != null and roomCode != ''">
             and room_code = #{roomCode}
         </if>

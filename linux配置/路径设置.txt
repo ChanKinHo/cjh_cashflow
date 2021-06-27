@@ -1,0 +1,5 @@
+jar包及脚本目录: /houseapps/cashflow/boot/bin/
+
+启动日志目录: /houseapps/cashflow/boot/tomcat/
+
+日志目录: /houseapps/cashflow/boot/spring/log/
