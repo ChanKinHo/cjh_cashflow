@@ -177,17 +177,17 @@
          */
         function backExtraLoan() {
 
-            var flag = confirm("确定偿还此款项吗？");
-
-            if (!flag) {
-                return;
-            }
-
             var $extraDebt = $("#extraDebt");
             var $extraPay = $("#extraPay");
 
             if ($extraDebt.val() === "0") {
                 alert("该款项已还清");
+                return;
+            }
+
+            var flag = confirm("确定偿还额外负债吗？");
+
+            if (!flag) {
                 return;
             }
 
@@ -233,17 +233,18 @@
          * 还信用卡
          */
         function backCreditCard() {
-            var flag = confirm("确定偿还此款项吗？");
-
-            if (!flag) {
-                return;
-            }
 
             var $creditCard = $("#creditCard");
             var $creditCardPay = $("#creditCardPay");
 
             if ($creditCard.val() === "0") {
                 alert("该款项已还清");
+                return;
+            }
+
+            var flag = confirm("确定偿信用卡欠款吗？");
+
+            if (!flag) {
                 return;
             }
 
@@ -289,17 +290,18 @@
          * 还教育贷
          */
         function backEducationLoan() {
-            var flag = confirm("确定偿还此款项吗？");
-
-            if (!flag) {
-                return;
-            }
 
             var $educationLoan = $("#educationLoan");
             var $educationPay = $("#educationPay");
 
             if ($educationLoan.val() === "0") {
                 alert("该款项已还清");
+                return;
+            }
+
+            var flag = confirm("确定偿教育贷款吗？");
+
+            if (!flag) {
                 return;
             }
 
@@ -347,17 +349,18 @@
          * 还车贷
          */
         function backCarLoan() {
-            var flag = confirm("确定偿还此款项吗？");
-
-            if (!flag) {
-                return;
-            }
 
             var $carLoan = $("#carLoan");
             var $carPay = $("#carPay");
 
             if ($carLoan.val() === "0") {
                 alert("该款项已还清");
+                return;
+            }
+
+            var flag = confirm("确定偿还车贷吗？");
+
+            if (!flag) {
                 return;
             }
 
@@ -403,17 +406,18 @@
          * 还房贷
          */
         function backHouseLoan() {
-            var flag = confirm("确定偿还此款项吗？");
-
-            if (!flag) {
-                return;
-            }
 
             var $houseLoan = $("#houseLoan");
             var $housePay = $("#housePay");
 
             if ($houseLoan.val() === "0") {
                 alert("该款项已还清");
+                return;
+            }
+
+            var flag = confirm("确定偿还房贷吗？");
+
+            if (!flag) {
                 return;
             }
 

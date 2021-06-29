@@ -23,6 +23,6 @@
     </select>
 
     <select id="findRecentRooms" resultType="com.house.cjh_cashflow.dto.RoomDto">
-        select name, code from room order by created_date desc LIMIT 0,3
+        select name, code from room order by created_date desc LIMIT 0,10
     </select>
 </mapper>

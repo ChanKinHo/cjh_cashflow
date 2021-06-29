@@ -17,7 +17,7 @@
         <input type="submit" value="回到战局" style="font-size: 20px">
     </form>
     <br>
-    <button onclick="checkPlayers()" style="font-size: 18px; color: red">输入房间号查询玩家信息</button>
+    <button id="playerBtn" onclick="checkPlayers()" style="font-size: 18px; color: red">输入房间号查询玩家信息</button>
     <table id="playerInfo" border="1" style="visibility: hidden">
         <tr>
             <th>玩家id</th>
@@ -25,7 +25,7 @@
         </tr>
     </table>
 
-    <button onclick="getRecentRoom()" style="font-size: 18px; color: red">查询最近的房间</button>
+    <button id="recentRoomBtn" onclick="getRecentRoom()" style="font-size: 18px; color: red">查询最近的房间</button>
     <table id="roomInfo" border="1" style="visibility: hidden">
         <tr>
             <th>房间名称</th>
@@ -40,6 +40,7 @@
 
            if (roomCode === "" || roomCode === undefined) {
                alert("请输入房间号, please");
+               return;
            }
 
            var temp = "";
@@ -65,6 +66,9 @@
            });
 
            $("#playerInfo").attr("style","visibility: display");
+
+            var btn1 = document.getElementById("playerBtn");
+            btn1.setAttribute('disabled',true);
         }
     </script>
 
@@ -92,6 +96,9 @@
             });
 
             $("#roomInfo").attr("style","visibility: display");
+
+            var btn1 = document.getElementById("recentRoomBtn");
+            btn1.setAttribute('disabled',true);
         }
     </script>
 </html>

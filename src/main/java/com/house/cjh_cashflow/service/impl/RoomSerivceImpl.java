@@ -50,9 +50,14 @@ public class RoomSerivceImpl implements RoomService {
     @Transactional(rollbackFor = Exception.class)
     public String createRoom(String roomName, String playerName) throws ServiceException {
         //生成6位整数房间号
-        int roomNum = (int) ((Math.random()*900000-1)+100000);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 6; i++) {
+            int rand = (int) (Math.random()*9);
+            builder.append(rand);
+        }
 
-        String roomCode = String.valueOf(roomNum);
+
+        String roomCode = builder.toString();
         RoomForm roomForm = new RoomForm();
         roomForm.setCode(roomCode);
         roomForm.setCreator(playerName);
