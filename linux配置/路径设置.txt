@@ -3,3 +3,7 @@ jar包及脚本目录: /houseapps/cashflow/boot/bin/
 启动日志目录: /houseapps/cashflow/boot/tomcat/
 
 日志目录: /houseapps/cashflow/boot/spring/log/
+
+mysql数据库位置: /usr/local/mysql
+mysql指令位置: /usr/local/mysql/bin
+登录mysql数据库方式: 如果进入到bin目录了，则 ./mysql -uroot -p 然后回车输入密码
