@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 设置默认执行器为重用执行器，只会执行一次预编译，即使没有使用缓存，而simple执行器在没有使用缓存会每次执行都编译 -->
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <!-- 一级缓存作用域，只要不是SESSION，就不会命中一级缓存 -->
+        <setting name="localCacheScope" value="STATEMENT"/>
+    </settings>
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://120.79.27.236:3306/cashflow?serverTimezone=GMT%2B8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="learnbatis/mapper/UserMapper.xml"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.house.cjh_cashflow.learnbatis.dao.UserDao">
+
+    <select id="queryById" parameterType="java.lang.Long" resultType="com.house.cjh_cashflow.learnbatis.entity.User">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="queryById1" parameterType="java.lang.Long" resultType="com.house.cjh_cashflow.learnbatis.entity.User">
+        select * from user where id = #{id}
+    </select>
+
+    <update id="updateById">
+        update user set user_name = #{username} where id = #{id}
+    </update>
+</mapper>
